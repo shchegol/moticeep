@@ -1,0 +1,23 @@
+// bootstrap global
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
+
+// custom globals
+@import "./common/variables";
+@import "./common/utils";
+
+// bootstrap components
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/forms";
+@import "~bootstrap/scss/buttons";
+@import "~bootstrap/scss/tables";
+
+// custom
+@import "./common/base";
+@import "./common/reset";
+@import "./components/card";
+@import "./components/button";
+@import "./vendors/material-icons";

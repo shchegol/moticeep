@@ -1,0 +1,28 @@
+.card {
+  min-height: 300px;
+  border-radius: $border-radius;
+  @include box_shadow_material(1);
+  background-color: #fff;
+  transition: box-shadow .3s ease;
+  cursor: pointer;
+
+  &:hover {
+    @include box_shadow_material(4);
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 1px black(.1);
+    transition: none;
+  }
+
+  &__img {
+    background-color: $blue;
+  }
+
+  &__title {
+    color: white;
+  }
+
+  &__description {
+  }
+}

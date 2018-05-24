@@ -1,8 +1,8 @@
 {
   "name": "y",
   "version": "1.0.0",
-  "description": "y",
-  "author": "y",
+  "description": "Small App for count my daughter money",
+  "author": "Alexander Shchegol <zelenzoom@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -14,6 +14,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "bootstrap": "^4.0.0",
+    "eslint-config-google": "^0.9.1",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
