@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row mt-3">
       <div class="col-2">
         <div class="form-group">
@@ -23,14 +23,12 @@
         <table class="table">
           <thead>
           <tr>
-            <th>Работа</th>
-            <th>Оплата, р.</th>
+            <td v-for="date in dateModel" :key="date">{{date}}</td>
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>Какая-то работа</td>
-            <td>40</td>
+          <tr v-for="(data, index) in dataModel" :key="index">
+            <td v-for="date in dateModel" :key="date">date</td>
           </tr>
           </tbody>
         </table>
@@ -40,33 +38,45 @@
 </template>
 
 <script>
+  import moment from 'moment';
+
+  let data = [];
+  let daysInMonth = moment(new Date(), 'YYYY-MM').daysInMonth();
+
+  for (let i = 0; i < daysInMonth; i++) {
+    data.push(i);
+  }
+
   export default {
-    name: 'HelloWorld',
+    name: 'Main',
     data() {
       return {
-        msg: 'Welcome to Your Vue.js App',
+        dataModel: [
+          {
+            name: 'Детский сад',
+            date: {
+              '1': 40,
+              '2': 40,
+              '4': 40,
+              '5': 40,
+              '8': 40,
+            },
+          },
+          {
+            name: 'Чтение',
+            date: {
+              '2': 12,
+              '11': 22,
+              '15': 56,
+              '20': 21,
+            },
+          },
+        ],
+        dateModel: data,
       };
+    },
+    mounted() {
+
     },
   };
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-  h1, h2 {
-    font-weight: normal;
-  }
-
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-
-  a {
-    color: #42b983;
-  }
-</style>
