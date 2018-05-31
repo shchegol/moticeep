@@ -3,9 +3,20 @@
     <section class="position-relative">
       <div class="header">
         <div class="container position-relative">
-          <div class="row">
+          <div class="row align-items-center pb-4">
             <div class="col">
               <h1>MOTIKEEP</h1>
+            </div>
+            <div class="col-auto">
+              <button class="mdc-button">
+                  Помощь проекту
+              </button>
+            </div>
+            <div class="col-auto">
+              <button class="mdc-button mdc-button--img mdc-button--chip">
+                <img src="./assets/images/avatar.png" alt="">
+                Щеголь А.А.
+              </button>
             </div>
           </div>
 
@@ -18,13 +29,15 @@
 
       <div class="menu-add" :class="{'menu-add_show': flag.addMenu}">
         <div class="container">
-          <div class="row">
+          <div class="row mt-3">
             <div class="col">
               <m-input :name="'name'" :label="'Название'" class="w-100"></m-input>
             </div>
 
+            <div class="w-100 d-block d-md-none"></div>
+
             <div class="col">
-              <m-input :name="'reward'" :label="'Название'" class="w-100"></m-input>
+              <m-input :name="'reward'" :label="'Количество очков'" class="w-100"></m-input>
             </div>
           </div>
         </div>
