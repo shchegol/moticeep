@@ -1,0 +1,19 @@
+.mdc-fab {
+  position: absolute;
+  z-index: 3;
+  bottom: -28px;
+  left: calc(50% - 28px);
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1.25rem;
+  width: auto;
+  border-radius: 5000px;
+
+  &__text {
+    padding-left: .5rem;
+    text-transform: uppercase;
+    font-family: $font-family-base;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}

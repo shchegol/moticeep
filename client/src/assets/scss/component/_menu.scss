@@ -1,0 +1,17 @@
+.menu-add {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 32px 0;
+  background-color: #fff;
+  transition: transform .3s ease;
+  transform: translateY(0);
+  @include mdc-elevation(4);
+
+  &_show {
+    bottom: 0;
+    transform: translateY(100%);
+  }
+}

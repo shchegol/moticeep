@@ -8,7 +8,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: () => import('@/components/Main.vue'),
+      component: () => import('../components/Main.vue'),
     },
   ],
 });

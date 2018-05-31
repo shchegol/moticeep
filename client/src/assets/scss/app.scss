@@ -4,20 +4,29 @@
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/utilities";
 
-// custom globals
-@import "./common/variables";
-@import "./common/utils";
+// material global
+@import "~@material/theme/color-palette";
 
-// bootstrap components
-@import "~bootstrap/scss/reboot";
+// custom global
+@import "common/variables";
+@import "common/utils";
+
+// bootstrap
 @import "~bootstrap/scss/grid";
-@import "~bootstrap/scss/forms";
-@import "~bootstrap/scss/buttons";
-@import "~bootstrap/scss/tables";
+
+// material components
+@import "~@material/theme/mdc-theme";
+@import "~@material/typography/mdc-typography";
+@import "~@material/layout-grid/mdc-layout-grid";
+@import "~@material/button/mdc-button";
+@import "~@material/form-field/mdc-form-field";
+@import "~@material/textfield/mdc-text-field";
+@import "~@material/checkbox/mdc-checkbox";
+@import "~@material/fab/mdc-fab";
 
 // custom
-@import "./common/base";
-@import "./common/reset";
-@import "./components/card";
-@import "./components/button";
-@import "./vendors/material-icons";
+@import "common/base";
+@import "layout/header";
+@import "component/button";
+@import "component/menu";
+@import "vendors/material-icons";

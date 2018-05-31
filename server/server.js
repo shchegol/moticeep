@@ -1,7 +1,6 @@
 process.env['NODE_CONFIG_DIR'] = __dirname + '/config/';
 const Koa = require('koa');
 // const Router = require('koa-router');
-const fs = require('fs');
 const favicon = require('koa-favicon');
 const serve = require('koa-static');
 const logger = require('koa-logger');
@@ -11,7 +10,7 @@ const config = require('config');
 const app = new Koa();
 // const router = new Router();
 
-app.use(favicon('public/favicon.ico'));
+app.use(favicon('public/static/favicon.ico'));
 app.use(serve('public'));
 app.use(logger());
 // errors
