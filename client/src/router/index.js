@@ -8,7 +8,15 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: () => import('../components/Main.vue'),
+      component: () => import('../components/pages/Main.vue'),
+    },
+    {
+      path: '/user',
+      component: () => import('../components/pages/User.vue'),
+    },
+    {
+      path: '/donate',
+      component: () => import('../components/pages/Donate.vue'),
     },
   ],
 });
