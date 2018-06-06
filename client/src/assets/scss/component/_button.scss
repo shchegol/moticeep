@@ -22,7 +22,7 @@
   position: absolute;
   z-index: 3;
   bottom: -28px;
-  left: 50%;
+  left: 1rem;
   align-items: center;
   padding-left: 1rem;
   padding-right: 1.25rem;
@@ -30,14 +30,21 @@
   border-radius: 5000px;
   color: #fff;
   background-color: $material-color-pink-500;
-  transform: translateX(-50%);
 
+  @include media-breakpoint-down(lg) {
+    padding-right: 1rem;
+  }
 
   &__text {
+    display: block;
     padding-left: .5rem;
     text-transform: uppercase;
     font-family: $font-family-base;
     font-size: 1rem;
     font-weight: 500;
+
+    @include media-breakpoint-down(lg) {
+      display: none;
+    }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="app">
     <v-header></v-header>
 
     <router-view></router-view>
@@ -7,19 +7,13 @@
 </template>
 
 <script>
-
-  import Header from './components/layout/Header';
+  import Header from '@/components/layout/Header';
 
   export default {
     name: 'App',
     components: {
       'v-header': Header,
     },
-    data() {
-      return {};
-    },
-    methods: {},
-    mounted() {},
   };
 </script>
 

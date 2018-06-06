@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-3">
+  <div class="container main">
     <div class="row">
       <div class="col">
         User content

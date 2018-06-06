@@ -5,9 +5,15 @@ html, body {
 
 html {
   font-size: 16px;
-  background-color: $material-color-grey-200;
+  background-color: #fff;
 }
 
-body {
-  //padding-top: 5rem;
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+.main {
+  margin-top: 1rem;
 }
