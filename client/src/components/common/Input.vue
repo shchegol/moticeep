@@ -1,13 +1,8 @@
 <template>
-  <div ref="input" class="mdc-text-field mdc-text-field--outlined">
+  <div ref="input" class="mdc-text-field">
     <input type="text" :id="name" class="mdc-text-field__input">
-    <label :for="name" class="mdc-floating-label">{{ label }}</label>
-    <div class="mdc-notched-outline">
-      <svg>
-        <path class="mdc-notched-outline__path"/>
-      </svg>
-    </div>
-    <div class="mdc-notched-outline__idle"></div>
+    <label class="mdc-floating-label" :for="name">{{ label }}</label>
+    <div class="mdc-line-ripple"></div>
   </div>
 </template>
 
@@ -15,7 +10,7 @@
   import {MDCTextField} from '@material/textfield';
 
   export default {
-    name: 'm-input',
+    name: 'Input',
     props: {
       label: String,
       name: {

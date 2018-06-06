@@ -1,5 +1,5 @@
 <template>
-  <div class="container main">
+  <div class="container-fluid">
     <div class="row">
       <div class="col">
         Donate content
@@ -11,9 +11,5 @@
 <script>
   export default {
     name: 'Donate',
-    data() {
-      return {};
-    },
-    mounted() {},
   };
 </script>

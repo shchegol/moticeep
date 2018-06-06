@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row align-items-center header">
       <div class="col">
-        <router-link to="/" class="logo">MOTIKEEP</router-link>
+        <h1 class="logo">MOTIKEEP</h1>
       </div>
 
       <div class="col-auto">
@@ -12,9 +12,8 @@
       </div>
 
       <div class="col-auto">
-        <router-link to="/user" class="mdc-button mdc-button--img mdc-button--chip">
-          <img src="@/assets/images/avatar.png" alt="">
-          zelenzoom
+        <router-link to="/user" class="avatar-btn">
+          <span class="avatar-btn__img"></span>
         </router-link>
       </div>
     </div>
