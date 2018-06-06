@@ -1,5 +1,13 @@
 .header {
-  position: relative;
-  z-index: 2;
   background-color: $mdc-theme-secondary;
+}
+
+.logo {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $material-color-grey-900;
+  text-decoration: none;
 }
