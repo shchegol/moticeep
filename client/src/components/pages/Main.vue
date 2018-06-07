@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="animate-page">
     <v-header></v-header>
 
     <div class="container-fluid">

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="animate-page">
     <div class="container-fluid">
       <div class="row align-items-center header header--second">
         <div class="col">
