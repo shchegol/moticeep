@@ -5,7 +5,7 @@
         <h1 class="logo">MOTIKEEP</h1>
       </div>
 
-      <div class="col-auto">
+      <div class="col-auto pr-5">
         <router-link to="/donate" class="mdc-button">
           Поддержать
         </router-link>

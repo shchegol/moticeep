@@ -18,6 +18,12 @@
   }
 }
 
+.mdc-text-field {
+  &__input {
+    box-sizing: content-box;
+  }
+}
+
 .mdc-fab {
   position: fixed;
   z-index: 3;
@@ -30,3 +36,4 @@
 .mdc-card {
   margin-bottom: .5rem;
 }
+

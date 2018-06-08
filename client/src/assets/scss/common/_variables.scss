@@ -1,5 +1,15 @@
 // bootstrap customization
 $grid-gutter-width: 1rem;
+$spacers: ();
+$spacers: map-merge((
+  0: 0,
+  1: ($spacer * .25),
+  2: ($spacer * .5),
+  3: $spacer,
+  4: ($spacer * 1.5),
+  5: ($spacer * 2),
+  6: ($spacer * 3),
+), $spacers);
 
 // material customization
 $mdc-theme-primary: $material-color-grey-900;

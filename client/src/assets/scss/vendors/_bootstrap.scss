@@ -1,18 +1,13 @@
 // bootstrap customization
 
-//*,
-//::after,
-//::before {
-//  box-sizing: border-box;
-//}
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
 
 .container-fluid {
   padding-left: $side-paddings;
   padding-right: $side-paddings;
   box-sizing: border-box;
-
-  &::after,
-  &::before {
-    box-sizing: border-box;
-  }
 }
