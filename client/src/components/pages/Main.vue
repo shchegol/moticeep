@@ -5,11 +5,7 @@
     <div class="container-fluid main">
       <div class="row align-items-center">
         <div class="col">
-          <h4>Достижения</h4>
-        </div>
-
-        <div class="col-auto">
-          Накоплено: {{ balance }}
+          <h4>Достижения {{ totalPoints }}</h4>
         </div>
       </div>
 
@@ -23,11 +19,7 @@
     <div class="container-fluid main">
       <div class="row align-items-center">
         <div class="col">
-          <h4>Мотивация</h4>
-        </div>
-
-        <div class="col-auto">
-          Желаний на: {{ balanceMoti }}
+          <h4>Мотивация {{ balanceMoti }}</h4>
         </div>
       </div>
 
@@ -62,7 +54,7 @@
 
 <script>
   import _ from 'lodash';
-  import {getRandomNumber} from '@/assets/js/utils';
+  import {declOfNum, getRandomNumber} from '@/assets/js/utils';
   import Header from '@/components/layout/Header';
   import PayCard from '@/components/cards/PayCard';
   import MotiCard from '@/components/cards/MotiCard';
@@ -105,7 +97,6 @@
     },
     data() {
       return {
-        balance: 534,
         cards: {
           pay: {
             data: payCardsData,
@@ -117,14 +108,18 @@
       };
     },
     computed: {
+      totalPoints() {
+        let points = this.$store.state.totalPoints;
+        return `${points} ${declOfNum(points, ['очко', 'очка', 'очков'])}`;
+      },
       balanceMoti() {
-        let counter = 0;
+        let points = 0;
 
         _.forEach(this.cards.moti.data, (card) => {
-          counter += card.cost;
+          points += card.cost;
         });
 
-        return counter;
+        return `${points} ${declOfNum(points, ['очко', 'очка', 'очков'])}`;
       },
       cardMoti() {
         return _.filter(this.cards.moti.data, ['favorite', false]);
