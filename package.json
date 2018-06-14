@@ -27,6 +27,7 @@
     "lodash": "^4.17.10",
     "material-components-web": "^0.36.0",
     "moment": "^2.22.1",
+    "mongoose": "^5.1.5",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.1",
     "vue": "^2.5.2",
