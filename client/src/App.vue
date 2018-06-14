@@ -1,5 +1,5 @@
 <template>
-  <transition :name="transitionName">
+  <transition name="fade">
     <router-view></router-view>
   </transition>
 </template>
@@ -12,11 +12,11 @@
         transitionName: '',
       };
     },
-    watch: {
-      '$route'(to) {
-        this.transitionName = (to.path === '/') ? 'slide-right' : 'slide-left';
-      },
-    },
+    // watch: {
+    //   '$route'(to) {
+    //     this.transitionName = (to.path === '/') ? 'slide-right' : 'slide-left';
+    //   },
+    // },
   };
 </script>
 

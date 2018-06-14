@@ -1,8 +1,3 @@
-// bootstrap global
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
-
 // material global
 @import "~@material/theme/color-palette";
 
@@ -10,24 +5,9 @@
 @import "common/variables";
 @import "common/utils";
 
-// bootstrap
-@import "~bootstrap/scss/utilities";
-@import "~bootstrap/scss/grid";
-
 // material components
-@import "~@material/theme/mdc-theme";
-@import "~@material/typography/mdc-typography";
-@import "~@material/layout-grid/mdc-layout-grid";
-@import "~@material/button/mdc-button";
-@import "~@material/icon-toggle/mdc-icon-toggle";
-@import "~@material/icon-button/mdc-icon-button";
-@import "~@material/chips/mdc-chips";
-@import "~@material/card/mdc-card";
-@import "~@material/list/mdc-list";
-@import "~@material/form-field/mdc-form-field";
-@import "~@material/textfield/mdc-text-field";
-@import "~@material/checkbox/mdc-checkbox";
-@import "~@material/fab/mdc-fab";
+@import "vue-mdc-adapter/dist/vue-mdc-adapter.min.css";
+//@import "~vue-mdc-adapter/dist/styles";
 
 // custom
 @import "common/base";
@@ -36,6 +16,5 @@
 @import "component/button";
 @import "component/menu";
 @import "component/card";
-@import "vendors/bootstrap";
 @import "vendors/material-icons";
 @import "vendors/material";

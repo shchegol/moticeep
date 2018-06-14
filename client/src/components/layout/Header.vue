@@ -1,27 +1,27 @@
 <template>
-  <div class="container-fluid">
-    <div class="row align-items-center header">
-      <div class="col">
-        <h1 class="logo">MOTIKEEP</h1>
-      </div>
+  <mdc-toolbar slot="toolbar" fixed>
+    <mdc-toolbar-row>
+      <mdc-toolbar-section align-start>
+        <mdc-toolbar-menu-icon event="toggle-drawer"></mdc-toolbar-menu-icon>
+        <mdc-toolbar-title>MOTIKEEP</mdc-toolbar-title>
+      </mdc-toolbar-section>
 
-      <div class="col-auto pr-5">
-        <router-link to="/donate" class="mdc-button">
-          Поддержать
-        </router-link>
-      </div>
-
-      <div class="col-auto">
+      <mdc-toolbar-section align-end>
         <router-link to="/user" class="avatar-btn">
-          <span class="avatar-btn__img"></span>
+          <span class="avatar-btn__img" :style="{'background-image': `url(${avatarImage})`}"></span>
         </router-link>
-      </div>
-    </div>
-  </div>
+      </mdc-toolbar-section>
+    </mdc-toolbar-row>
+  </mdc-toolbar>
 </template>
 
 <script>
   export default {
     name: 'Header',
+    data() {
+      return {
+        avatarImage: require('@/assets/images/girl.png'),
+      };
+    },
   };
 </script>

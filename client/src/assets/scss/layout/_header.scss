@@ -1,26 +1,3 @@
-.header {
-  height: 4rem;
-  margin-right: -$side-paddings;
-  margin-left: -$side-paddings;
-  padding-right: $side-paddings - $grid-gutter-width / 2;
-  padding-left: $side-paddings - $grid-gutter-width / 2;
-  background-color: $mdc-theme-secondary;
-
-  &--second {
-    background-color: transparent;
-  }
-}
-
-.logo {
-  display: block;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: $material-color-grey-900;
-  text-decoration: none;
-}
-
 .avatar-btn {
   overflow: hidden;
   display: flex;
@@ -38,7 +15,7 @@
   &__img {
     height: 32px;
     width: 32px;
-    background: url('./assets/images/girl.png') center 4px no-repeat;
+    background: center 4px no-repeat;
     background-size: cover;
   }
 }

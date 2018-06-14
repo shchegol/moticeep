@@ -18,9 +18,5 @@ export default new Router({
       path: '/donate',
       component: () => import('../components/pages/Donate.vue'),
     },
-    {
-      path: '/add-card',
-      component: () => import('../components/pages/CardAdd.vue'),
-    },
   ],
 });

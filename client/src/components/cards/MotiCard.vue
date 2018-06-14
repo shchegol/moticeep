@@ -1,22 +1,25 @@
 <template>
-  <div class="mdc-card mdc-card--outlined card">
-    <div :style="{ backgroundImage: `url( ${image} )` }" class="mdc-card__media mdc-card__media--16-9">
-    </div>
 
-    <div class="card__content">
-      <h4 class="card__title mdc-typography--headline6">{{ title }}</h4>
-      <h5 class="card__subtitle mdc-typography--subtitle2">{{ pointsString }}</h5>
-    </div>
-
-    <div class="mdc-card__actions">
-      <div class="mdc-card__action-icons">
-        <button @click="favoriteToggle" class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon">
-          {{ favorite ? 'favorite' : 'favorite_border' }}
-        </button>
-        <button class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon">more_vert</button>
-      </div>
-    </div>
-  </div>
+  <mdc-card :outlined="true">
+    <mdc-card-primary-action>
+      <mdc-card-media :src="image">
+      </mdc-card-media>
+    </mdc-card-primary-action>
+    <mdc-card-header :title="title" :subtitle="pointsString" >
+    </mdc-card-header>
+    <mdc-card-actions>
+      <mdc-card-action-icons>
+        <mdc-card-action-icon @click="favoriteToggle" :icon="favorite ? 'favorite' : 'favorite_border'" />
+        <mdc-menu-anchor>
+          <mdc-card-action-icon raised @click="open=true" icon="more_vert" />
+          <mdc-menu v-model="open">
+            <mdc-menu-item>Изменить</mdc-menu-item>
+            <mdc-menu-item>Удалить</mdc-menu-item>
+          </mdc-menu>
+        </mdc-menu-anchor>
+      </mdc-card-action-icons>
+    </mdc-card-actions>
+  </mdc-card>
 </template>
 
 <script>
@@ -37,6 +40,7 @@
         cost: this.card.cost,
         favorite: this.card.favorite,
         image: this.card.image,
+        open: false,
       };
     },
 

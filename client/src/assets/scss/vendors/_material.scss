@@ -18,22 +18,3 @@
   }
 }
 
-.mdc-text-field {
-  &__input {
-    box-sizing: content-box;
-  }
-}
-
-.mdc-fab {
-  position: fixed;
-  z-index: 3;
-  bottom: 2rem;
-  right: 2rem;
-  color: #fff;
-  background-color: $material-color-pink-500;
-}
-
-.mdc-card {
-  margin-bottom: .5rem;
-}
-

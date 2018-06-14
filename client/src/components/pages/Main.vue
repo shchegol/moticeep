@@ -1,55 +1,60 @@
 <template>
-  <div class="animate-page">
+  <mdc-layout-app class="animate-page">
     <v-header></v-header>
 
-    <div class="container-fluid main">
-      <div class="row align-items-center">
-        <div class="col">
-          <h4>Достижения {{ totalPoints }}</h4>
-        </div>
-      </div>
+    <mdc-drawer slot="drawer" :temporary=true toggle-on="toggle-drawer">
+      <mdc-drawer-list>
+        <mdc-drawer-item start-icon="inbox">Поддержать</mdc-drawer-item>
+      </mdc-drawer-list>
+    </mdc-drawer>
 
-      <div class="row align-items-stretch">
-        <div v-for="(card, index) in cards.pay.data" :key="index" class="col col-md-6 col-lg-4 mb-3">
+    <main>
+      <mdc-layout-grid>
+        <mdc-layout-cell span=12>
+          <h2>Достижения {{ totalPoints }}</h2>
+        </mdc-layout-cell>
+
+        <mdc-layout-cell
+          desktop=3 tablet=4
+          v-for="card in cards.pay.data" :key="card.title">
           <pay-card :card="card"></pay-card>
-        </div>
-      </div>
-    </div>
+        </mdc-layout-cell>
+      </mdc-layout-grid>
 
-    <div class="container-fluid main">
-      <div class="row align-items-center">
-        <div class="col">
-          <h4>Мотивация {{ balanceMoti }}</h4>
-        </div>
-      </div>
+      <mdc-layout-grid>
+        <mdc-layout-cell span=12>
+          <h2>Мотивация {{ balanceMoti }}</h2>
+        </mdc-layout-cell>
 
-      <template v-if="cardMotiFavorites.length > 0">
-        <div class="row">
-          <div class="col">
-            <h5>Избранное</h5>
-          </div>
-        </div>
-
-        <div class="row">
-          <div v-for="(card, index) in cardMotiFavorites" :key="index" class="col col-md-6 col-lg-4 mb-3">
+        <template v-if="cardMotiFavorites.length > 0">
+          <mdc-layout-cell desktop=3 tablet=4 v-for="card in cardMotiFavorites" :key="card.title">
             <moti-card :card="card"></moti-card>
-          </div>
-        </div>
-      </template>
-
-      <template v-if="cardMoti.length > 0">
-        <div class="row mt-5">
-          <div v-for="(card, index) in cardMoti" :key="index" class="col col-md-6 col-lg-4 mb-3">
+          </mdc-layout-cell>
+        </template>
+      </mdc-layout-grid>
+      <mdc-layout-grid>
+        <template v-if="cardMoti.length > 0">
+          <mdc-layout-cell desktop=3 tablet=4 v-for="card in cardMoti" :key="card.title">
             <moti-card :card="card"></moti-card>
-          </div>
-        </div>
-      </template>
-    </div>
+          </mdc-layout-cell>
+        </template>
+      </mdc-layout-grid>
+    </main>
 
-    <router-link to="/add-card" tag="button" class="mdc-fab material-icons" aria-label="Favorite">
-      <span class="mdc-fab__icon">add</span>
-    </router-link>
-  </div>
+    <mdc-fab fixed icon="add" @click="modal.open=!modal.open"></mdc-fab>
+
+    <mdc-dialog v-model="modal.open" title="Title" accept="Сохранить" cancel="Отменить">
+      <mdc-layout-grid>
+        <mdc-layout-cell>
+          <mdc-textfield v-model="modal.data.title" label="Заголовок"/>
+        </mdc-layout-cell>
+
+        <mdc-layout-cell>
+          <mdc-textfield v-model="modal.data.points" label="Очки"/>
+        </mdc-layout-cell>
+      </mdc-layout-grid>
+    </mdc-dialog>
+  </mdc-layout-app>
 </template>
 
 <script>
@@ -62,7 +67,7 @@
   const payCardsData = [];
   const motiCardsData = [];
   let payTitiles = ['Почитала', 'Позанималась английским', 'Убралась', 'Выучила стих'];
-  let motiTitiles = ['Lego', 'Кукла', 'Театр', 'Скейтборд'];
+  let motiTitiles = ['Lego', 'Кукла, длинный текст, длинный тексты', 'Театр', 'Скейтборд'];
   let motiImages = [
     'https://le-go.ru/files/products/37085_large.jpg',
     'http://xn--80aqafmcch0bg.xn--p1ai/goods_img/goods1/gr_20938/20938161/b_20938161_0.gif',
@@ -103,6 +108,13 @@
           },
           moti: {
             data: motiCardsData,
+          },
+        },
+        modal: {
+          open: false,
+          data: {
+            title: '',
+            points: '',
           },
         },
       };

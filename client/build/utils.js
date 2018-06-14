@@ -38,7 +38,7 @@ exports.cssLoaders = function (options) {
         loader: loader + '-loader',
         options: Object.assign({}, loaderOptions, {
           sourceMap: options.sourceMap,
-          includePaths: ['./node_modules'] // for @material https://github.com/shchegol/material-components-web
+          includePaths: [path.resolve(__dirname, '../../node_modules')] // for @material https://github.com/shchegol/material-components-web
         })
       })
     }

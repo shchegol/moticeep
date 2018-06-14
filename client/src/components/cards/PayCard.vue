@@ -1,19 +1,23 @@
 <template>
-  <div class="mdc-card mdc-card--outlined card">
-    <div class="card__content">
-      <h4 class="card__title mdc-typography--headline6">{{ title }}</h4>
-      <h5 class="card__subtitle mdc-typography--subtitle2">{{ pointsString }}</h5>
-    </div>
+  <mdc-card :outlined="true">
+    <mdc-card-header :title="title" :subtitle="pointsString"></mdc-card-header>
 
-    <div class="mdc-card__actions">
-      <div class="mdc-card__action-buttons">
-        <button class="mdc-button mdc-card__action mdc-card__action--button">Добавить</button>
-      </div>
-      <div class="mdc-card__action-icons">
-        <button class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon">more_vert</button>
-      </div>
-    </div>
-  </div>
+    <mdc-card-actions>
+      <mdc-card-action-buttons>
+        <mdc-card-action-button>Добавить</mdc-card-action-button>
+      </mdc-card-action-buttons>
+
+      <mdc-card-action-icons>
+        <mdc-menu-anchor>
+          <mdc-card-action-icon raised @click="open=true" icon="more_vert"/>
+          <mdc-menu v-model="open">
+            <mdc-menu-item>Изменить</mdc-menu-item>
+            <mdc-menu-item>Удалить</mdc-menu-item>
+          </mdc-menu>
+        </mdc-menu-anchor>
+      </mdc-card-action-icons>
+    </mdc-card-actions>
+  </mdc-card>
 </template>
 
 <script>
@@ -32,6 +36,7 @@
       return {
         title: this.card.title,
         points: this.card.points,
+        open: false,
       };
     },
 
