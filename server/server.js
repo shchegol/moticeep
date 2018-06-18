@@ -1,46 +1,62 @@
-process.env['NODE_CONFIG_DIR'] = __dirname + '/config/';
+// A "closer to real-life" app example
+// using 3rd party middleware modules
+// P.S. MWs calls be refactored in many files
+
+// long stack trace (+clarify from co) if needed
+if (process.env.TRACE) {
+  require('./libs/trace');
+}
 
 const Koa = require('koa');
-const Router = require('koa-router');
-const favicon = require('koa-favicon');
-const serve = require('koa-static');
-const logger = require('koa-logger');
-const bodyParser = require('koa-bodyparser');
-const mongoose = require('mongoose');
-const config = require('config');
-
 const app = new Koa();
+
+const config = require('config');
+const mongoose = require('./libs/mongoose');
+
+// keys for in-koa KeyGrip cookie signing (used in session, maybe other modules)
+app.keys = [config.secret];
+
+const path = require('path');
+const fs = require('fs');
+const middlewares = fs.readdirSync(path.join(__dirname, 'middlewares')).sort();
+
+middlewares.forEach(function(middleware) {
+  require('./middlewares/' + middleware).init(app);
+});
+
+// ---------------------------------------
+
+// can be split into files too
+const Router = require('koa-router');
+
 const router = new Router();
 
-const Users = require('./models/user');
+router.get('/', require('./routes/frontpage').get);
+router.post('/login', require('./routes/login').post);
+router.post('/logout', require('./routes/logout').post);
+router.post('/register', require('./routes/register').post);
+router.get('/register', require('./routes/register').get);
 
-app.use(favicon('public/static/favicon.ico'));
-app.use(logger());
-app.use(bodyParser({jsonLimit: '56kb'}));
-app.use(serve('public'));
+router.get('/verify-email/:verifyEmailToken', require('./routes/verifyEmail').get);
 
-// errors
-app.use(async (ctx, next) => {
-  try {
-    await next();
-  } catch (e) {
-    if (e.status) {
-      // could use template methods to render error page
-      ctx.body = e.message;
-      ctx.status = e.status;
-    } else {
-      ctx.body = 'Error 500';
-      ctx.status = 500;
-      console.error(e.message, e.stack);
-    }
-  }
-});
+const passport = require('./libs/passport');
 
-router.get('/user', async function(ctx) {
-  let name = ctx.request.query.name || 'World';
-  ctx.body = {message: `Hello ${name}!`};
-});
+// login
+router.get('/login/facebook', passport.authenticate('facebook', config.providers.facebook.passportOptions));
+// connect with existing profile
+router.get('/connect/facebook', passport.authorize('facebook', config.providers.facebook.passportOptions));
 
-app.use(router.routes()).use(router.allowedMethods());
+// http://stage.javascript.ru/auth/callback/facebook?error=access_denied&error_code=200&error_description=Permissions+error&error_reason=user_denied#_=_
+router.get('/oauth/facebook', passport.authenticate('facebook', {
+  successRedirect: '/',
+  failureRedirect: '/',
+  failureFlash: true // req.flash
+}));
 
-app.listen(config.get('port'));
+app.use(router.routes());
+
+module.exports = app;
+
+if (!module.parent) {
+  app.listen(3000);
+}
