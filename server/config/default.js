@@ -44,7 +44,7 @@ module.exports = {
     },
   },
   mongoose: {
-    uri: 'mongodb://localhost/app',
+    uri: 'mongodb://localhost/motikeep',
     options: {},
   },
   crypto: {

@@ -1,7 +1,4 @@
-
-
 exports.init = app => app.use(async function(ctx, next) {
-
   try {
     await next();
   } catch (e) {
@@ -10,10 +7,9 @@ exports.init = app => app.use(async function(ctx, next) {
       ctx.body = e.message;
       ctx.status = e.status;
     } else {
-      ctx.body = "Error 500";
+      ctx.body = 'Error 500';
       ctx.status = 500;
       console.error(e.message, e.stack);
     }
-
   }
 });
