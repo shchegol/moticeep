@@ -1,3 +1,5 @@
+// process.env["NODE_CONFIG_DIR"] = __dirname + "/server/config/";
+
 const mongoose = require('mongoose');
 const config = require('config');
 

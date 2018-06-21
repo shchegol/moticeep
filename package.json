@@ -13,7 +13,8 @@
     "lint": "eslint --ext .js,.vue src client/test/unit client/test/e2e/specs",
     "build": "node client/build/build.js",
     "server": "nodemon server/server.js",
-    "db": "C:/mongodb/bin/mongod.exe --dbpath E:/motikeep/bd"
+    "db": "C:/mongodb/bin/mongod.exe --dbpath E:/motikeep/db",
+    "db2": "C:/mongodb/bin/mongod.exe --dbpath D:/motikeep/db"
   },
   "dependencies": {
     "axios": "^0.18.0",
