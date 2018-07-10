@@ -1,32 +1,31 @@
 const User = require('../models/user');
-const user = new User()
 
-export function register(next) {
-  const ctx = this;
-  console.log(ctx)
+module.exports = {
+  async register(ctx) {
+    console.log('register');
 
-  // yield user.read({userName: opts.userName}).then(function (doc) {
-  //   if (doc.length > 0) {
-  //     ctx.body = {
-  //       msg: 'error',
-  //       state: false
-  //     }
-  //   } else {
-  //     return user.save(opts)
-  //   }
-  // }).then(function (doc) {
-  //   if (doc) {
-  //     ctx.body = {
-  //       msg: 'success',
-  //       data: {
-  //         _id : user._id,
-  //         userName : user.userName,
-  //         userNickName : user.userNickName,
-  //         userImg : user.userImg,
-  //       },
-  //       state: true,
-  //       token : token
-  //     }
-  //   }
-  // })
-}
+    try {
+      await User.create(ctx.request.body);
+      ctx.body = 'success';
+    } catch (err) {
+      ctx.body = `error: ${err}`;
+    }
+  },
+
+  async login(ctx) {
+    console.log('login');
+
+    try {
+      let user = await User.read({name: ctx.request.body.name});
+
+      if (user.password === ctx.request.body.password) {
+        ctx.body = user._id;
+      } else {
+        ctx.body = 'Пароль не подходит';
+      }
+
+    } catch (err) {
+      ctx.body = `error: ${err}`;
+    }
+  },
+};

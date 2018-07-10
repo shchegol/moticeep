@@ -1,39 +1,26 @@
-'use strict'
-
 const mongoose = require('mongoose');
+
 const userSchema = new mongoose.Schema({
   name: String,
   password: String,
 });
-const UserModel = mongoose.model('User', userSchema);
 
-exports.create = function(opts) {
-  console.log('opts', opts)
-    let User = new UserModel(opts);
-    return User.save(opts);
+const User = mongoose.model('User', userSchema);
+
+module.exports = {
+  async create(opts) {
+    return await User.create(opts);
+  },
+
+  async read(email) {
+    return await User.findOne(email).exec();
+  },
+
+  async update(opts) {
+    return await User.updateOne(opts);
+  },
+
+  async delete(opts) {
+    return await User.deleteOne(opts);
+  }
 };
-
-// class User {
-//   constructor() {
-//     this.model = UserModel;
-//   }
-//
-//   create(opts) {
-//     this.entity = new UserModel(opts);
-//     return this.entity.save(opts);
-//   }
-//
-//   read(opts) {
-//     return this.model.find(opts).exec();
-//   }
-//
-//   update(opts) {
-//     return this.model.updateOne(opts);
-//   }
-//
-//   delete(opts) {
-//     return this.model.deleteOne(opts);
-//   }
-// }
-//
-// module.exports = User;
