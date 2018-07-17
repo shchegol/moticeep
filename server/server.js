@@ -18,15 +18,6 @@ middlewares.forEach(function(middleware) {
   require('./middlewares/' + middleware).init(app);
 });
 
-// router.post('/register', async (ctx) => {
-//   let operation = await User.create(ctx.request.body);
-//   ctx.response.type = 'application/json';
-//   ctx.body = {
-//     success: true,
-//     operation
-//   };
-// });
-
 router
   .post('/register', user.register)
   .post('/login', user.login);
