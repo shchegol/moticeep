@@ -1,12 +1,18 @@
 const User = require('../models/user');
 
 module.exports = {
+  /**
+   * register new user
+   * @param {string} ctx.request.body.displayName - user display name.
+   * @param {email} ctx.request.body.email - user email.
+   * @param {string} ctx.request.body.password - user password.
+   */
   async register(ctx) {
     let ctxBody = ctx.request.body;
 
-    // check name field for emptiness
-    if (ctxBody.name === undefined) {
-      ctx.body = 'error: name field is empty';
+    // check email field for emptiness
+    if (ctxBody.email === undefined) {
+      ctx.body = 'error: email field is empty';
       return;
     }
 
@@ -16,29 +22,44 @@ module.exports = {
       return;
     }
 
-    let user = await User.read({name: ctxBody.name});
+    let user = await User.read({email: ctxBody.email});
 
-    // check name existence
+    // check user existence
     if (user !== null) {
-      ctx.body = 'error: user with that name exists';
+      ctx.body = 'error: user already exists';
       return;
     }
 
+    // if display name is empty
+    if (!ctxBody.displayName) {
+      ctxBody.displayName = ctxBody.email.split('@')[0];
+    }
+
     // create user
-    await User.create(ctxBody);
-    ctx.body = 'success';
+    await User.create(ctxBody)
+      .then(() => {
+        ctx.body = 'ok';
+      })
+      .catch(err => {
+        ctx.body = err.message;
+      });
   },
 
+  /**
+   * register new user
+   * @param {email} ctx.request.body.email - user email.
+   * @param {string} ctx.request.body.password - user password.
+   */
   async login(ctx) {
     let ctxBody = ctx.request.body;
 
     // check name and password field for emptiness
-    if (ctxBody.name === undefined || ctxBody.password === undefined) {
-      ctx.body = 'error: name or password field is empty';
+    if (ctxBody.email === undefined || ctxBody.password === undefined) {
+      ctx.body = 'error: displayName or password field is empty';
       return;
     }
 
-    let user = await User.read({name: ctxBody.name});
+    let user = await User.read({email: ctxBody.email});
 
     // check name existence
     if (user === null) {
