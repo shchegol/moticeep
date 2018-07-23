@@ -7,9 +7,13 @@
       </mdc-toolbar-section>
 
       <mdc-toolbar-section align-end>
-        <router-link to="/user" class="avatar-btn">
-          <span class="avatar-btn__img" :style="{'background-image': `url(${avatarImage})`}"></span>
-        </router-link>
+        <!--<router-link to="/user" class="avatar-btn">-->
+          <!--<span class="avatar-btn__img" :style="{'background-image': `url(${avatarImage})`}"></span>-->
+        <!--</router-link>-->
+
+        <mdc-button to="/user" class="avatar-btn">
+          Зарегестрироваться
+        </mdc-button>
       </mdc-toolbar-section>
     </mdc-toolbar-row>
   </mdc-toolbar>
