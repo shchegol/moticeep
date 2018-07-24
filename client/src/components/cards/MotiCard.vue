@@ -5,13 +5,13 @@
       <mdc-card-media :src="image">
       </mdc-card-media>
     </mdc-card-primary-action>
-    <mdc-card-header :title="title" :subtitle="pointsString" >
+    <mdc-card-header :title="title" :subtitle="pointsString">
     </mdc-card-header>
     <mdc-card-actions>
       <mdc-card-action-icons>
-        <mdc-card-action-icon @click="favoriteToggle" :icon="favorite ? 'favorite' : 'favorite_border'" />
+        <mdc-card-action-icon @click="favoriteToggle" :icon="favorite ? 'favorite' : 'favorite_border'"/>
         <mdc-menu-anchor>
-          <mdc-card-action-icon raised @click="open=true" icon="more_vert" />
+          <mdc-card-action-icon raised @click="open=true" icon="more_vert"/>
           <mdc-menu v-model="open">
             <mdc-menu-item>Изменить</mdc-menu-item>
             <mdc-menu-item>Удалить</mdc-menu-item>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import {declOfNum} from '@/assets/js/utils';
 
   export default {
@@ -47,6 +48,14 @@
     methods: {
       favoriteToggle() {
         this.favorite = !this.favorite;
+
+        axios.get('/test')
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       },
     },
 
