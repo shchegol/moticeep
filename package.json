@@ -13,6 +13,7 @@
     "lint": "eslint --ext .js,.vue src client/test/unit client/test/e2e/specs",
     "build": "node client/build/build.js",
     "server": "nodemon server/server.js",
+    "server-dev": "cross-env NODE_ENV=development nodemon server/server.js",
     "db": "C:/mongodb/bin/mongod.exe --dbpath E:/motikeep/db",
     "db2": "C:/mongodb/bin/mongod.exe --dbpath D:/motikeep/db"
   },
@@ -100,6 +101,7 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.31",
     "karma-webpack": "^2.0.2",
+    "koa-webpack-dev-middleware": "^2.0.2",
     "koa-webpack-hot-middleware": "^1.0.3",
     "mocha": "^3.2.0",
     "nightwatch": "^0.9.12",
@@ -126,7 +128,6 @@
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
-    "webpack-dev-middleware": "^2.0.6",
     "webpack-dev-server": "^2.9.1",
     "webpack-merge": "^4.1.0"
   },
