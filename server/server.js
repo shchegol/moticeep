@@ -23,6 +23,7 @@ if (process.env.NODE_ENV === 'development') {
       noInfo: true,
     },
   }));
+
   app.use(convert(require('koa-webpack-hot-middleware')(compiler)));
   router.get('/', async ctx => {
     ctx.type = 'html';
