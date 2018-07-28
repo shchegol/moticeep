@@ -1,30 +1,13 @@
-# Motikeep
+# Hello everyone!
 
-> Motikeep is an app for people motivation.
+> Motikeep is a small isomorphic app for people motivation. 
+#### Sorry but the app is under constraction now.
 
-## Build Setup
+## Coming soon...
 
-``` bash
-# install dependencies
-npm i
+> or send me an email to zelenzoom@gmail.com. 
+You can help to finish app and get some experience 
+with development koa-mongo-vue isomorphic application.
 
-# serve with hot reload at localhost:8080
-npm start
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run e2e tests
-npm run e2e
-
-# run all tests
-npm test
-```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
