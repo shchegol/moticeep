@@ -7,4 +7,4 @@
 
 > or send me an email to zelenzoom@gmail.com. 
 You can help to finish app and get some experience 
-with development koa-mongo-vue isomorphic application.
+with development koa-mongo-nuxt application.
