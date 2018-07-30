@@ -1,0 +1,21 @@
+.avatar-btn {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  background-color: $mdc-theme-primary;
+
+  &:focus {
+    box-shadow: 0 0 0 4px black(.1);
+  }
+
+  &__img {
+    height: 32px;
+    width: 32px;
+    background: center 4px no-repeat;
+    background-size: cover;
+  }
+}

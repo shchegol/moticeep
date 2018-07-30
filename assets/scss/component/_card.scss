@@ -1,0 +1,10 @@
+.mdc-card {
+  justify-content: space-between;
+  height: 100%;
+  margin-bottom: 0;
+
+  &__title {
+    margin: 0;
+    word-wrap: break-word;
+  }
+}

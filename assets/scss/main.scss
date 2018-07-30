@@ -1,0 +1,20 @@
+// material global
+//@import "~@material/theme/color-palette";
+
+// custom global
+@import "common/variables";
+@import "common/utils";
+
+// material components
+//@import "vue-mdc-adapter/dist/vue-mdc-adapter.min.css";
+//@import "~vue-mdc-adapter/dist/styles";
+
+// custom
+@import "common/base";
+@import "common/animation";
+@import "layout/header";
+@import "component/button";
+@import "component/menu";
+@import "component/card";
+@import "vendors/material-icons";
+@import "vendors/material";
