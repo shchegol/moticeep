@@ -3,7 +3,6 @@ node_modules
 build
 db
 npm-debug.log*
-package-lock.json
 
 # Editor directories and files
 .nuxt
