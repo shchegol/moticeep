@@ -1,42 +1,50 @@
 module.exports = {
-  /*
-  ** Headers of the page
-  */
   head: {
-    title: 'motikeep-nuxt',
+    title: 'motikeep',
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Nuxt.js project' }
+      {charset: 'utf-8'},
+      {
+        name: 'viewport',
+        content: 'width=device-width, initial-scale=1',
+      },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Nuxt.js project',
+      },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href: '/favicon.ico',
+      },
+    ],
   },
-  /*
-  ** Customize the progress bar color
-  */
-  loading: { color: '#3B8070' },
+
+  loading: {color: '#3B8070'},
+
   css: [
-    '@/assets/scss/main.scss'
+    '@/assets/scss/main.scss',
   ],
-  /*
-  ** Build configuration
-  */
+
   build: {
-    /*
-    ** Run ESLint on save
-    */
-    extend (config, { isDev, isClient }) {
+    vendor: [
+      'lodash',
+      'axios',
+      'moment',
+    ],
+
+    extend(config, {isDev, isClient}) {
       if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
+          exclude: /(node_modules)/,
+        });
       }
-    }
-  }
-}
+    },
+  },
+};
 

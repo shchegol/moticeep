@@ -1,21 +1,37 @@
 {
-  "name": "motikeep-nuxt",
+  "name": "motikeep",
   "version": "1.0.0",
-  "description": "Nuxt.js project",
+  "description": "Small App for count my daughter money",
   "author": "Alexander Shchegol <zelenzoom@gmail.com>",
   "private": true,
   "scripts": {
-    "start": "npm run dev",
+    "start": "backpack dev",
     "dev": "backpack dev",
     "prod": "cross-env NODE_ENV=production node build/main.js",
     "build": "nuxt build && backpack build",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "db": "C:/mongodb/bin/mongod.exe --dbpath E:/motikeep/db",
+    "db2": "C:/mongodb/bin/mongod.exe --dbpath D:/motikeep/db"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "bootstrap": "^4.0.0",
+    "config": "^1.30.0",
     "cross-env": "^5.2.0",
     "koa": "^2.5.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-convert": "^1.2.0",
+    "koa-favicon": "^2.0.1",
+    "koa-logger": "^3.2.0",
+    "koa-passport": "^4.1.0",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.8.1",
+    "koa-session-mongoose": "^2.0.5",
+    "koa-static": "^4.0.3",
+    "moment": "^2.22.1",
+    "mongoose": "^5.1.5",
     "nuxt": "^1.0.0",
     "source-map-support": "^0.5.6"
   },
@@ -28,6 +44,7 @@
     "eslint-plugin-vue": "^4.0.0",
     "node": "^10.7.0",
     "node-sass": "^4.9.2",
-    "sass-loader": "^7.0.3"
+    "sass-loader": "^7.0.3",
+    "socket.io": "^2.1.1"
   }
 }
