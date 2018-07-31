@@ -1,40 +1,33 @@
 import Koa             from 'koa';
-import Router          from 'koa-router';
 import config          from 'config';
 import {Nuxt, Builder} from 'nuxt';
+import nuxtConfig      from '../nuxt.config.js';
 import middlewares     from './middlewares';
-import user            from './controllers/user';
+import apiRouter       from './routes/api';
+
 import './utils/mongoose';
 
 async function start() {
-  let app    = new Koa(),
-      router = new Router(),
-      host   = process.env.HOST || config.server.host,
-      port   = process.env.PORT || config.server.port;
+  const host = process.env.HOST || config.server.host,
+        port = process.env.PORT || config.server.port,
+        app  = new Koa();
 
-  middlewares(app);
+  // Nuxt.js
+  nuxtConfig.dev = !(app.env === 'production');
+  const nuxt = new Nuxt(nuxtConfig);
 
-  // Import and Set Nuxt.js options
-  let config = require('../nuxt.config.js');
-  config.dev = !(app.env === 'production');
-
-  // Instantiate nuxt.js
-  const nuxt = new Nuxt(config);
-
-  // Build in development
-  if (config.dev) {
+  if (nuxtConfig.dev) {
     const builder = new Builder(nuxt);
     await builder.build();
   }
 
-  router
-    .post('/api/register', user.register)
-    .post('/api/login', user.login)
-    .get('/api/test', async ctx => {
-      ctx.body = 'test success';
-    });
-  app.use(router.routes());
+  // Middleware
+  middlewares(app);
 
+  // routes
+  apiRouter(app);
+
+  // ssr
   app.use(async (ctx, next) => {
     await next();
     ctx.status = 200; // koa defaults to 404 when it sees that status is unset
