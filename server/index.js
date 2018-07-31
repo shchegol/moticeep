@@ -4,8 +4,7 @@ import {Nuxt, Builder} from 'nuxt';
 import nuxtConfig      from '../nuxt.config.js';
 import middlewares     from './middlewares';
 import apiRouter       from './routes/api';
-
-import './utils/mongoose';
+import mongoose        from './utils/mongoose';
 
 async function start() {
   const host = process.env.HOST || config.server.host,
@@ -23,6 +22,9 @@ async function start() {
 
   // Middleware
   middlewares(app);
+
+  // db
+  mongoose();
 
   // routes
   apiRouter(app);
