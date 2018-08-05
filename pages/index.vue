@@ -6,51 +6,8 @@
           <h1>MOTIKEEP</h1>
         </div>
 
-        <div class="col">
-          <div class="btn-group">
-            <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Зарегестрироваться
-            </button>
-
-            <section class="dropdown-menu dropdown-menu-right p-3 minw_250">
-              <div class="form-group">
-                <label for="registerEmail">Email</label>
-                <input type="email" class="form-control" id="registerEmail" placeholder="email@example.com">
-              </div>
-
-              <div class="form-group">
-                <label for="registerPassword">Пароль</label>
-                <input type="password" class="form-control" id="registerPassword" placeholder="пароль">
-              </div>
-
-              <div class="form-group">
-                <label for="registerPasswordConfirm">Ещё раз пароль</label>
-                <input type="password" class="form-control" id="registerPasswordConfirm" placeholder="тот же пароль">
-              </div>
-
-              <button type="button" class="btn btn-primary btn-block">Зарегестироваться</button>
-            </section>
-          </div>
-
-          <div class="btn-group">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Войти
-            </button>
-
-            <section class="dropdown-menu dropdown-menu-right p-3 minw_250">
-              <div class="form-group">
-                <label for="loginEmail">Email</label>
-                <input type="email" class="form-control" id="loginEmail" placeholder="email@example.com">
-              </div>
-
-              <div class="form-group">
-                <label for="loginPassword">Пароль</label>
-                <input type="password" class="form-control" id="loginPassword" placeholder="пароль">
-              </div>
-
-              <button type="button" class="btn btn-primary btn-block">Войти</button>
-            </section>
-          </div>
+        <div class="col-auto">
+          <b-btn variant="primary" v-b-modal.loginModal>Войти</b-btn>
         </div>
       </div>
     </header>
@@ -60,10 +17,36 @@
         private: {{ isLogin }}
       </div>
     </section>
+
+    <b-modal id="loginModal" hide-header hide-footer centered>
+      <div class="row">
+        <div class="col">
+          <b-form-group label="Email" label-for="inputEmail">
+            <b-form-input id="inputEmail" v-model.trim="login.email" placeholder="your@email.ru"></b-form-input>
+          </b-form-group>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <b-form-group label="Пароль" label-for="inputPassword">
+            <b-form-input type="password" id="inputPassword" v-model.trim="login.password" placeholder="Введите пароль"></b-form-input>
+          </b-form-group>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col">
+          <b-btn @click="loginStart" variant="primary">Войти</b-btn>
+        </div>
+      </div>
+
+    </b-modal>
   </div>
 </template>
 
 <script>
+  import axios from 'axios';
   import Modal from '~/components/Modal.vue';
 
   export default {
@@ -74,30 +57,39 @@
     data() {
       return {
         isLogin: false,
-        showModal: false,
+
+        login: {
+          email: '',
+          password: '',
+        },
+
+        register: {
+          passwordConfirm: '',
+        }
       };
     },
 
     methods: {
-      startRegistration() {
-
-      },
-
-      login() {
+      loginStart() {
         axios
-          .post('/login')
+          .post('/api/login', this.login)
           .then(res => {
             console.log(res.data);
-            this.isLogin = true;
+            if (res.data.error) {
+
+            } else {
+              this.isLogin = true;
+            }
+
           })
           .catch(err => {
             console.log(err);
           });
       },
 
-      register() {
+      registerStart() {
         axios
-          .post('/register')
+          .post('/api/register', this.register)
           .then(res => {
             console.log(res.data);
             this.isLogin = true;

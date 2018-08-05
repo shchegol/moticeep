@@ -1,4 +1,4 @@
-import User from '../models/user'
+import User from '../models/user';
 
 export default {
   /**
@@ -9,26 +9,41 @@ export default {
    */
   async register(ctx) {
     let ctxBody = ctx.request.body;
-    console.log('registration', ctxBody)
+    console.log('registration', ctxBody);
 
     // check email field for emptiness
     if (ctxBody.email === undefined) {
-      ctx.body = 'error: email field is empty';
+      ctx.body = {
+        error: {
+          status: 400,
+          message: 'Поле email пусто',
+        },
+      };
       return;
     }
 
     // check password field for emptiness
     if (ctxBody.password === undefined) {
-      ctx.body = 'error: password field is empty';
+      ctx.body = {
+        error: {
+          status: 400,
+          message: 'Поле email не может быть пустым',
+        },
+      };
       return;
     }
 
     let user = await User.read({email: ctxBody.email});
-    console.log(user)
+    console.log(user);
 
     // check user existence
     if (user !== null) {
-      ctx.body = 'error: user already exists';
+      ctx.body = {
+        error: {
+          status: 400,
+          message: 'Пользователь с таким email адресом уже существует',
+        },
+      };
       return;
     }
 
@@ -40,7 +55,7 @@ export default {
     // create user
     await User.create(ctxBody)
       .then(() => {
-        console.log('user create')
+        console.log('user create');
         ctx.body = 'ok';
       })
       .catch(err => {
@@ -57,8 +72,23 @@ export default {
     let ctxBody = ctx.request.body;
 
     // check name and password field for emptiness
-    if (ctxBody.email === undefined || ctxBody.password === undefined) {
-      ctx.body = 'error: displayName or password field is empty';
+    if (ctxBody.email === undefined) {
+      ctx.body = {
+        error: {
+          status: 400,
+          message: 'Поле email не может быть пустым',
+        },
+      };
+      return;
+    }
+
+    if (ctxBody.password === undefined) {
+      ctx.body = {
+        error: {
+          status: 400,
+          message: 'Поле пароль не может быть пустым',
+        },
+      };
       return;
     }
 
@@ -66,13 +96,23 @@ export default {
 
     // check name existence
     if (user === null) {
-      ctx.body = 'error: user with that name not exists';
+      ctx.body = {
+        error: {
+          status: 400,
+          message: 'Пользователь с таким email не существует',
+        },
+      };
       return;
     }
 
     // check password correct
     if (user.password !== ctxBody.password) {
-      ctx.body = 'error: password is incorrect';
+      ctx.body = {
+        error: {
+          status: 400,
+          message: 'Неверный пароль',
+        },
+      };
       return;
     }
 

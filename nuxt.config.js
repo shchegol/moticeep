@@ -28,6 +28,10 @@ module.exports = {
     '@/assets/scss/main.scss',
   ],
 
+  modules: [
+    'bootstrap-vue/nuxt'
+  ],
+
   build: {
     vendor: [
       'lodash',
