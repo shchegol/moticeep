@@ -33,6 +33,7 @@ module.exports = {
       'lodash',
       'axios',
       'moment',
+      'bootstrap.native/dist/bootstrap-native-v4.min',
     ],
 
     extend(config, {isDev, isClient}) {
