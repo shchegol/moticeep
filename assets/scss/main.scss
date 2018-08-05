@@ -1,13 +1,8 @@
-// material global
-//@import "~@material/theme/color-palette";
+@import "~bootstrap/scss/bootstrap.scss";
 
 // custom global
 @import "common/variables";
 @import "common/utils";
-
-// material components
-//@import "vue-mdc-adapter/dist/vue-mdc-adapter.min.css";
-//@import "~vue-mdc-adapter/dist/styles";
 
 // custom
 @import "common/base";
