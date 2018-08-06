@@ -1,6 +1,3 @@
-const defer = require('config/defer').deferConfig;
-const path = require('path');
-
 module.exports = {
   // secret data can be moved to env variables
   // or a separate config
@@ -34,8 +31,8 @@ module.exports = {
       // transactional emails, register/forgot pass etc
       default: {
         fromEmail: 'course.test.mailer@gmail.com',
-        fromName: 'JavaScript.ru',
-        signature: '<em>С уважением,<br>Javascript.ru</em>',
+        fromName: 'Motikeep',
+        signature: '<em>С уважением,<br>Motikeep</em>',
       },
       // newsletters
       informer: {
