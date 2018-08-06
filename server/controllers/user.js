@@ -55,8 +55,9 @@ export default {
     // create user
     await User.create(ctxBody)
       .then(() => {
-        console.log('user create');
-        ctx.body = 'ok';
+        ctx.body = {
+          name: ctxBody.displayName
+        };
       })
       .catch(err => {
         ctx.body = err.message;
@@ -116,6 +117,8 @@ export default {
       return;
     }
 
-    ctx.body = user._id;
+    ctx.body = {
+      name: user.displayName
+    };
   },
 };

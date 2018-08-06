@@ -7,18 +7,20 @@
         </div>
 
         <div class="col-auto">
-          <b-btn variant="primary" v-b-modal.loginModal>Войти</b-btn>
+          <b-btn v-if="user.name.length === 0" @click="modalLoginShow" variant="primary">Войти</b-btn>
+
+          <span v-else>Привет {{ user.name }}</span>
         </div>
       </div>
     </header>
 
     <section class="row mt-4">
       <div class="col">
-        private: {{ isPrivate }}
+        Привет {{ user.name }}
       </div>
     </section>
 
-    <b-modal id="loginModal" hide-header hide-footer>
+    <b-modal ref="loginModal" hide-header hide-footer>
       <login-form @auth="auth"></login-form>
     </b-modal>
   </div>
@@ -34,13 +36,24 @@
 
     data() {
       return {
-        isPrivate: false,
+        user: {
+          name: ''
+        }
       };
     },
 
     methods: {
-      auth(isAuth) {
-        this.isPrivate = isAuth
+      auth(user) {
+        this.user.name = user.name;
+        this.modalLoginHide();
+      },
+
+      modalLoginShow() {
+        this.$refs.loginModal.show();
+      },
+
+      modalLoginHide() {
+        this.$refs.loginModal.hide();
       }
     },
   };

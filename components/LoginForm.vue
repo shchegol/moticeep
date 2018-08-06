@@ -160,7 +160,7 @@
               this.serverError.state = true;
               this.serverError.message = res.data.error.message;
             } else {
-              this.$emit('auth', true);
+              this.$emit('auth', res.data);
             }
 
           })
@@ -191,7 +191,7 @@
               this.serverError.state = true;
               this.serverError.message = res.data.error.message;
             } else {
-              this.$emit('auth', true);
+              this.$emit('auth', res.data);
             }
           })
           .catch(err => {
