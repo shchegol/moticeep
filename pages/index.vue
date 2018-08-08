@@ -17,6 +17,10 @@
     <section class="row mt-4">
       <div class="col">
         Привет {{ user.name }}
+
+        <b-btn @click="increment">
+          {{ counter }}
+        </b-btn>
       </div>
     </section>
 
@@ -27,22 +31,37 @@
 </template>
 
 <script>
-  import LoginForm from '~/components/LoginForm.vue';
+  import {mapState} from 'vuex';
+  import LoginForm  from '~/components/LoginForm.vue';
 
   export default {
     components: {
       LoginForm,
     },
 
+    // middleware: 'notAuthenticated',
+
     data() {
       return {
         user: {
-          name: ''
-        }
+          name: '',
+        },
       };
     },
 
+    // fetch({store}) {
+    //   store.commit('setCounter');
+    // },
+
+    computed: mapState([
+      'counter',
+    ]),
+
     methods: {
+      increment() {
+        this.$store.commit('increment');
+      },
+
       auth(user) {
         this.user.name = user.name;
         this.modalLoginHide();
@@ -54,7 +73,7 @@
 
       modalLoginHide() {
         this.$refs.loginModal.hide();
-      }
+      },
     },
   };
 </script>
