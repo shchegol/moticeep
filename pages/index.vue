@@ -39,8 +39,6 @@
       LoginForm,
     },
 
-    // middleware: 'notAuthenticated',
-
     data() {
       return {
         user: {
@@ -48,10 +46,6 @@
         },
       };
     },
-
-    // fetch({store}) {
-    //   store.commit('setCounter');
-    // },
 
     computed: mapState([
       'counter',

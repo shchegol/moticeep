@@ -1,12 +1,8 @@
-const mongoose = require('mongoose');
+import config   from 'config';
+import mongoose from 'mongoose';
+import crypto   from 'crypto';
 
 const userSchema = new mongoose.Schema({
-  password: String,
-
-  displayName: {
-    type: String,
-    required: 'Имя пользователя отсутствует.',
-  },
   email: {
     type: String,
     unique: 'Такой email уже есть, если это вы, то войдите.',
@@ -14,38 +10,74 @@ const userSchema = new mongoose.Schema({
     validate: [
       {
         validator: function checkEmail(value) {
-          return this.deleted ? true : /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(value);
+          return this.deleted ? true : /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(
+            value);
         },
         msg: 'Укажите, пожалуйста, корректный email.',
       },
     ],
   },
-  deleted: Boolean,
+
+  displayName: {
+    type: String,
+    required: 'Имя пользователя отсутствует.',
+  },
+
   passwordHash: {
     type: String,
+    required: true,
   },
+
   salt: {
     type: String,
+    required: true,
   },
+
+  deleted: Boolean,
 });
 
-const User = mongoose.model('User', userSchema);
+userSchema
+  .virtual('password')
+  .set(function(password) {
+    if (password) {
+      if (password.length < 4) {
+        this.invalidate('password', 'Пароль должен быть минимум 4 символа.');
+      }
 
-export default {
-  async create(opts) {
-    return await User.create(opts);
-  },
+      this.salt = crypto.randomBytes(config.crypto.hash.length)
+        .toString('base64');
 
-  async read(email) {
-    console.log(email)
-    return await User.findOne(email).exec();
-  },
+      this.passwordHash = crypto.pbkdf2Sync(
+        password,
+        this.salt,
+        config.crypto.hash.iterations,
+        config.crypto.hash.length,
+        'sha512',
+      ).toString('base64');
+    } else {
+      this.salt = undefined;
+      this.passwordHash = undefined;
+    }
+  });
 
-  async update(opts) {
-    return await User.updateOne(opts);
-  },
+userSchema.methods.checkPassword = function(password) {
+  if (!password) return false;
+  if (!this.passwordHash) return false;
 
-  async delete(opts) {
-    return await User.deleteOne(opts);
-  },
+  return crypto.pbkdf2Sync(
+    password,
+    this.salt,
+    config.crypto.hash.iterations,
+    config.crypto.hash.length,
+    'sha512',
+  ).toString('base64') === this.passwordHash;
 };
+
+userSchema.methods.getPublicFields = function() {
+  return {
+    displayName: this.displayName,
+    email: this.email,
+  };
+};
+
+export default mongoose.model('User', userSchema);

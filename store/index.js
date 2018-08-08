@@ -11,7 +11,6 @@ const createStore = () => {
 
     mutations: {
       setCounter(state, data) {
-        console.log(state, data)
         state.counter = data
       },
 
