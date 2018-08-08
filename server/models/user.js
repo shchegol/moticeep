@@ -1,14 +1,8 @@
-import config from 'config';
+import config   from 'config';
 import mongoose from 'mongoose';
+import crypto   from 'crypto';
 
 const userSchema = new mongoose.Schema({
-  password: String,
-
-  displayName: {
-    type: String,
-    required: 'Имя пользователя отсутствует.',
-  },
-
   email: {
     type: String,
     unique: 'Такой email уже есть, если это вы, то войдите.',
@@ -24,27 +18,32 @@ const userSchema = new mongoose.Schema({
     ],
   },
 
-  deleted: Boolean,
+  displayName: {
+    type: String,
+    required: 'Имя пользователя отсутствует.',
+  },
 
   passwordHash: {
     type: String,
+    required: true,
   },
 
   salt: {
     type: String,
+    required: true,
   },
+
+  deleted: Boolean,
 });
 
 userSchema
   .virtual('password')
   .set(function(password) {
-    if (password !== undefined) {
+    if (password) {
       if (password.length < 4) {
         this.invalidate('password', 'Пароль должен быть минимум 4 символа.');
       }
-    }
 
-    if (password) {
       this.salt = crypto.randomBytes(config.crypto.hash.length)
         .toString('base64');
 
@@ -53,22 +52,13 @@ userSchema
         this.salt,
         config.crypto.hash.iterations,
         config.crypto.hash.length,
-        'sha512' // sha512
+        'sha512',
       ).toString('base64');
     } else {
-      // remove password (unable to login w/ password any more, but can use
-      // providers)
       this.salt = undefined;
       this.passwordHash = undefined;
     }
   });
-
-userSchema.methods.getPublicFields = function() {
-  return {
-    displayName: this.displayName,
-    email: this.email
-  }
-};
 
 userSchema.methods.checkPassword = function(password) {
   if (!password) return false;
@@ -81,6 +71,13 @@ userSchema.methods.checkPassword = function(password) {
     config.crypto.hash.length,
     'sha512',
   ).toString('base64') === this.passwordHash;
+};
+
+userSchema.methods.getPublicFields = function() {
+  return {
+    displayName: this.displayName,
+    email: this.email,
+  };
 };
 
 export default mongoose.model('User', userSchema);

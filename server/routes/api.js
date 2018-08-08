@@ -1,7 +1,7 @@
 'use strict';
 
 import Router from 'koa-router';
-import user   from '../controllers/user';
+import {getUser, login, logout, register}   from '../controllers/user';
 
 export default (app) => {
   let router = new Router({
@@ -9,8 +9,9 @@ export default (app) => {
   });
 
   router
-    .post('/register', user.register)
-    .post('/login', user.login)
+    .post('/register', register())
+    .post('/login', login())
+    .post('/logout', logout())
     .get('/test', async ctx => {
       ctx.body = 'test success';
     });
