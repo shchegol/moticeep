@@ -7,9 +7,9 @@
         </div>
 
         <div class="col-auto">
-          <b-btn v-if="user.name.length === 0" @click="modalLoginShow" variant="primary">Войти</b-btn>
+          <b-btn @click="modalLoginShow" variant="primary">Войти</b-btn>
 
-          <span v-else>Привет {{ user.name }}</span>
+          <!--<span v-else>Привет {{ user.name }}</span>-->
         </div>
       </div>
     </header>
@@ -17,6 +17,10 @@
     <section class="row mt-4">
       <div class="col">
         Привет {{ user.name }}
+
+        <b-btn @click="increment">
+          {{ counter }}
+        </b-btn>
       </div>
     </section>
 
@@ -27,7 +31,8 @@
 </template>
 
 <script>
-  import LoginForm from '~/components/LoginForm.vue';
+  import {mapState} from 'vuex';
+  import LoginForm  from '~/components/LoginForm.vue';
 
   export default {
     components: {
@@ -37,12 +42,20 @@
     data() {
       return {
         user: {
-          name: ''
-        }
+          name: '',
+        },
       };
     },
 
+    computed: mapState([
+      'counter',
+    ]),
+
     methods: {
+      increment() {
+        this.$store.commit('increment');
+      },
+
       auth(user) {
         this.user.name = user.name;
         this.modalLoginHide();
@@ -54,7 +67,7 @@
 
       modalLoginHide() {
         this.$refs.loginModal.hide();
-      }
+      },
     },
   };
 </script>

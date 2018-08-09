@@ -1,14 +1,19 @@
-import favicon from 'koa-favicon';
-import serve from 'koa-static';
-import logger from 'koa-logger';
-import bodyParser from 'koa-bodyparser';
+import favicon       from 'koa-favicon';
+import serve         from 'koa-static';
+import logger        from 'koa-logger';
+import bodyParser    from 'koa-bodyparser';
+import session       from 'koa-session';
+import mongooseStore from 'koa-session-mongoose';
+// import passport      from 'koa-passport';
+import mongoose      from '../utils/mongoose';
+// import {session as passportSession} from 'koa-passport';
+import passport from '../utils/passport';
 
 export default app => {
   app
     .use(favicon())
-    .use(serve('.'))
+    .use(serve('../static'))
     .use(logger())
-    .use(bodyParser())
     .use(async function(ctx, next) {
       try {
         await next();
@@ -24,4 +29,18 @@ export default app => {
         }
       }
     })
+    // .use(session({ store: new MongooseStore() }, app))
+    .use(session({
+      key: 'sid',
+      rolling: true,
+
+      store: mongooseStore.create({
+        name: 'Session',
+        expires: 3600 * 4,
+        connection: mongoose,
+      }),
+    }, app))
+    .use(bodyParser())
+    .use(passport.initialize())
+    .use(require('koa-passport').session());
 }
