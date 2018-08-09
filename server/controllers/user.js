@@ -1,29 +1,25 @@
 import passport from 'koa-passport';
 import User from '../models/user';
 
-export async function auth(ctx) {
-    ctx.body = ctx.isAuthenticated()
+export async function auth(ctx, next) {
+  ctx.body = ctx.isAuthenticated();
 }
 
 export async function login(ctx, next) {
-  console.log('controller login start')
-  await passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/',
-    //failureMessage: true // запишет сообщение об ошибке в session.messages[]
-    // failureFlash: true, // ctx.flash, better
-    // successFlash: true
+  console.log('controller login start');
 
-    // assignProperty: 'something' присвоить юзера в свойство req.something
-    //   - нужно для привязывания акков соц. сетей
-    // если не стоит, то залогинит его вызовом req.login(user),
-    //   - это поместит user.id в session.passport.user (если не стоит опция session:false)
-    //   - также присвоит его в req.user
+  await passport.authenticate('local', (err, user, info) => {
+    if (err) { return next(err); }
+
+    // ctx.body = user
+
   })(ctx, next);
+
+  // next();
 }
 
 export async function logout(ctx, next) {
-  console.log('controller logout start')
+  console.log('controller logout start');
   ctx.logout();
   ctx.session = null;
 }
@@ -32,14 +28,14 @@ export async function register(ctx, next) {
   let ctxBody = ctx.request.body;
 
   await User.create(ctxBody)
-      .then(() => {
-        ctx.body = {
-          name: ctxBody.displayName
-        };
-      })
-      .catch(err => {
-        ctx.body = err.message;
-      });
+    .then(() => {
+      ctx.body = {
+        name: ctxBody.displayName,
+      };
+    })
+    .catch(err => {
+      ctx.body = err.message;
+    });
 }
 
 // export default {

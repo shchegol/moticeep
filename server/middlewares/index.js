@@ -1,46 +1,78 @@
-import favicon       from 'koa-favicon';
-import serve         from 'koa-static';
-import logger        from 'koa-logger';
-import bodyParser    from 'koa-bodyparser';
-import session       from 'koa-session';
+import favicon from 'koa-favicon';
+import serve from 'koa-static';
+import logger from 'koa-logger';
+import bodyParser from 'koa-bodyparser';
+import session from 'koa-session';
 import mongooseStore from 'koa-session-mongoose';
-// import passport      from 'koa-passport';
-import mongoose      from '../utils/mongoose';
-// import {session as passportSession} from 'koa-passport';
+import mongoose from '../utils/mongoose';
 import passport from '../utils/passport';
 
-export default app => {
-  app
-    .use(favicon())
-    .use(serve('../static'))
-    .use(logger())
-    .use(bodyParser())
-    .use(async function(ctx, next) {
-      try {
-        await next();
-      } catch (e) {
-        if (e.status) {
-          // could use template methods to render error page
-          ctx.body = e.message;
-          ctx.status = e.status;
-        } else {
-          ctx.body = 'Error 500';
-          ctx.status = 500;
-          console.error(e.message, e.stack);
-        }
-      }
-    })
-    // .use(session({ store: new MongooseStore() }, app))
-    .use(session({
-      key: 'sid',
-      rolling: true,
 
-      store: mongooseStore.create({
-        name: 'Session',
-        expires: 3600 * 4,
-        connection: mongoose,
-      }),
-    }, app))
-    .use(passport.initialize())
-    .use(require('koa-passport').session());
+
+export default app => {
+  console.log('middleware start');
+
+  let sessionMiddleware = session({
+    key: 'sid',
+    rolling: true,
+
+    store: mongooseStore.create({
+      name: 'Session',
+      expires: 3600 * 4,
+      connection: mongoose,
+    }),
+  }, app)
+
+  app.use(favicon());
+  app.use(serve('../static'));
+  app.use(logger());
+  app.use(bodyParser());
+  app.use(async function(ctx, next) {
+    try {
+      await next();
+    } catch (e) {
+      if (e.status) {
+        // could use template methods to render error page
+        ctx.body = e.message;
+        ctx.status = e.status;
+      } else {
+        ctx.body = 'Error 500';
+        ctx.status = 500;
+        console.error(e.message, e.stack);
+      }
+    }
+  });
+
+  app.use(async (ctx, next) => {
+    await sessionMiddleware(ctx, async () => {
+      ctx.session = ctx.session;
+    });
+
+    await next();
+  });
+
+  // app.use(session({
+  //   key: 'sid',
+  //   rolling: true,
+  //
+  //   store: mongooseStore.create({
+  //     name: 'Session',
+  //     expires: 3600 * 4,
+  //     connection: mongoose,
+  //   }),
+  // }, app));
+
+  app.use(passport.initialize());
+  app.use(require('koa-passport').session());
 }
+
+// app.use(session({
+//   key: 'sid',
+//   rolling: true,
+//
+//   store: mongooseStore.create({
+//     name: 'Session',
+//     expires: 3600 * 4,
+//     connection: mongoose,
+//   }),
+// }, app))

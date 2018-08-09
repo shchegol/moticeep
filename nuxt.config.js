@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   head: {
     title: 'motikeep',
     meta: [
@@ -29,7 +29,7 @@ module.exports = {
   ],
 
   modules: [
-    'bootstrap-vue/nuxt'
+    'bootstrap-vue/nuxt',
   ],
 
   build: {

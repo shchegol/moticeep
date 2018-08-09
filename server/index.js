@@ -4,14 +4,11 @@ import {Nuxt, Builder} from 'nuxt';
 import nuxtConfig from '../nuxt.config.js';
 import middlewares from './middlewares';
 import apiRouter from './routes/api';
-import mongoose from './utils/mongoose';
 
 async function start() {
   const host = process.env.HOST || config.server.host,
     port = process.env.PORT || config.server.port,
     app = new Koa();
-
-  app.keys = [config.secret];
 
   app.keys = [config.secret];
 
@@ -24,9 +21,6 @@ async function start() {
     await builder.build();
   }
 
-  // db
-  // mongoose();
-
   // Middleware
   middlewares(app);
 
@@ -37,6 +31,12 @@ async function start() {
   app.use(async (ctx, next) => {
     await next();
     ctx.status = 200; // koa defaults to 404 when it sees that status is unset
+
+    console.log('ctx.session', ctx.session);
+    // console.log('ctx.state', ctx.state);
+
+    ctx.req.session = ctx.session; // for nuxtServerInit
+    ctx.req.state = ctx.state; // for nuxtServerInit
 
     return new Promise((resolve, reject) => {
       ctx.res.on('close', resolve);
@@ -51,8 +51,7 @@ async function start() {
 
   app.listen(port, host);
 
-  console.log('Server listening on ' + host + ':' + port); // eslint-disable-line
-                                                           // no-console
+  console.log('Server listening on ' + host + ':' + port); // eslint-disable-line no-console
 }
 
 start();

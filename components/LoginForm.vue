@@ -74,6 +74,8 @@
   export default {
     name: 'login-modal',
 
+    middleware: 'auth',
+
     data() {
       return {
         email: {
@@ -136,6 +138,29 @@
         } else {
           this.passwordConfirm.state = null;
           this.passwordConfirm.message = '';
+        }
+      },
+
+      async login() {
+        try {
+          await this.$store.dispatch('login', {
+            email: this.email.value,
+            password: this.password.value
+          });
+
+          this.email.value = '';
+          this.password.value = '';
+          this.serverError.message = '';
+        } catch (e) {
+          this.serverError.message = e.message
+        }
+      },
+
+      async logout() {
+        try {
+          await this.$store.dispatch('logout')
+        } catch (e) {
+          this.serverError.message = e.message
         }
       },
 
