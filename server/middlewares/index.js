@@ -14,6 +14,7 @@ export default app => {
     .use(favicon())
     .use(serve('../static'))
     .use(logger())
+    .use(bodyParser())
     .use(async function(ctx, next) {
       try {
         await next();
@@ -40,7 +41,6 @@ export default app => {
         connection: mongoose,
       }),
     }, app))
-    .use(bodyParser())
     .use(passport.initialize())
     .use(require('koa-passport').session());
 }
