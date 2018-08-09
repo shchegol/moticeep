@@ -2,11 +2,13 @@ module.exports = {
   // secret data can be moved to env variables
   // or a separate config
   secret: 'mysecret',
+
   server: {
     siteHost: 'http://127.0.0.1:3000',
     host: '127.0.0.1',
     port: '3000',
   },
+
   providers: {
     facebook: {
       appId: '1584514044907807',
@@ -21,12 +23,15 @@ module.exports = {
       },
     },
   },
+
   mailer: {
     transport: 'gmail',
+
     gmail: {
       user: 'course.test.mailer',
       password: 'course-test-password1',
     },
+
     senders: {
       // transactional emails, register/forgot pass etc
       default: {
@@ -42,10 +47,12 @@ module.exports = {
       },
     },
   },
+
   mongoose: {
     uri: 'mongodb://localhost:27017/motikeep',
     options: { useNewUrlParser: true },
   },
+
   crypto: {
     hash: {
       length: 128,
@@ -53,6 +60,7 @@ module.exports = {
       iterations: process.env.NODE_ENV === 'production' ? 12000 : 1,
     },
   },
+
   root: process.cwd(),
 };
 

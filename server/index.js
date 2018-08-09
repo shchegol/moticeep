@@ -11,6 +11,8 @@ async function start() {
         port = process.env.PORT || config.server.port,
         app  = new Koa();
 
+  app.keys = [config.secret];
+
   // Nuxt.js
   nuxtConfig.dev = !(app.env === 'production');
   const nuxt = new Nuxt(nuxtConfig);
@@ -20,11 +22,11 @@ async function start() {
     await builder.build();
   }
 
+  // db
+  // mongoose();
+
   // Middleware
   middlewares(app);
-
-  // db
-  mongoose();
 
   // routes
   apiRouter(app);

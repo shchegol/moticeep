@@ -7,9 +7,9 @@
         </div>
 
         <div class="col-auto">
-          <b-btn v-if="user.name.length === 0" @click="modalLoginShow" variant="primary">Войти</b-btn>
+          <b-btn @click="modalLoginShow" variant="primary">Войти</b-btn>
 
-          <span v-else>Привет {{ user.name }}</span>
+          <!--<span v-else>Привет {{ user.name }}</span>-->
         </div>
       </div>
     </header>

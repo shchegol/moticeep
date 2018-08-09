@@ -22,12 +22,11 @@ const createStore = () => {
 
     actions: {
       nuxtServerInit({commit}, {req}) {
-        let counter = 0;
-        let cookie;
+        let counter, cookie;
 
         if (req.headers.cookie) {
           cookie = JSON.parse(JSON.stringify(cookieparser.parse(req.headers.cookie)));
-          counter = cookie.counter
+          counter = isNaN(cookie.counter) ? 0 : cookie.counter
         }
 
         commit('setCounter', counter);
