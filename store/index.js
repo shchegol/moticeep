@@ -1,4 +1,5 @@
 import Vuex from 'vuex';
+import axios from 'axios';
 import cookieparser from 'cookieparser';
 import Cookie from 'js-cookie';
 
@@ -48,7 +49,10 @@ const createStore = () => {
         console.log('vuex login');
 
         try {
-          const {data} = await axios.post('/api/login', {username, password});
+          const {data} = await axios.post('/api/login', {
+            username,
+            password,
+          });
           commit('setUser', data);
         } catch (error) {
           if (error.response && error.response.status === 401) {

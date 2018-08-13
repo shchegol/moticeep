@@ -35,8 +35,8 @@ async function start() {
     console.log('ctx.session', ctx.session);
     // console.log('ctx.state', ctx.state);
 
-    ctx.req.session = ctx.session; // for nuxtServerInit
-    ctx.req.state = ctx.state; // for nuxtServerInit
+    // ctx.req.session = ctx.session; // for nuxtServerInit
+    // ctx.req.state = ctx.state; // for nuxtServerInit
 
     return new Promise((resolve, reject) => {
       ctx.res.on('close', resolve);

@@ -141,30 +141,9 @@
         }
       },
 
-      async login() {
-        try {
-          await this.$store.dispatch('login', {
-            email: this.email.value,
-            password: this.password.value
-          });
-
-          this.email.value = '';
-          this.password.value = '';
-          this.serverError.message = '';
-        } catch (e) {
-          this.serverError.message = e.message
-        }
-      },
-
-      async logout() {
-        try {
-          await this.$store.dispatch('logout')
-        } catch (e) {
-          this.serverError.message = e.message
-        }
-      },
-
       loginStart() {
+        console.log('login form start');
+
         this.serverError.state = false;
         this.serverError.message = '';
 
@@ -173,25 +152,30 @@
 
         if (!this.email.state || !this.password.state) return;
 
-        axios
-          .post('/api/login', {
-            email: this.email.value,
-            password: this.password.value,
-          })
-          .then(res => {
-            console.log(res.data);
+        this.$emit('login', {
+          email: this.email.value,
+          password: this.password.value
+        })
 
-            if (res.data.error) {
-              this.serverError.state = true;
-              this.serverError.message = res.data.error.message;
-            } else {
-              this.$emit('auth', res.data);
-            }
-
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        // axios
+        //   .post('/api/login', {
+        //     email: this.email.value,
+        //     password: this.password.value,
+        //   })
+        //   .then(res => {
+        //     console.log(res.data);
+        //
+        //     if (res.data.error) {
+        //       this.serverError.state = true;
+        //       this.serverError.message = res.data.error.message;
+        //     } else {
+        //       this.$emit('auth', res.data);
+        //     }
+        //
+        //   })
+        //   .catch(err => {
+        //     console.log(err);
+        //   });
       },
 
       registerStart() {
@@ -204,24 +188,29 @@
 
         if (!this.email.state || !this.password.state || !this.passwordConfirm.state) return;
 
-        axios
-          .post('/api/register', {
-            email: this.email.value,
-            password: this.password.value,
-          })
-          .then(res => {
-            console.log(res.data);
+        this.$emit('register', {
+          email: this.email.value,
+          password: this.password.value
+        })
 
-            if (res.data.error) {
-              this.serverError.state = true;
-              this.serverError.message = res.data.error.message;
-            } else {
-              // this.$emit('auth', res.data);
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        // axios
+        //   .post('/api/register', {
+        //     email: this.email.value,
+        //     password: this.password.value,
+        //   })
+        //   .then(res => {
+        //     console.log(res.data);
+        //
+        //     if (res.data.error) {
+        //       this.serverError.state = true;
+        //       this.serverError.message = res.data.error.message;
+        //     } else {
+        //       // this.$emit('auth', res.data);
+        //     }
+        //   })
+        //   .catch(err => {
+        //     console.log(err);
+        //   });
       },
     },
   };

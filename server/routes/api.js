@@ -5,7 +5,7 @@ import {login, logout, register, auth}   from '../controllers/user';
 
 export default (app) => {
   let router = new Router({
-    // prefix: '/api',
+    prefix: '/api',
   });
 
   router

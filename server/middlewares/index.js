@@ -1,13 +1,11 @@
-import favicon from 'koa-favicon';
-import serve from 'koa-static';
-import logger from 'koa-logger';
-import bodyParser from 'koa-bodyparser';
-import session from 'koa-session';
+import favicon       from 'koa-favicon';
+import serve         from 'koa-static';
+import logger        from 'koa-logger';
+import bodyParser    from 'koa-bodyparser';
+import session       from 'koa-session';
 import mongooseStore from 'koa-session-mongoose';
-import mongoose from '../utils/mongoose';
-import passport from '../utils/passport';
-
-
+import mongoose      from '../utils/mongoose';
+import passport      from '../utils/passport';
 
 export default app => {
   console.log('middleware start');
@@ -21,7 +19,7 @@ export default app => {
       expires: 3600 * 4,
       connection: mongoose,
     }),
-  }, app)
+  }, app);
 
   app.use(favicon());
   app.use(serve('../static'));
@@ -45,7 +43,8 @@ export default app => {
 
   app.use(async (ctx, next) => {
     await sessionMiddleware(ctx, async () => {
-      ctx.session = ctx.session;
+      ctx.req.session = ctx.session; // for nuxtServerInit
+      ctx.req.state = ctx.state; // for nuxtServerInit
     });
 
     await next();
@@ -65,14 +64,3 @@ export default app => {
   app.use(passport.initialize());
   app.use(require('koa-passport').session());
 }
-
-// app.use(session({
-//   key: 'sid',
-//   rolling: true,
-//
-//   store: mongooseStore.create({
-//     name: 'Session',
-//     expires: 3600 * 4,
-//     connection: mongoose,
-//   }),
-// }, app))

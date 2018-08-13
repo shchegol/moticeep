@@ -11,7 +11,9 @@ export async function login(ctx, next) {
   await passport.authenticate('local', (err, user, info) => {
     if (err) { return next(err); }
 
-    // ctx.body = user
+    console.log('authenticate local done')
+
+    ctx.body = user
 
   })(ctx, next);
 
