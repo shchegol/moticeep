@@ -1,38 +1,32 @@
 import passport from 'koa-passport';
 import User     from '../models/user';
 
-export async function auth(ctx, next) {
+export const auth = ctx => {
   ctx.body = ctx.isAuthenticated();
-}
+};
 
-export async function login(ctx, next) {
+export const login = async ctx => {
   console.log('controller login start');
 
-  // await passport.authenticate('local', (err, user, info) => {
-  //   if (err) { return next(err); }
-  //
-  //   console.log('authenticate local done', err, user._id, info);
-  //   ctx.body = user
-  //
-  // })(ctx, next);
-
-  // await passport.authenticate('local')(ctx, next);
-
   return passport.authenticate('local', async (err, user, info, status) => {
+    if (err) {
+      ctx.throw(501, info);
+    }
+
     if (!user) {
       ctx.throw(401, info);
     }
 
     await ctx.login(user);
-    ctx.body = await user.toJSON({accessor: user});
-  })(ctx);
-}
 
-export async function logout(ctx, next) {
-  console.log('controller logout start');
+    ctx.body = await `login ${user._id}`;
+  })(ctx);
+};
+
+export const logout = async (ctx, next) => {
   ctx.logout();
   ctx.session = null;
-}
+};
 
 export async function register(ctx, next) {
   let ctxBody = ctx.request.body;

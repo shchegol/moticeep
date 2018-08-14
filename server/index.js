@@ -1,16 +1,16 @@
-import Koa from 'koa';
-import config from 'config';
+import Koa             from 'koa';
+import config          from 'config';
 import {Nuxt, Builder} from 'nuxt';
-import nuxtConfig from '../nuxt.config.js';
-import middlewares from './middlewares';
-import apiRouter from './routes/api';
+import nuxtConfig      from '../nuxt.config.js';
+import middlewares     from './middlewares';
+import apiRouter       from './routes/api';
 
 async function start() {
   const host = process.env.HOST || config.server.host,
-    port = process.env.PORT || config.server.port,
-    app = new Koa();
+        port = process.env.PORT || config.server.port,
+        app  = new Koa();
 
-  app.proxy = true
+  app.proxy = true;
 
   // app.keys = [config.secret];
 
@@ -31,24 +31,25 @@ async function start() {
 
   // ssr
   app.use(async (ctx, next) => {
-    await next();
-    ctx.status = 200; // koa defaults to 404 when it sees that status is unset
+    if (!ctx.request.path.startsWith('/api')) {
+      await next();
+      ctx.status = 200; // koa defaults to 404 when it sees that status is unset
+      ctx.req.session = ctx.session;
+      ctx.req.state = ctx.state;
+      ctx.res.csrf = ctx.csrf;
 
-    // console.log('ctx.session', ctx.session);
-    // console.log('ctx.state', ctx.state);
+      return new Promise((resolve, reject) => {
+        ctx.res.on('close', resolve);
+        ctx.res.on('finish', resolve);
 
-    // ctx.req.session = ctx.session; // for nuxtServerInit
-    // ctx.req.state = ctx.state; // for nuxtServerInit
-
-    return new Promise((resolve, reject) => {
-      ctx.res.on('close', resolve);
-      ctx.res.on('finish', resolve);
-
-      nuxt.render(ctx.req, ctx.res, promise => {
-        // nuxt.render passes a rejected promise into callback on error.
-        promise.then(resolve).catch(reject);
+        nuxt.render(ctx.req, ctx.res, promise => {
+          // nuxt.render passes a rejected promise into callback on error.
+          promise.then(resolve).catch(reject);
+        });
       });
-    });
+    }
+
+    await next();
   });
 
   // app.use(async(ctx) => {

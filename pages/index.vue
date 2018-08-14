@@ -57,7 +57,7 @@
       <div class="col">
         <div class="alert" :class="authUser ? 'alert-primary' : 'alert-secondary'" role="alert">
           <template v-if="authUser">
-            Привет {{ authUser.email }}
+            Привет {{ authUser }}
           </template>
 
           <template v-else>
@@ -105,11 +105,6 @@
         this.$store.commit('increment');
       },
 
-      // auth(user) {
-      //   this.user.name = user.name;
-      //   this.modalLoginHide();
-      // },
-
       async login() {
         console.log('vue start login', this.email, this.password);
 
@@ -133,25 +128,14 @@
         }
       },
 
-      register() {
-        axios
-          .post('/api/register', {
-            email: this.email,
-            password: this.password,
-          })
-          .then(res => {
-            console.log(res.data);
+      async register() {
+        console.log('vue start logout');
 
-            if (res.data.error) {
-              this.serverError.state = true;
-              this.serverError.message = res.data.error.message;
-            } else {
-              // this.$emit('auth', res.data);
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        try {
+          await this.$store.dispatch('register');
+        } catch (e) {
+          console.log(e.message);
+        }
       },
 
       modalLoginShow() {

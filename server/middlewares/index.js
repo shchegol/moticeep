@@ -40,16 +40,13 @@ export default app => {
     }
   });
 
-
-
   app.use(bodyParser());
   app.keys = ['secret'];
-  // app.use(session({}, app));
 
   app.use(async (ctx, next) => {
     await sessionMiddleware(ctx, async () => {
-      ctx.req.session = ctx.session; // for nuxtServerInit
-      ctx.req.state = ctx.state; // for nuxtServerInit
+      // ctx.req.session = ctx.session; // for nuxtServerInit
+      // ctx.req.state = ctx.state; // for nuxtServerInit
     });
 
     await next();

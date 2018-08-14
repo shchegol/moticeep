@@ -1,8 +1,9 @@
 import passport      from 'koa-passport';
 import LocalStrategy from 'passport-local';
 import User          from '../../models/user';
+import Strategy      from 'passport-local/lib/index';
 
-passport.use(new LocalStrategy({
+passport.use(new Strategy({
     usernameField: 'email',
     passwordField: 'password',
   },
