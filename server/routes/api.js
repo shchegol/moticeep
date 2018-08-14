@@ -1,7 +1,7 @@
 'use strict';
 
-import Router from 'koa-router';
-import {login, logout, register, auth}   from '../controllers/user';
+import Router                          from 'koa-router';
+import {login, logout, register, auth} from '../controllers/user';
 
 export default (app) => {
   let router = new Router({
@@ -9,7 +9,6 @@ export default (app) => {
   });
 
   router
-    // .get('/', auth)
     .get('/auth', auth)
     .post('/register', register)
     .post('/login', login)
@@ -19,6 +18,6 @@ export default (app) => {
     });
 
   app
-    .use(router.routes())
-    .use(router.allowedMethods());
+    .use(router.routes());
+  // .use(router.allowedMethods());
 }

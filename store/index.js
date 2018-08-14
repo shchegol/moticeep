@@ -1,17 +1,20 @@
-import Vuex from 'vuex';
-import axios from 'axios';
+import Vuex         from 'vuex';
+import axios        from 'axios';
 import cookieparser from 'cookieparser';
-import Cookie from 'js-cookie';
+import Cookie       from 'js-cookie';
 
 const createStore = () => {
   return new Vuex.Store({
     state: {
       counter: 0,
-      auth: null,
+      authUser: null,
+
     },
 
     mutations: {
       setUser(state, user) {
+        console.log(user._id);
+
         state.authUser = user;
       },
 
@@ -29,11 +32,12 @@ const createStore = () => {
       nuxtServerInit({commit}, {req}) {
         let counter, cookie;
 
-        console.log('vuex req.session', req.session, '###############################################');
+        // console.log('vuex req.session', req.session, '###############################################');
+        console.log('nuxtServerInit');
 
-        if (req.session && req.session.authUser) {
-          commit('setUser', req.session.authUser);
-        }
+        // if (req.session && req.session.authUser) {
+        //   commit('setUser', req.session.authUser);
+        // }
 
         if (req.headers.cookie) {
           cookie = JSON.parse(
@@ -44,23 +48,35 @@ const createStore = () => {
         commit('setCounter', counter);
       },
 
-      async login({commit}, {username, password}) {
+      login({commit}, {email, password}) {
 
-        console.log('vuex login');
-
-        try {
-          const {data} = await axios.post('/api/login', {
-            username,
+        axios
+          .post('/api/login', {
+            email,
             password,
+          })
+          .then(res => {
+            commit('setUser', res.data)
           });
-          commit('setUser', data);
-        } catch (error) {
-          if (error.response && error.response.status === 401) {
-            throw new Error('Bad credentials');
-          }
-          throw error;
-        }
       },
+
+      // async login({commit}, {email, password}) {
+      //   try {
+      //     console.log('vuex login', email, password);
+      //
+      //     const {data} = await axios.post('/api/login', {
+      //       email,
+      //       password,
+      //     });
+      //
+      //     commit('setUser', data);
+      //   } catch (error) {
+      //     if (error.response && error.response.status === 401) {
+      //       throw new Error('Bad credentials');
+      //     }
+      //     throw error;
+      //   }
+      // },
 
       async logout({commit}) {
         console.log('vuex logout');

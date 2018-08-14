@@ -7,7 +7,7 @@
         </div>
 
         <div class="col-auto">
-          <b-btn @click="modalLoginShow" variant="primary">Войти</b-btn>
+          <!--<b-btn @click="modalLoginShow" variant="primary">Войти</b-btn>-->
 
           <!--<span v-else>Привет {{ user.name }}</span>-->
 
@@ -20,12 +20,12 @@
         Просто счётчик
 
         <b-btn @click="increment">
-          {{ counter }}
+        {{ counter }}
         </b-btn>
       </div>
     </section>
 
-    <div class="row">
+    <div class="row mt-4">
       <div class="col">
         <b-form-input v-model.trim="email" placeholder="почта"></b-form-input>
       </div>
@@ -36,6 +36,12 @@
 
       <div class="col-auto">
         <b-button @click="login" variant="primary">
+          Войти
+        </b-button>
+      </div>
+
+      <div class="col-auto">
+        <b-button @click="logout">
           Выйти
         </b-button>
       </div>
@@ -43,29 +49,21 @@
 
     <section class="row mt-4">
       <div class="col">
-        <div class="alert" :class="user.auth ? 'alert-primary' : 'alert-secondary'" role="alert">
-          <template v-if="user.auth">
-            Привет {{ user.name }}
+        <div class="alert" :class="authUser ? 'alert-primary' : 'alert-secondary'" role="alert">
+          <template v-if="authUser">
+            Привет {{ authUser.email }}
           </template>
 
           <template v-else>
-            Вы не авторезированы
+            Вы не авторезированы {{ authUser }}
           </template>
         </div>
       </div>
     </section>
 
-    <section class="row mt-4">
-      <div class="col">
-        <b-button @click="logout" variant="primary">
-          Выйти
-        </b-button>
-      </div>
-    </section>
-
-    <b-modal ref="loginModal" hide-header hide-footer>
-      <login-form @login="login" @register="register"></login-form>
-    </b-modal>
+    <!--<b-modal ref="loginModal" hide-header hide-footer>-->
+    <!--<login-form @login="login" @register="register"></login-form>-->
+    <!--</b-modal>-->
   </div>
 </template>
 
@@ -81,17 +79,18 @@
     data() {
       return {
         email: '123@123.12',
-        password: '123456',
+        password: '12345',
 
-        user: {
-          name: '',
-          auth: false,
-        },
+        // user: {
+        //   name: '',
+        //   auth: false,
+        // },
       };
     },
 
     computed: mapState([
       'counter',
+      'authUser'
     ]),
 
     methods: {
@@ -104,12 +103,13 @@
       //   this.modalLoginHide();
       // },
 
-      async login(data) {
-        console.log('login', data);
+      async login() {
+        console.log('vue start login', this.email, this.password);
+
         try {
           await this.$store.dispatch('login', {
-            email: data.email,
-            password: data.password,
+            email: this.email,
+            password: this.password,
           });
         } catch (e) {
           console.log(e.message);
@@ -117,6 +117,8 @@
       },
 
       async logout() {
+        console.log('vue start logout');
+
         try {
           await this.$store.dispatch('logout');
         } catch (e) {
@@ -124,7 +126,7 @@
         }
       },
 
-      async register(data) {
+      async register() {
         axios
           .post('/api/register', {
             email: data.email,

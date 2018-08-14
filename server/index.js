@@ -32,7 +32,7 @@ async function start() {
     await next();
     ctx.status = 200; // koa defaults to 404 when it sees that status is unset
 
-    console.log('ctx.session', ctx.session);
+    // console.log('ctx.session', ctx.session);
     // console.log('ctx.state', ctx.state);
 
     // ctx.req.session = ctx.session; // for nuxtServerInit
