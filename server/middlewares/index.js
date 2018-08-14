@@ -10,22 +10,20 @@ import passport      from '../utils/passport';
 export default app => {
   console.log('middleware start');
 
-  // let sessionMiddleware = session({
-  //   key: 'sid',
-  //   rolling: true,
-  //
-  //   store: mongooseStore.create({
-  //     name: 'Session',
-  //     expires: 3600 * 4,
-  //     connection: mongoose,
-  //   }),
-  // }, app);
+  let sessionMiddleware = session({
+    key: 'sid',
+    rolling: true,
+
+    store: mongooseStore.create({
+      name: 'Session',
+      expires: 3600 * 4,
+      connection: mongoose,
+    }),
+  }, app);
 
   app.use(favicon());
   app.use(serve('../static'));
   app.use(logger());
-  app.use(bodyParser());
-
   app.use(async function(ctx, next) {
     try {
       await next();
@@ -42,26 +40,31 @@ export default app => {
     }
   });
 
-  // app.use(async (ctx, next) => {
-  //   console.log('session middleware');
-  //   await sessionMiddleware(ctx, async () => {
-  //     ctx.req.session = ctx.session; // for nuxtServerInit
-  //     ctx.req.state = ctx.state; // for nuxtServerInit
-  //   });
+
+
+  app.use(bodyParser());
+  app.keys = ['secret'];
+  // app.use(session({}, app));
+
+  app.use(async (ctx, next) => {
+    await sessionMiddleware(ctx, async () => {
+      ctx.req.session = ctx.session; // for nuxtServerInit
+      ctx.req.state = ctx.state; // for nuxtServerInit
+    });
+
+    await next();
+  });
+
+  // app.use(session({
+  //   key: 'sid',
+  //   rolling: true,
   //
-  //   await next();
-  // });
-
-  app.use(session({
-    key: 'sid',
-    rolling: true,
-
-    store: mongooseStore.create({
-      name: 'Session',
-      expires: 3600 * 4,
-      connection: mongoose,
-    }),
-  }, app));
+  //   store: mongooseStore.create({
+  //     name: 'Session',
+  //     expires: 3600 * 4,
+  //     connection: mongoose,
+  //   }),
+  // }, app));
 
   app.use(passport.initialize());
   app.use(require('koa-passport').session());

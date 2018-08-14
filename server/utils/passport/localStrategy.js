@@ -25,7 +25,7 @@ passport.use(new LocalStrategy({
 
       console.log('LocalStrategy success');
 
-      return done(null, user, {message: 'поздравляем!'});
+      return done(null, user);
     });
   },
 ));

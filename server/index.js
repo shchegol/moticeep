@@ -10,7 +10,9 @@ async function start() {
     port = process.env.PORT || config.server.port,
     app = new Koa();
 
-  app.keys = [config.secret];
+  app.proxy = true
+
+  // app.keys = [config.secret];
 
   // Nuxt.js
   nuxtConfig.dev = !(app.env === 'production');
@@ -48,6 +50,13 @@ async function start() {
       });
     });
   });
+
+  // app.use(async(ctx) => {
+  //   ctx.status = 200 // koa defaults to 404 when it sees that status is unset
+  //   ctx.req.session = ctx.session // for nuxtServerInit
+  //   ctx.req.state = ctx.state // for nuxtServerInit
+  //   await nuxt.render(ctx.req, ctx.res)
+  // })
 
   app.listen(port, host);
 

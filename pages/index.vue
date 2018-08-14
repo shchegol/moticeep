@@ -35,6 +35,12 @@
       </div>
 
       <div class="col-auto">
+        <b-button @click="register" variant="primary">
+          Регистрация
+        </b-button>
+      </div>
+
+      <div class="col-auto">
         <b-button @click="login" variant="primary">
           Войти
         </b-button>
@@ -68,6 +74,7 @@
 </template>
 
 <script>
+  import axios from 'axios';
   import {mapState} from 'vuex';
   import LoginForm  from '~/components/LoginForm.vue';
 
@@ -126,11 +133,11 @@
         }
       },
 
-      async register() {
+      register() {
         axios
           .post('/api/register', {
-            email: data.email,
-            password: data.password,
+            email: this.email,
+            password: this.password,
           })
           .then(res => {
             console.log(res.data);

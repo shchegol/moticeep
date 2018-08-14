@@ -1,5 +1,5 @@
 import passport from 'koa-passport';
-import User from '../models/user';
+import User     from '../models/user';
 
 export async function auth(ctx, next) {
   ctx.body = ctx.isAuthenticated();
@@ -8,16 +8,24 @@ export async function auth(ctx, next) {
 export async function login(ctx, next) {
   console.log('controller login start');
 
-  await passport.authenticate('local', (err, user, info) => {
-    if (err) { return next(err); }
+  // await passport.authenticate('local', (err, user, info) => {
+  //   if (err) { return next(err); }
+  //
+  //   console.log('authenticate local done', err, user._id, info);
+  //   ctx.body = user
+  //
+  // })(ctx, next);
 
-    console.log('authenticate local done', err, user._id, info);
+  // await passport.authenticate('local')(ctx, next);
 
-    ctx.body = user
+  return passport.authenticate('local', async (err, user, info, status) => {
+    if (!user) {
+      ctx.throw(401, info);
+    }
 
-  })(ctx, next);
-
-  // next();
+    await ctx.login(user);
+    ctx.body = await user.toJSON({accessor: user});
+  })(ctx);
 }
 
 export async function logout(ctx, next) {

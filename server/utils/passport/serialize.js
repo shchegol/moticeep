@@ -5,7 +5,7 @@ console.log('passport/serialize.js');
 
 passport.serializeUser(function(user, done) {
   console.log('serializeUser');
-  done(null, user.id);
+  done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
