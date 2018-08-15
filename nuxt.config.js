@@ -1,5 +1,5 @@
 export default {
-  mode: 'spa',
+  // mode: 'spa',
   head: {
     title: 'motikeep',
     meta: [
@@ -31,11 +31,6 @@ export default {
 
   modules: [
     'bootstrap-vue/nuxt',
-  ],
-
-  serverMiddleware: [
-    '~/server/middlewares',
-    '~/server/routes/api'
   ],
 
   build: {

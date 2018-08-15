@@ -1,6 +1,7 @@
 import Koa             from 'koa';
 import config          from 'config';
 import {Nuxt, Builder} from 'nuxt';
+import koaConnect      from 'koa-connect';
 import nuxtConfig      from '../nuxt.config.js';
 import middlewares     from './middlewares';
 import apiRouter       from './routes/api';
@@ -30,34 +31,34 @@ async function start() {
   apiRouter(app);
 
   // ssr
+  // app.use(async (ctx, next) => {
+  //   if (!ctx.request.path.startsWith('/api')) {
+  //     await next();
+  //     ctx.status = 200; // koa defaults to 404 when it sees that status is unset
+  //     ctx.req.session = ctx.session;
+  //     ctx.req.state = ctx.state;
+  //     // ctx.res.csrf = ctx.csrf;
+  //
+  //     return new Promise((resolve, reject) => {
+  //       ctx.res.on('close', resolve);
+  //       ctx.res.on('finish', resolve);
+  //
+  //       nuxt.render(ctx.req, ctx.res, promise => {
+  //         // nuxt.render passes a rejected promise into callback on error.
+  //         promise.then(resolve).catch(reject);
+  //       });
+  //     });
+  //   }
+  //
+  //   await next();
+  // });
+
   app.use(async (ctx, next) => {
-    if (!ctx.request.path.startsWith('/api')) {
-      await next();
-      ctx.status = 200; // koa defaults to 404 when it sees that status is unset
-      ctx.req.session = ctx.session;
-      // ctx.req.state = ctx.state;
-      // ctx.res.csrf = ctx.csrf;
-
-      return new Promise((resolve, reject) => {
-        ctx.res.on('close', resolve);
-        ctx.res.on('finish', resolve);
-
-        nuxt.render(ctx.req, ctx.res, promise => {
-          // nuxt.render passes a rejected promise into callback on error.
-          promise.then(resolve).catch(reject);
-        });
-      });
-    }
-
-    await next();
+    ctx.status = 200;
+    ctx.req.session = ctx.session;
+    ctx.req.state = ctx.state;
+    await koaConnect(nuxt.render)(ctx, next);
   });
-
-  // app.use(async(ctx) => {
-  //   ctx.status = 200 // koa defaults to 404 when it sees that status is unset
-  //   ctx.req.session = ctx.session // for nuxtServerInit
-  //   ctx.req.state = ctx.state // for nuxtServerInit
-  //   await nuxt.render(ctx.req, ctx.res)
-  // })
 
   app.listen(port, host);
 

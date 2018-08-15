@@ -1,7 +1,6 @@
-import passport      from 'koa-passport';
-import LocalStrategy from 'passport-local';
-import User          from '../../models/user';
-import Strategy      from 'passport-local/lib/index';
+import passport from 'koa-passport';
+import Strategy from 'passport-local';
+import User     from '../../models/user';
 
 passport.use(new Strategy({
     usernameField: 'email',
@@ -16,7 +15,7 @@ passport.use(new Strategy({
         return done(err);
       }
 
-      if(!user) {
+      if (!user) {
         return done(null, false, {message: 'Нет такого пользователя или пароль неверен.'});
       }
 

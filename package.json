@@ -26,6 +26,7 @@
     "js-cookie": "^2.2.0",
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
+    "koa-connect": "^2.0.1",
     "koa-csrf": "^3.0.6",
     "koa-favicon": "^2.0.1",
     "koa-logger": "^3.2.0",
