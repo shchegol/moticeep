@@ -8,8 +8,6 @@ passport.use(new Strategy({
   },
 
   function(email, password, done) {
-    console.log('LocalStrategy run', email, password);
-
     User.findOne({email}, (err, user) => {
       if (err) {
         return done(err);
@@ -22,8 +20,6 @@ passport.use(new Strategy({
       if (!user.checkPassword(password)) {
         return done(null, false, {message: 'Нет такого пользователя или пароль неверен.'});
       }
-
-      console.log('LocalStrategy success');
 
       return done(null, user);
     });

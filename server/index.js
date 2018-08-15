@@ -12,10 +12,9 @@ async function start() {
         app  = new Koa();
 
   app.proxy = true;
+  app.keys = [config.secret];
 
-  // app.keys = [config.secret];
-
-  // Nuxt.js
+  // nuxt.js
   nuxtConfig.dev = !(app.env === 'production');
   const nuxt = new Nuxt(nuxtConfig);
 
@@ -24,35 +23,13 @@ async function start() {
     await builder.build();
   }
 
-  // Middleware
+  // middleware
   middlewares(app);
 
   // routes
   apiRouter(app);
 
-  // ssr
-  // app.use(async (ctx, next) => {
-  //   if (!ctx.request.path.startsWith('/api')) {
-  //     await next();
-  //     ctx.status = 200; // koa defaults to 404 when it sees that status is unset
-  //     ctx.req.session = ctx.session;
-  //     ctx.req.state = ctx.state;
-  //     // ctx.res.csrf = ctx.csrf;
-  //
-  //     return new Promise((resolve, reject) => {
-  //       ctx.res.on('close', resolve);
-  //       ctx.res.on('finish', resolve);
-  //
-  //       nuxt.render(ctx.req, ctx.res, promise => {
-  //         // nuxt.render passes a rejected promise into callback on error.
-  //         promise.then(resolve).catch(reject);
-  //       });
-  //     });
-  //   }
-  //
-  //   await next();
-  // });
-
+  // nuxt render
   app.use(async (ctx, next) => {
     ctx.status = 200;
     ctx.req.session = ctx.session;
@@ -62,7 +39,7 @@ async function start() {
 
   app.listen(port, host);
 
-  console.log('Server listening on ' + host + ':' + port); // eslint-disable-line no-console
+  console.log(`Server listening on ${host}:${port}`); // eslint-disable-line no-console
 }
 
 start();

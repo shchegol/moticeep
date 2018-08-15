@@ -15,16 +15,6 @@
       </div>
     </header>
 
-    <section class="row mt-4">
-      <div class="col">
-        Просто счётчик
-
-        <b-btn @click="increment">
-        {{ counter }}
-        </b-btn>
-      </div>
-    </section>
-
     <div class="row mt-4">
       <div class="col">
         <b-form-input v-model.trim="email" placeholder="почта"></b-form-input>
@@ -74,7 +64,6 @@
 </template>
 
 <script>
-  import axios from 'axios';
   import {mapState} from 'vuex';
   import LoginForm  from '~/components/LoginForm.vue';
 
@@ -87,27 +76,16 @@
       return {
         email: '123@123.12',
         password: '12345',
-
-        // user: {
-        //   name: '',
-        //   auth: false,
-        // },
       };
     },
 
     computed: mapState([
       'counter',
-      'authUser'
+      'authUser',
     ]),
 
     methods: {
-      increment() {
-        this.$store.commit('increment');
-      },
-
       async login() {
-        console.log('vue start login', this.email, this.password);
-
         try {
           await this.$store.dispatch('login', {
             email: this.email,
@@ -119,8 +97,6 @@
       },
 
       async logout() {
-        console.log('vue start logout');
-
         try {
           await this.$store.dispatch('logout');
         } catch (e) {
@@ -129,8 +105,6 @@
       },
 
       async register() {
-        console.log('vue start logout');
-
         try {
           await this.$store.dispatch('register');
         } catch (e) {
