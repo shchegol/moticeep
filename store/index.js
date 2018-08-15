@@ -30,11 +30,12 @@ const createStore = () => {
       nuxtServerInit({commit}, {req}) {
         let counter, cookie;
 
-        // console.log('vuex req.session', req.session, '###############################################');
-        // console.log('nuxtServerInit');
+        console.log('vuex req.session', req.session);
 
-        if (req.session && req.session.passport.user) {
-          commit('setUser', req.session.passport.user);
+        if (req.session) {
+          if(req.session.passport) {
+            commit('setUser', req.session.passport.user);
+          }
         }
 
         if (req.headers.cookie) {

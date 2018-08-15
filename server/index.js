@@ -35,8 +35,8 @@ async function start() {
       await next();
       ctx.status = 200; // koa defaults to 404 when it sees that status is unset
       ctx.req.session = ctx.session;
-      ctx.req.state = ctx.state;
-      ctx.res.csrf = ctx.csrf;
+      // ctx.req.state = ctx.state;
+      // ctx.res.csrf = ctx.csrf;
 
       return new Promise((resolve, reject) => {
         ctx.res.on('close', resolve);
