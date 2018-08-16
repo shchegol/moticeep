@@ -7,6 +7,7 @@ const createStore = () => {
   return new Vuex.Store({
     state: {
       auth: null,
+      currency: 'руб',
     },
 
     mutations: {
