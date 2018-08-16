@@ -24,6 +24,7 @@ export const login = async ctx => {
 export const logout = async ctx => {
   ctx.logout();
   ctx.session = null;
+  ctx.status = 200
 };
 
 export const register = async ctx => {

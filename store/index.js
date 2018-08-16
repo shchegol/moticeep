@@ -6,19 +6,17 @@ import axios        from 'axios';
 const createStore = () => {
   return new Vuex.Store({
     state: {
-      authUser: null,
+      auth: null,
     },
 
     mutations: {
       setUser(state, user) {
-        state.authUser = user;
+        state.auth = user;
       },
     },
 
     actions: {
       nuxtServerInit({commit}, {req}) {
-        console.log('vuex req.session', req.session);
-
         if (req.session.passport) {
           commit('setUser', String(req.session.passport.user));
         }

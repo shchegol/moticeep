@@ -51,6 +51,7 @@
     "eslint-plugin-vue": "^4.0.0",
     "node": "^10.7.0",
     "node-sass": "^4.9.2",
+    "sass-material-colors": "0.0.5",
     "sass-loader": "^7.0.3"
   }
 }
