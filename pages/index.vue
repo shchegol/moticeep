@@ -1,100 +1,8 @@
 <template>
   <div class="container">
-    <main-header :auth="Boolean(auth)"></main-header>
+    <header-main :auth="Boolean(auth)"></header-main>
 
-    <div class="row">
-      <div class="col">
-        <h4>Задание</h4>
-      </div>
-
-      <div class="col-auto">
-        <b-button variant="link" v-b-tooltip.hover title="Добавить задание">
-          <i class="material-icons md-24">add</i>
-        </b-button>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="col-12 col-md-6 col-lg-4 mb-2">
-        <b-card bg-variant="primary" text-variant="white">
-          <div class="row">
-            <div class="col">
-              <h4 class="card-title">Почитать</h4>
-            </div>
-
-            <div class="col-auto">
-              <b-dropdown variant="primary" right no-caret>
-                <template slot="button-content">
-                  <i class="material-icons md-24">more_vert</i>
-                </template>
-
-                <b-dropdown-item-button>
-                  <i class="material-icons">edit</i>&nbsp;Редактировать
-                </b-dropdown-item-button>
-                <b-dropdown-item-button>
-                  <i class="material-icons">delete</i>&nbsp;Удалить
-                </b-dropdown-item-button>
-              </b-dropdown>
-            </div>
-          </div>
-
-          <div class="row mt-2">
-            <div class="col">
-              <b-input-group append="руб">
-                <b-form-input placeholder="Награда"></b-form-input>
-              </b-input-group>
-            </div>
-          </div>
-
-          <div class="row mt-2">
-            <div class="col">
-              <b-button variant="success" block v-b-tooltip.hover title="Добавить в копилку">
-                Добавить
-              </b-button>
-            </div>
-          </div>
-        </b-card>
-      </div>
-
-      <div class="col-12 col-md-6 col-lg-4 mb-2">
-        <b-card bg-variant="primary" text-variant="white">
-          <div class="row">
-            <div class="col">
-              <h4 class="card-title">Убрать игрушки</h4>
-            </div>
-
-            <div class="col-auto">
-              <b-dropdown variant="primary" right no-caret>
-                <template slot="button-content">
-                  <i class="material-icons md-24">more_vert</i>
-                </template>
-
-                <b-dropdown-item-button>
-                  <i class="material-icons">edit</i>&nbsp;Редактировать
-                </b-dropdown-item-button>
-                <b-dropdown-item-button>
-                  <i class="material-icons">delete</i>&nbsp;Удалить
-                </b-dropdown-item-button>
-              </b-dropdown>
-            </div>
-          </div>
-
-          <div class="row no-gutters align-items-center mt-2">
-            <div class="col text-center">
-              <p class="h3">+ 100 руб</p>
-            </div>
-          </div>
-
-          <div class="row mt-2">
-            <div class="col">
-              <b-button variant="success" block v-b-tooltip.hover title="Добавить в копилку">
-                Выполнено
-              </b-button>
-            </div>
-          </div>
-        </b-card>
-      </div>
-    </div>
+    <tasks :tasks="tasks"></tasks>
 
     <hr class="mt-4 mb-5">
 
@@ -156,16 +64,43 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex';
-  import Header     from '~/components/HeaderMain';
+  import {mapState}     from 'vuex';
+  import {getRundomInt} from '~/assets/js/utils';
+  import HeaderMain         from '~/components/HeaderMain';
+  import Tasks         from '~/components/tasks/Tasks';
+
+  let tasksModel = (i = 3) => {
+    let model  = [],
+        single = i - 1;
+
+    while (i--) {
+      let isSingle = single === i,
+          title    = isSingle
+            ? ['Прочитать слова']
+            : ['Помыть посуду', 'Убраться в комнате', 'Почистить зубы', 'Сходить в сад'];
+
+      model.push({
+        id: i,
+        title: title[getRundomInt(0, title.length)],
+        currency: 'руб',
+        value: isSingle ? 1 : getRundomInt(1, 2000),
+        single: !isSingle,
+      });
+    }
+
+    return model;
+  };
 
   export default {
     components: {
-      'main-header': Header,
+      HeaderMain,
+      Tasks,
     },
 
     data() {
-      return {};
+      return {
+        tasks: tasksModel(),
+      };
     },
 
     computed: mapState([
