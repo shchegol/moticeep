@@ -19,9 +19,8 @@
     </div>
 
     <div class="form-row">
-      <div class="col-12 col-md-6 col-lg-4 mb-2" v-for="i in 2" :key="i">
-        <b-card img-src="http://www.stihi.ru/pics/2016/07/28/10120.jpg"
-                img-alt="Card Image" img-top>
+      <div class="col-12 col-md-6 col-lg-4 mb-2 align-items-stretch" v-for="i in 2" :key="i">
+        <b-card img-src="http://www.stihi.ru/pics/2016/07/28/10120.jpg" img-alt="Card Image" img-top>
           <div class="row">
             <div class="col">
               <h4 class="card-title">Игрушка</h4>
@@ -42,6 +41,7 @@
               </b-dropdown>
             </div>
           </div>
+
           <div class="row">
             <div class="col">
               Какая-то инфа
@@ -64,25 +64,30 @@
 </template>
 
 <script>
-  import {mapState}     from 'vuex';
+  import {mapState} from 'vuex';
   import {getRundomInt} from '~/assets/js/utils';
-  import HeaderMain         from '~/components/HeaderMain';
-  import Tasks         from '~/components/tasks/Tasks';
+  import HeaderMain from '~/components/HeaderMain';
+  import Tasks from '~/components/tasks/Tasks';
 
   let tasksModel = (i = 3) => {
-    let model  = [],
-        single = i - 1;
+    let model = [],
+      single = i - 1;
 
     while (i--) {
       let isSingle = single === i,
-          title    = isSingle
-            ? ['Прочитать слова']
-            : ['Помыть посуду', 'Убраться в комнате', 'Почистить зубы', 'Сходить в сад'];
+        title = isSingle
+          ? ['Прочитать слова']
+          : [
+            'Помыть посуду',
+            'Убраться в комнате',
+            'Почистить зубы',
+            'Сходить в сад',
+            // 'Очень большое сообщение. Очень большое сообщение',
+          ];
 
       model.push({
         id: i,
         title: title[getRundomInt(0, title.length)],
-        currency: 'руб',
         value: isSingle ? 1 : getRundomInt(1, 2000),
         single: !isSingle,
       });
