@@ -26,7 +26,7 @@ const createStore = () => {
         try {
           console.log('vuex register', email, password);
 
-          const {data} = await axios.post('/api/register', {
+          const {data} = await axios.post('/api/auth/register', {
             email,
             password,
           });
@@ -44,7 +44,7 @@ const createStore = () => {
         try {
           console.log('vuex login', email, password);
 
-          const {data} = await axios.post('/api/login', {
+          const {data} = await axios.post('/api/auth/login', {
             email,
             password,
           });
@@ -61,7 +61,7 @@ const createStore = () => {
       async logout({commit}) {
         console.log('vuex logout');
 
-        await axios.post('/api/logout');
+        await axios.get('/api/auth/logout');
         commit('setUser', null);
       },
     },

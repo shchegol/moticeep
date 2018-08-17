@@ -17,18 +17,26 @@ export const login = async ctx => {
 
     await ctx.login(user);
 
-    ctx.body = await `login ${user._id}`;
+    ctx.body = {
+      name: user.displayName,
+    };
   })(ctx);
 };
 
 export const logout = async ctx => {
   ctx.logout();
   ctx.session = null;
-  ctx.status = 200
+  ctx.status = 200;
 };
 
+// todo trough mail
 export const register = async ctx => {
   let ctxBody = ctx.request.body;
+
+  // if display name is empty
+  if (!ctxBody.displayName) {
+    ctxBody.displayName = ctxBody.email.split('@')[0];
+  }
 
   await User.create(ctxBody)
     .then(() => {
@@ -39,4 +47,4 @@ export const register = async ctx => {
     .catch(err => {
       ctx.body = err.message;
     });
-}
+};

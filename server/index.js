@@ -4,7 +4,7 @@ import {Nuxt, Builder} from 'nuxt';
 import koaConnect      from 'koa-connect';
 import nuxtConfig      from '../nuxt.config.js';
 import middlewares     from './middlewares';
-import apiRouter       from './routes/api';
+import apiRouter       from './routes';
 
 async function start() {
   const host = process.env.HOST || config.server.host,

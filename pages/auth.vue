@@ -89,7 +89,7 @@
         },
 
         passwordConfirm: {
-          value: '',
+          value: '12345',
           state: null,
           message: '',
         },

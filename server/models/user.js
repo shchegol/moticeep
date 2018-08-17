@@ -4,10 +4,10 @@ import bcrypt   from 'bcrypt';
 import crypto   from 'crypto';
 
 const userSchema = new mongoose.Schema({
-  // displayName: {
-  //   type: String,
-  //   required: 'Имя пользователя отсутствует.',
-  // },
+  displayName: {
+    type: String,
+    required: 'Имя пользователя отсутствует.',
+  },
 
   email: {
     type: String,
@@ -23,14 +23,15 @@ const userSchema = new mongoose.Schema({
     ],
   },
 
-  salt: {
-    type: String,
-  },
-
   passwordHash: {
     type: String,
     required: true,
   },
+
+  tasks: [{
+    type:     mongoose.Schema.Types.ObjectId,
+    ref:      'Task'
+  }],
 
   deleted: Boolean,
 }, {
@@ -40,51 +41,28 @@ const userSchema = new mongoose.Schema({
 userSchema
   .virtual('password')
   .set(function(password) {
-    console.log('virtual password start', password);
-
     if (password) {
       if (password.length < 4) {
         this.invalidate('password', 'Пароль должен быть минимум 4 символа.');
       }
 
-      // bcrypt.hash(password, config.crypto.hash.iterations)
-      //   .then(hash => {
-      //     console.log('hash', hash)
-      //     this.passwordHash = hash;
-      //   });
+      console.log(password, typeof password)
 
-      this.salt = crypto.randomBytes(config.crypto.hash.length)
-        .toString('base64');
+      const salt = bcrypt.genSaltSync(config.crypto.hash.iterations);
+      const hash = bcrypt.hashSync(password, salt);
 
-      this.passwordHash = crypto.pbkdf2Sync(
-        password,
-        this.salt,
-        config.crypto.hash.iterations,
-        config.crypto.hash.length,
-        'sha512',
-      ).toString('base64');
+      console.log(hash);
+
+      this.passwordHash = hash;
     } else {
-      this.salt = undefined;
       this.passwordHash = undefined;
     }
   });
 
 userSchema.methods.checkPassword = function(password) {
   if (!password) return false;
-  if (!this.passwordHash) return false;
 
-  return crypto.pbkdf2Sync(
-    password,
-    this.salt,
-    config.crypto.hash.iterations,
-    config.crypto.hash.length,
-    'sha512',
-  ).toString('base64') === this.passwordHash;
-
-  // bcrypt.compare(password, this.passwordHash)
-  //   .then(function(res) {
-  //     return res;
-  //   });
+  return bcrypt.compareSync(password, this.passwordHash)
 };
 
 userSchema.methods.getPublicFields = function() {
