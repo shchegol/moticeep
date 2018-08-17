@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
   title: String,
   value: Number,
   single: Boolean,
@@ -8,4 +8,4 @@ const userSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-export default mongoose.model('Task', userSchema);
+export default taskSchema;

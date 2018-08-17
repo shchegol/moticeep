@@ -1,5 +1,5 @@
 import passport from 'koa-passport';
-import User     from '../models/user';
+import {createUser }    from '../models/user';
 
 export const auth = ctx => {
   ctx.body = ctx.isAuthenticated();
@@ -38,7 +38,7 @@ export const register = async ctx => {
     ctxBody.displayName = ctxBody.email.split('@')[0];
   }
 
-  await User.create(ctxBody)
+  await createUser(ctxBody)
     .then(() => {
       ctx.body = {
         name: ctxBody.displayName,
