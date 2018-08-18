@@ -13,10 +13,10 @@
                 <i class="material-icons md-24">more_vert</i>
               </template>
 
-              <b-dropdown-item-button>
+              <b-dropdown-item-button @click="taskEdit">
                 <i class="material-icons">edit</i>&nbsp;Редактировать
               </b-dropdown-item-button>
-              <b-dropdown-item-button>
+              <b-dropdown-item-button @click="taskDelete">
                 <i class="material-icons">delete</i>&nbsp;Удалить
               </b-dropdown-item-button>
             </b-dropdown>
@@ -24,21 +24,21 @@
         </div>
 
         <div class="row mt-2">
-          <div v-if="task.single" class="col text-center">
-            <p class="h3">+ {{task.value}} {{task.currency}}</p>
-          </div>
-
-          <div v-else class="col">
+          <div v-if="task.editable" class="col">
             <b-input-group :append="task.currency">
               <b-form-input v-model="task.value" placeholder="Награда"></b-form-input>
             </b-input-group>
+          </div>
+
+          <div v-else class="col text-center">
+            <p class="h3">+ {{task.value}} {{task.currency}}</p>
           </div>
         </div>
 
         <div class="row mt-2">
           <div class="col">
             <b-button variant="success" block v-b-tooltip.hover title="Добавить в копилку">
-              {{task.single ? 'Выполнено': 'Добавить'}}
+              {{task.editable ? 'Добавить': 'Выполнено'}}
             </b-button>
           </div>
         </div>
@@ -55,6 +55,15 @@
       task: {
         type: Object,
         required: true,
+      },
+    },
+
+    methods: {
+      taskEdit() {
+        this.$emit('taskEdit', this.task._id);
+      },
+      taskDelete() {
+        this.$emit('taskDelete', this.task._id);
       },
     },
   };

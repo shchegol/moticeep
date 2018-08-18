@@ -6,20 +6,26 @@ import axios from 'axios';
 const createStore = () => {
   return new Vuex.Store({
     state: {
-      auth: null,
+      user: {},
+      auth: false,
       currency: 'руб',
     },
 
     mutations: {
       setUser(state, user) {
-        state.auth = user;
+        state.user = user;
+      },
+
+      setAuth(state, auth) {
+        state.auth = auth;
       },
     },
 
     actions: {
       nuxtServerInit({commit}, {req}) {
-        if (req.session.passport) {
-          commit('setUser', String(req.session.passport.user));
+        if (req.session.passport && req.state.user) {
+          commit('setAuth', true);
+          commit('setUser', req.state.user);
         }
       },
 
@@ -31,6 +37,7 @@ const createStore = () => {
           });
 
           commit('setUser', data);
+          commit('setAuth', true);
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');
@@ -42,14 +49,13 @@ const createStore = () => {
 
       async login({commit}, {email, password}) {
         try {
-          console.log('vuex login', email, password);
-
           const {data} = await axios.post('/api/auth/login', {
             email,
             password,
           });
 
           commit('setUser', data);
+          commit('setAuth', true);
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');
@@ -60,10 +66,9 @@ const createStore = () => {
       },
 
       async logout({commit}) {
-        console.log('vuex logout');
-
         await axios.get('/api/auth/logout');
-        commit('setUser', null);
+        commit('setUser', {});
+        commit('setAuth', false);
       },
     },
   });

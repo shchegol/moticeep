@@ -4,6 +4,10 @@
       <h1>MOTIKEEP</h1>
     </div>
 
+    <div v-if="auth" class="col-auto">
+      {{ user.displayName }}
+    </div>
+
     <div class="col-auto">
       <nuxt-link v-if="!auth" to="/auth" class="btn btn-link">Войти</nuxt-link>
       <button v-else @click="logout" class="btn btn-link">Выйти</button>
@@ -18,8 +22,13 @@
     props: {
       auth: {
         type: Boolean,
-        required: true
-      }
+        required: true,
+      },
+
+      user: {
+        type: Object,
+        required: true,
+      },
     },
 
     methods: {

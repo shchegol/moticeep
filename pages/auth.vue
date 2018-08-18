@@ -153,9 +153,12 @@
           });
 
           this.$router.push('/');
-        } catch (e) {
-          console.log(e.message);
+        } catch (error) {
+          this.serverError.message = error.response.data;
+          console.log('error', error.response);
         }
+
+        this.email.state = this.password.state = this.passwordConfirm.state = null;
       },
 
       async registerStart() {

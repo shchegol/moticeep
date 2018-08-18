@@ -13,11 +13,13 @@
     </div>
 
     <div class="form-row">
-      <tasks-card v-for="task in tasks" :key="task.id" :task="task"></tasks-card>
+      <tasks-card v-for="task in tasks"
+                  :key="task.id" :task="task"
+                  @taskEdit="taskEdit" @taskDelete="taskDelete"></tasks-card>
     </div>
 
     <!-- Modal Component -->
-    <b-modal id="modal1" centered hide-header hide-footer>
+    <b-modal ref="taskModal" id="modal1" centered hide-header hide-footer>
       <div class="row">
         <div class="col">
           <h3>Новое задание</h3>
@@ -26,7 +28,7 @@
       <div class="row">
         <div class="col">
           <b-form-group label="Заголовок" label-for="inputTitle">
-            <b-form-input  id="inputTitle" placeholder="Убрать в комнате"></b-form-input>
+            <b-form-input v-model="title" id="inputTitle" placeholder="Убрать в комнате"></b-form-input>
           </b-form-group>
         </div>
       </div>
@@ -34,7 +36,7 @@
       <div class="row">
         <div class="col">
           <b-form-group label="Сумма" label-for="inputValue">
-            <b-form-input  id="inputValue" placeholder="300"></b-form-input>
+            <b-form-input v-model="value" id="inputValue" placeholder="300"></b-form-input>
           </b-form-group>
         </div>
       </div>
@@ -49,7 +51,7 @@
 
       <div class="row mt-4">
         <div class="col-auto">
-          <b-button variant="success">Создать</b-button>
+          <b-button @click="taskCreate" variant="success">Создать</b-button>
         </div>
       </div>
     </b-modal>
@@ -57,6 +59,7 @@
 </template>
 
 <script>
+  import axios     from 'axios';
   import TasksCard from '~/components/tasks/TasksCard';
 
   export default {
@@ -67,16 +70,65 @@
     },
 
     props: {
-      tasks: {
-        type: Array,
+      user: {
+        type: Object,
         required: true,
       },
     },
 
     data() {
       return {
-        editable: false
-      }
-    }
+        title: 'Убрать комнату',
+        value: '100',
+        editable: false,
+
+        tasks: this.user.tasks,
+      };
+    },
+
+    watch: {
+      user(freshUser) {
+        this.tasks = freshUser.tasks;
+      },
+    },
+
+    methods: {
+      async taskCreate() {
+        try {
+          const {data} = await axios.post(`/api/tasks`, {
+            userId: this.user._id,
+            title: this.title,
+            value: this.value,
+            editable: this.editable,
+          });
+
+          this.tasks = data;
+          this.$refs.taskModal.hide();
+        } catch (error) {
+          if (!error.response) {
+            throw new Error('Ошибка на сервере');
+          }
+
+          throw error;
+        }
+      },
+
+      taskEdit(id) {
+
+      },
+
+      async taskDelete(id) {
+        try {
+          const {data} = await axios.delete(`/api/tasks/${id}`, {params: {userId: this.user._id, taskId: id}});
+          this.tasks = data;
+        } catch (error) {
+          if (!error.response) {
+            throw new Error('Ошибка на сервере');
+          }
+
+          throw error;
+        }
+      },
+    },
   };
 </script>

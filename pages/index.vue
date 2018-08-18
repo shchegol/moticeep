@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <header-main :auth="Boolean(auth)"></header-main>
+    <header-main :auth="auth" :user="user"></header-main>
 
-    <tasks :tasks="tasks"></tasks>
+    <tasks :user="user"></tasks>
 
     <hr class="mt-4 mb-5">
 
@@ -64,37 +64,10 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex';
+  import {mapState}     from 'vuex';
   import {getRundomInt} from '~/assets/js/utils';
-  import HeaderMain from '~/components/HeaderMain';
-  import Tasks from '~/components/tasks/Tasks';
-
-  let tasksModel = (i = 3) => {
-    let model = [],
-      single = i - 1;
-
-    while (i--) {
-      let isSingle = single === i,
-        title = isSingle
-          ? ['Прочитать слова']
-          : [
-            'Помыть посуду',
-            'Убраться в комнате',
-            'Почистить зубы',
-            'Сходить в сад',
-            // 'Очень большое сообщение. Очень большое сообщение',
-          ];
-
-      model.push({
-        id: i,
-        title: title[getRundomInt(0, title.length)],
-        value: isSingle ? 1 : getRundomInt(1, 2000),
-        single: !isSingle,
-      });
-    }
-
-    return model;
-  };
+  import HeaderMain     from '~/components/HeaderMain';
+  import Tasks          from '~/components/tasks/Tasks';
 
   export default {
     components: {
@@ -104,12 +77,14 @@
 
     data() {
       return {
-        tasks: tasksModel(),
+        tasks: [] || this.user.tasks,
+        motivators: [] || this.user.motivators,
       };
     },
 
     computed: mapState([
       'auth',
+      'user',
     ]),
   };
 </script>
