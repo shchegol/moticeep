@@ -51,7 +51,7 @@
           </div>
         </div>
 
-        <div v-if="serverError.state" class="row">
+        <div v-if="serverError.message !== ''" class="row">
           <div class="col">
             <b-alert show variant="info">{{ serverError.message }}</b-alert>
           </div>
@@ -95,7 +95,6 @@
         },
 
         serverError: {
-          state: false,
           message: '',
         },
 
@@ -140,7 +139,6 @@
       },
 
       async loginStart() {
-        this.serverError.state = false;
         this.serverError.message = '';
 
         this.emailCheck();
@@ -154,14 +152,13 @@
             password: this.password.value,
           });
 
-          this.$router.push('/')
+          this.$router.push('/');
         } catch (e) {
           console.log(e.message);
         }
       },
 
       async registerStart() {
-        this.serverError.state = false;
         this.serverError.message = '';
 
         this.emailCheck();
@@ -176,15 +173,14 @@
             password: this.password.value,
           });
 
-          this.$router.push('/')
-        } catch (e) {
-          console.log(e.message);
+          this.$router.push('/');
+        } catch (error) {
+          this.serverError.message = error.response.data;
+          console.log('error', error.response);
         }
+
+        this.email.state = this.password.state = this.passwordConfirm.state = null;
       },
     },
   };
 </script>
-
-<style scoped>
-
-</style>

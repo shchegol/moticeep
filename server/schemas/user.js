@@ -1,6 +1,8 @@
-import mongoose from 'mongoose';
-import config   from 'config';
-import bcrypt   from 'bcrypt';
+import mongoose        from 'mongoose';
+import config          from 'config';
+import bcrypt          from 'bcrypt';
+import taskSchema      from './task';
+import motivatorSchema from './motivator';
 
 const userSchema = new mongoose.Schema({
   displayName: {
@@ -27,6 +29,8 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 
+  tasks: [taskSchema],
+  motivators: [motivatorSchema],
   deleted: Boolean,
 }, {
   timestamps: true,
@@ -35,33 +39,30 @@ const userSchema = new mongoose.Schema({
 userSchema
   .virtual('password')
   .set(function(password) {
-    if (password) {
-      if (password.length < 4) {
-        this.invalidate('password', 'Пароль должен быть минимум 4 символа.');
-      }
-
-      console.log(password, typeof password)
-
-      const salt = bcrypt.genSaltSync(config.crypto.hash.iterations);
-      const hash = bcrypt.hashSync(password, salt);
-
-      console.log(hash);
-
-      this.passwordHash = hash;
-    } else {
-      this.passwordHash = undefined;
+    if (!password) {
+      this.invalidate('password', 'Пароль должен быть минимум 4 символа.');
     }
+
+    if (password.length < 4) {
+      this.invalidate('password', 'Пароль должен быть минимум 4 символа.');
+    }
+
+    const salt = bcrypt.genSaltSync(config.crypto.hash.iterations);
+    this.passwordHash = bcrypt.hashSync(password, salt);
   });
 
 userSchema.methods.checkPassword = function(password) {
   if (!password) return false;
-  return bcrypt.compareSync(password, this.passwordHash)
+  return bcrypt.compareSync(password, this.passwordHash);
 };
 
 userSchema.methods.getPublicFields = function() {
   return {
     displayName: this.displayName,
     email: this.email,
+    tasks: this.tasks,
+    motivators: this.motivators,
+    deleted: this.deleted,
   };
 };
 

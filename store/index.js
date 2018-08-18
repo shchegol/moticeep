@@ -1,5 +1,5 @@
-import Vuex         from 'vuex';
-import axios        from 'axios';
+import Vuex  from 'vuex';
+import axios from 'axios';
 // import cookieparser from 'cookieparser';
 // import Cookie       from 'js-cookie';
 
@@ -25,8 +25,6 @@ const createStore = () => {
 
       async register({commit}, {email, password}) {
         try {
-          console.log('vuex register', email, password);
-
           const {data} = await axios.post('/api/auth/register', {
             email,
             password,
@@ -34,9 +32,10 @@ const createStore = () => {
 
           commit('setUser', data);
         } catch (error) {
-          if (error.response && error.response.status === 401) {
-            throw new Error('Bad credentials');
+          if (!error.response) {
+            throw new Error('Ошибка на сервере');
           }
+
           throw error;
         }
       },
@@ -52,9 +51,10 @@ const createStore = () => {
 
           commit('setUser', data);
         } catch (error) {
-          if (error.response && error.response.status === 401) {
-            throw new Error('Bad credentials');
+          if (!error.response) {
+            throw new Error('Ошибка на сервере');
           }
+
           throw error;
         }
       },
