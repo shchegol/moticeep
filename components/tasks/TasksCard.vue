@@ -60,10 +60,10 @@
 
     methods: {
       taskEdit() {
-        this.$emit('taskEdit', this.task._id);
+        this.$emit('taskEdit', this.task);
       },
       taskDelete() {
-        this.$emit('taskDelete', this.task._id);
+        this.$emit('taskDelete', this.task);
       },
     },
   };

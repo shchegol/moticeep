@@ -1,9 +1,9 @@
-import {read, update} from '../controllers/user';
+import {readUser, updateUser} from '../controllers/user';
 
 const authRouts = (router, path) => {
   router
-    .get(`${path}/:id`, read)
-    .put(`${path}/:id`, update)
+    .get(`${path}/:id`, readUser)
+    .put(`${path}/:id`, updateUser)
 };
 
 export default authRouts;

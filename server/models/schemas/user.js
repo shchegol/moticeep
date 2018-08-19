@@ -57,7 +57,6 @@ userSchema.methods.checkPassword = function(password) {
 };
 
 userSchema.methods.getPublicFields = function() {
-  console.log('getPublicFields')
   return {
     id: this._id,
     displayName: this.displayName,
