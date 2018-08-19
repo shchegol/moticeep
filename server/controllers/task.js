@@ -18,17 +18,18 @@ export const createTask = async ctx => {
 export const updateTask = async ctx => {
   const ctxBody = ctx.request.body;
 
-  User.findOneAndUpdate(
-    {'_id': ctxBody.userId, 'tasks._id': ctxBody.task._id},
-    {'$set': {'tasks.$': ctxBody.task}},
-    {'new': true},
-    (err, doc) => {
-      if (err) ctx.throw(err);
+  try {
+    const user = await User.findOneAndUpdate(
+      {'_id': ctxBody.userId, 'tasks._id': ctxBody.task._id},
+      {'$set': {'tasks.$': ctxBody.task}},
+      {'new': true},
+    );
 
-      ctx.status = 200;
-      ctx.body = doc.tasks;
-    },
-  );
+    ctx.status = 200;
+    ctx.body = user.tasks;
+  } catch (error) {
+    ctx.throw(error.statusCode || error.status || 500, 'Ошибка на сервере');
+  }
 };
 
 export const deleteTask = async ctx => {
