@@ -36,14 +36,14 @@
       <div class="row">
         <div class="col">
           <b-form-group label="Сумма" label-for="inputValue">
-            <b-form-input v-model="value" id="inputValue" placeholder="300"></b-form-input>
+            <b-form-input v-model="value" type="number" id="inputValue" placeholder="300"></b-form-input>
           </b-form-group>
         </div>
       </div>
 
       <div class="row">
         <div class="col">
-          <b-form-checkbox v-model="editable">
+          <b-form-checkbox id="checkbox-editable" v-model="editable">
             редактируемое
           </b-form-checkbox>
         </div>
@@ -78,8 +78,8 @@
 
     data() {
       return {
-        title: 'Убрать комнату',
-        value: '100',
+        title: '',
+        value: 0,
         editable: false,
 
         tasks: this.user.tasks,
