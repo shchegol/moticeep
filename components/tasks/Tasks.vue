@@ -6,7 +6,7 @@
       </div>
 
       <div class="col-auto">
-        <b-button @click="modalShow" variant="link" v-b-tooltip.hover title="Добавить задание">
+        <b-button @click="taskCreateStart" variant="link" v-b-tooltip.hover title="Добавить задание">
           <i class="material-icons md-24">add</i>
         </b-button>
       </div>
@@ -36,7 +36,7 @@
       <div class="row">
         <div class="col">
           <b-form-group label="Сумма" label-for="inputValue">
-            <b-form-input v-model="taskModal.data.value" type="number" id="inputValue" placeholder="300"></b-form-input>
+            <b-form-input v-model.number="taskModal.data.value" type="number" id="inputValue" placeholder="300"></b-form-input>
           </b-form-group>
         </div>
       </div>
@@ -100,6 +100,24 @@
     },
 
     methods: {
+      taskCreateStart() {
+        this.taskModal.isEdit = false;
+        this.modalShow();
+      },
+
+      taskEditStart(task) {
+        this.taskModal.data = task;
+        this.taskModal.isEdit = true;
+        this.modalShow();
+      },
+
+      clearForm() {
+        this.taskModal.data._id = '';
+        this.taskModal.data.title = '';
+        this.taskModal.data.value = 0;
+        this.taskModal.data.editable = false;
+      },
+
       async taskCreate() {
         try {
           const {data} = await axios.post(`/api/tasks`, {
@@ -113,26 +131,24 @@
 
           this.tasks = data;
           this.modalHide();
+          this.clearForm();
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');
           }
-
           throw error;
         }
       },
 
-      taskEditStart(task) {
-        this.taskModal.data = task;
-        this.taskModal.isEdit = true;
-        this.modalShow();
-      },
-
       async taskEdit() {
         try {
-          const {data} = await axios.put(`/api/tasks/${this.taskModal.data._id}`, {'userId': this.user._id, 'task': this.taskModal.data});
+          const {data} = await axios.put(`/api/tasks/${this.taskModal.data._id}`, {
+            userId: this.user._id,
+            task: this.taskModal.data,
+          });
           this.tasks = data;
           this.modalHide();
+          this.clearForm();
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');

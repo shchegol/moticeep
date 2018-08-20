@@ -38,7 +38,6 @@ export const deleteTask = async ctx => {
   let taskId = urlArr[urlArr.length - 1];
 
   try {
-    // todo use findOneAndDelete
     const user = await User.findOne({'_id': userId}).exec();
 
     user.tasks.remove({'_id': taskId});
