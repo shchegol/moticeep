@@ -1,9 +1,15 @@
 <template>
   <div class="container-fluid ">
-    <div class="row">
-      <div class="col-auto">
+    <div class="row align-items-center">
+      <div class="col">
         <nuxt-link to="/" class="btn" v-b-tooltip.hover title="Назад">
           <i class="material-icons md-36">arrow_back</i>
+        </nuxt-link>
+      </div>
+
+      <div class="col-auto">
+        <nuxt-link to="/user/edit" class="btn" v-b-tooltip.hover title="Редактировать">
+          <i class="material-icons md-24">edit</i>
         </nuxt-link>
       </div>
     </div>
