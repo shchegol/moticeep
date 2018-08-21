@@ -21,6 +21,14 @@
           </div>
         </div>
 
+        <div v-if="isRegister" class="row">
+          <div class="col">
+            <b-form-group label="Логин" label-for="inputDisplayName">
+              <b-form-input v-model.trim="displayName" id="inputDisplayName" placeholder="Иван Петров"></b-form-input>
+            </b-form-group>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col">
             <b-form-group :state="email.state" :invalid-feedback="email.message"
@@ -76,8 +84,10 @@
 
     data() {
       return {
+        displayName: 'Александр',
+
         email: {
-          value: '123@123.12',
+          value: 'test@test.ru',
           state: null,
           message: '',
         },
@@ -172,6 +182,7 @@
 
         try {
           await this.$store.dispatch('register', {
+            displayName: this.displayName,
             email: this.email.value,
             password: this.password.value,
           });

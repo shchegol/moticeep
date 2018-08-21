@@ -29,9 +29,10 @@ const createStore = () => {
         }
       },
 
-      async register({commit}, {email, password}) {
+      async register({commit}, {displayName, email, password}) {
         try {
           const {data} = await axios.post('/api/auth/register', {
+            displayName,
             email,
             password,
           });
