@@ -1,7 +1,11 @@
 <template>
   <header class="row align-items-center">
-    <div class="col">
+    <div class="col-auto">
       <h1>MOTIKEEP</h1>
+    </div>
+
+    <div class="col">
+      <nuxt-link to="/donate" class="btn btn-link">Помочь проекту</nuxt-link>
     </div>
 
     <div v-if="auth" class="col-auto">
