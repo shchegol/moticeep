@@ -5,7 +5,7 @@
     </div>
 
     <div v-if="auth" class="col-auto">
-      {{ user.displayName }}
+      <nuxt-link to="/user" class="btn btn-link">{{user.displayName}}</nuxt-link>
     </div>
 
     <div class="col-auto">
