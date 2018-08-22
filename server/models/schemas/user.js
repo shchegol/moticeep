@@ -24,6 +24,8 @@ const userSchema = new mongoose.Schema({
     ],
   },
 
+  points: 0,
+
   passwordHash: {
     type: String,
     required: true,
@@ -62,6 +64,7 @@ userSchema.methods.getPublicFields = function() {
     displayName: this.displayName,
     email: this.email,
     tasks: this.tasks,
+    points: this.points,
     motivators: this.motivators,
     deleted: this.deleted,
   };

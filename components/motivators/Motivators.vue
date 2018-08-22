@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col">
-        <h4>Мотиватор</h4>
+        <h4>Мотиваторы</h4>
       </div>
 
       <div class="col-auto">
@@ -15,7 +15,9 @@
     <div class="form-row">
       <motivators-card v-for="motivator in motivators"
                        :key="motivator.id" :motivator="motivator"
-                       @motivatorEdit="motivatorEditStart" @motivatorDelete="motivatorDelete"></motivators-card>
+                       @motivatorEdit="motivatorEditStart"
+                       @motivatorDelete="motivatorDelete"
+                       @motivatorFavorite="motivatorFavorite"></motivators-card>
     </div>
 
     <!-- Modal Component -->
@@ -33,18 +35,18 @@
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <b-form-group label="Описание" label-for="inputValue">
-            <b-form-textarea id="textarea1"
-                             v-model="motivatorModal.data.description"
-                             placeholder="Конструктор"
-                             :rows="3"
-                             :max-rows="6">
-            </b-form-textarea>
-          </b-form-group>
-        </div>
-      </div>
+      <!--<div class="row">-->
+        <!--<div class="col">-->
+          <!--<b-form-group label="Описание" label-for="inputValue">-->
+            <!--<b-form-textarea id="textarea1"-->
+                             <!--v-model="motivatorModal.data.description"-->
+                             <!--placeholder="Конструктор"-->
+                             <!--:rows="3"-->
+                             <!--:max-rows="6">-->
+            <!--</b-form-textarea>-->
+          <!--</b-form-group>-->
+        <!--</div>-->
+      <!--</div>-->
 
       <div class="row">
         <div class="col">
@@ -135,7 +137,7 @@
               title: this.motivatorModal.data.title,
               value: this.motivatorModal.data.value,
               img: this.motivatorModal.data.img,
-              description: this.motivatorModal.data.description,
+              // description: this.motivatorModal.data.description,
               maxValue: this.motivatorModal.data.maxValue,
             },
           });
@@ -173,8 +175,26 @@
         try {
           const {data} = await axios.delete(`/api/motivators/${motivator._id}`, {
             params: {
-              userId: this.user._id
-            }
+              userId: this.user._id,
+            },
+          });
+          this.motivators = data;
+        } catch (error) {
+          if (!error.response) {
+            throw new Error('Ошибка на сервере');
+          }
+
+          throw error;
+        }
+      },
+
+      async motivatorFavorite(motivator) {
+        motivator.favourite = !motivator.favourite;
+
+        try {
+          const {data} = await axios.put(`/api/motivators/${motivator._id}`, {
+            userId: this.user._id,
+            motivator: motivator,
           });
           this.motivators = data;
         } catch (error) {

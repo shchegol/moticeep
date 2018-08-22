@@ -1,25 +1,33 @@
 <template>
   <div class="col-12 col-md-6 col-lg-4 mb-2 align-items-stretch">
     <b-card bg-variant="primary" text-variant="white" class="h-100" no-body>
-      <b-card-body class="d-flex flex-column">
+      <div class="row align-items-center justify-content-end no-gutters mt-2">
+        <div class="col-auto">
+          <b-button @click="motivatorFavorite" variant="link">
+            <i class="material-icons md-24 color-orange-500">{{task.favourite ? 'star' : 'star_border' }}</i>
+          </b-button>
+        </div>
+
+        <div class="col-auto">
+          <b-dropdown variant="primary" right no-caret>
+            <template slot="button-content">
+              <i class="material-icons md-24">more_vert</i>
+            </template>
+
+            <b-dropdown-item-button @click="taskEdit">
+              <i class="material-icons">edit</i>&nbsp;Редактировать
+            </b-dropdown-item-button>
+            <b-dropdown-item-button @click="taskDelete">
+              <i class="material-icons">delete</i>&nbsp;Удалить
+            </b-dropdown-item-button>
+          </b-dropdown>
+        </div>
+      </div>
+
+      <b-card-body class="d-flex flex-column pt-0">
         <div class="row flex-grow-1">
           <div class="col">
             <h4 class="card-title">{{ task.title }}</h4>
-          </div>
-
-          <div class="col-auto">
-            <b-dropdown variant="primary" right no-caret>
-              <template slot="button-content">
-                <i class="material-icons md-24">more_vert</i>
-              </template>
-
-              <b-dropdown-item-button @click="taskEdit">
-                <i class="material-icons">edit</i>&nbsp;Редактировать
-              </b-dropdown-item-button>
-              <b-dropdown-item-button @click="taskDelete">
-                <i class="material-icons">delete</i>&nbsp;Удалить
-              </b-dropdown-item-button>
-            </b-dropdown>
           </div>
         </div>
 

@@ -2,7 +2,7 @@
   <div>
     <div class="row">
       <div class="col">
-        <h4>Задание</h4>
+        <h4>Задания</h4>
       </div>
 
       <div class="col-auto">
