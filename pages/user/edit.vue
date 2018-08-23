@@ -35,7 +35,7 @@
   export default {
     name: 'user',
 
-    middleware: 'authenticated',
+    middleware: 'notAuthenticated',
 
     computed: mapState([
       'user',

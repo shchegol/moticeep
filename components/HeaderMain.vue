@@ -39,6 +39,7 @@
       async logout() {
         try {
           await this.$store.dispatch('logout');
+          this.$router.push('/start');
         } catch (e) {
           console.log(e.message);
         }

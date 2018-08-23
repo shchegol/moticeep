@@ -3,7 +3,7 @@
     <b-card bg-variant="primary" text-variant="white" class="h-100" no-body>
       <div class="row align-items-center justify-content-end no-gutters mt-2">
         <div class="col-auto">
-          <b-button @click="motivatorFavorite" variant="link">
+          <b-button @click="taskFavorite" variant="link">
             <i class="material-icons md-24 color-orange-500">{{task.favourite ? 'star' : 'star_border' }}</i>
           </b-button>
         </div>
@@ -72,6 +72,9 @@
       },
       taskDelete() {
         this.$emit('taskDelete', this.task);
+      },
+      taskFavorite() {
+        this.$emit('taskFavorite', this.task);
       },
     },
   };

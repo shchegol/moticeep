@@ -24,6 +24,8 @@
       Motivators,
     },
 
+    middleware: 'notAuthenticated',
+
     data() {
       return {
         tasks: [] || this.user.tasks,

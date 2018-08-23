@@ -35,7 +35,7 @@ export default app => {
 
       store: mongooseStore.create({
         name: 'Session',
-        expires: 3600 * 4,
+        expires: 3600 * 24 * 10,
         connection: mongoose,
       }),
     }, app))

@@ -80,7 +80,7 @@
   export default {
     name: 'auth-index',
 
-    middleware: 'notAuthenticated',
+    middleware: 'authenticated',
 
     data() {
       return {
