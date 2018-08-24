@@ -45,7 +45,7 @@
 
         <div class="row mt-2">
           <div class="col">
-            <b-button variant="success" block v-b-tooltip.hover title="Добавить в копилку">
+            <b-button @click="pointsAdd" variant="success" block v-b-tooltip.hover title="Добавить в копилку">
               {{task.editable ? 'Добавить': 'Выполнено'}}
             </b-button>
           </div>
@@ -76,6 +76,9 @@
       taskFavorite() {
         this.$emit('taskFavorite', this.task);
       },
+      pointsAdd() {
+        this.$emit('pointsAdd', this.task);
+      }
     },
   };
 </script>

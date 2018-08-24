@@ -35,6 +35,7 @@ const createStore = () => {
             displayName,
             email,
             password,
+            points: 0,
           });
 
           commit('setUser', data);

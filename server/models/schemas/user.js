@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     ],
   },
 
-  points: 0,
+  points: Number,
 
   passwordHash: {
     type: String,

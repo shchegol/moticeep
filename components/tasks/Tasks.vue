@@ -15,7 +15,9 @@
     <div class="form-row">
       <tasks-card v-for="task in tasks"
                   :key="task.id" :task="task"
-                  @taskEdit="taskEditStart" @taskDelete="taskDelete"></tasks-card>
+                  @taskEdit="taskEditStart"
+                  @taskDelete="taskDelete"
+                  @pointsAdd="pointsAdd"></tasks-card>
     </div>
 
     <!-- Modal Component -->
@@ -161,6 +163,22 @@
       async taskDelete(task) {
         try {
           const {data} = await axios.delete(`/api/tasks/${task._id}`, {params: {userId: this.user._id}});
+          this.tasks = data;
+        } catch (error) {
+          if (!error.response) {
+            throw new Error('Ошибка на сервере');
+          }
+
+          throw error;
+        }
+      },
+
+      async pointsAdd(task) {
+        try {
+          const {data} = await axios.put(`/api/tasks/${this.taskModal.data._id}`, {
+            userId: this.user._id,
+            task: this.taskModal.data,
+          });
           this.tasks = data;
         } catch (error) {
           if (!error.response) {

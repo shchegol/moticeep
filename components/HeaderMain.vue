@@ -8,8 +8,12 @@
       <nuxt-link to="/donate" class="btn btn-link">Помочь проекту</nuxt-link>
     </div>
 
+    <div class="col-auto">
+      {{ user.points }}
+    </div>
+
     <div v-if="auth" class="col-auto">
-      <nuxt-link to="/user" class="btn btn-link">{{user.displayName}}</nuxt-link>
+      <nuxt-link to="/user" class="btn btn-link">{{ user.displayName }}</nuxt-link>
     </div>
 
     <div class="col-auto">
@@ -33,6 +37,10 @@
         type: Object,
         required: true,
       },
+    },
+
+    mounted() {
+      console.log(this.user)
     },
 
     methods: {

@@ -35,19 +35,6 @@
         </div>
       </div>
 
-      <!--<div class="row">-->
-        <!--<div class="col">-->
-          <!--<b-form-group label="Описание" label-for="inputValue">-->
-            <!--<b-form-textarea id="textarea1"-->
-                             <!--v-model="motivatorModal.data.description"-->
-                             <!--placeholder="Конструктор"-->
-                             <!--:rows="3"-->
-                             <!--:max-rows="6">-->
-            <!--</b-form-textarea>-->
-          <!--</b-form-group>-->
-        <!--</div>-->
-      <!--</div>-->
-
       <div class="row">
         <div class="col">
           <b-form-group label="Стоимость" label-for="inputValue">
