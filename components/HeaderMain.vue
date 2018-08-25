@@ -12,13 +12,13 @@
       {{ user.points }}
     </div>
 
-    <div v-if="auth" class="col-auto">
+    <div v-if="isAuthenticated" class="col-auto">
       <nuxt-link to="/user" class="btn btn-link">{{ user.displayName }}</nuxt-link>
     </div>
 
     <div class="col-auto">
-      <nuxt-link v-if="!auth" to="/auth" class="btn btn-link">Войти</nuxt-link>
-      <button v-else @click="logout" class="btn btn-link">Выйти</button>
+      <button v-if="isAuthenticated"  @click="logout" class="btn btn-link">Выйти</button>
+      <nuxt-link v-else to="/auth" class="btn btn-link">Войти</nuxt-link>
     </div>
   </header>
 </template>
@@ -28,19 +28,16 @@
     name: 'header-main',
 
     props: {
-      auth: {
-        type: Boolean,
-        required: true,
-      },
-
       user: {
         type: Object,
         required: true,
       },
     },
 
-    mounted() {
-      console.log(this.user)
+    computed: {
+      isAuthenticated () {
+        return this.$store.getters.isAuthenticated
+      }
     },
 
     methods: {

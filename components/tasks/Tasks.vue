@@ -123,12 +123,9 @@
       async taskCreate() {
         try {
           const {data} = await axios.post(`/api/tasks`, {
-            userId: this.user._id,
-            task: {
               title: this.taskModal.data.title,
               value: this.taskModal.data.value,
               editable: this.taskModal.data.editable,
-            },
           });
 
           this.tasks = data;

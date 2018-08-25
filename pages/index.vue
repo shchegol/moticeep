@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <header-main :auth="auth" :user="user"></header-main>
+    <header-main :user="user"></header-main>
 
     <tasks :user="user"></tasks>
 
@@ -26,15 +26,7 @@
 
     middleware: 'notAuthenticated',
 
-    data() {
-      return {
-        tasks: [] || this.user.tasks,
-        motivators: [] || this.user.motivators,
-      };
-    },
-
     computed: mapState([
-      'auth',
       'user',
     ]),
   };

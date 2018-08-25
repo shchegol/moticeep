@@ -1,79 +1,18 @@
-import Vuex  from 'vuex';
-import axios from 'axios';
-// import cookieparser from 'cookieparser';
-// import Cookie       from 'js-cookie';
+import Vuex      from 'vuex';
+import mutations from './mutations';
+import actions   from './actions';
+import auth   from './modules/auth';
 
-const createStore = () => {
+export default () => {
   return new Vuex.Store({
     state: {
       user: {},
-      auth: false,
-      currency: 'руб',
     },
-
-    mutations: {
-      setUser(state, user) {
-        state.user = user;
-      },
-
-      setAuth(state, auth) {
-        state.auth = auth;
-      },
+    mutations,
+    actions,
+    modules: {
+      auth,
     },
-
-    actions: {
-      nuxtServerInit({commit}, {req}) {
-        if (req.session.passport && req.state.user) {
-          commit('setAuth', true);
-          commit('setUser', req.state.user);
-        }
-      },
-
-      async register({commit}, {displayName, email, password}) {
-        try {
-          const {data} = await axios.post('/api/auth/register', {
-            displayName,
-            email,
-            password,
-            points: 0,
-          });
-
-          commit('setUser', data);
-          commit('setAuth', true);
-        } catch (error) {
-          if (!error.response) {
-            throw new Error('Ошибка на сервере');
-          }
-
-          throw error;
-        }
-      },
-
-      async login({commit}, {email, password}) {
-        try {
-          const {data} = await axios.post('/api/auth/login', {
-            email,
-            password,
-          });
-
-          commit('setUser', data);
-          commit('setAuth', true);
-        } catch (error) {
-          if (!error.response) {
-            throw new Error('Ошибка на сервере');
-          }
-
-          throw error;
-        }
-      },
-
-      async logout({commit}) {
-        await axios.get('/api/auth/logout');
-        commit('setUser', {});
-        commit('setAuth', false);
-      },
-    },
+    strict: process.env.NODE_ENV !== 'production'
   });
 };
-
-export default createStore;

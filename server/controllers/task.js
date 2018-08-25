@@ -1,11 +1,15 @@
 import User from '../models/user';
 
 export const createTask = async ctx => {
-  const ctxBody = ctx.request.body;
+
+  console.log('authenticate', ctx.isAuthenticated());
+  console.log('#############################################');
+  console.log('state', ctx.state.user);
+  console.log('#############################################');
 
   try {
-    const user = await User.findOne({'_id': ctxBody.userId}).exec();
-    user.tasks.push(ctxBody.task);
+    const user = await User.findOne({'_id': ctx.state.user._id}).exec();
+    user.tasks.push(ctx.request.body);
     await user.save();
 
     ctx.status = 200;
