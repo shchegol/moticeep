@@ -1,9 +1,9 @@
 import axios from 'axios/index';
 
 const actions = {
-  async taskCreate({commit}, createdFields) {
+  async motivatorCreate({commit}, createdFields) {
     try {
-      const {data} = await axios.post('/api/tasks', createdFields);
+      const {data} = await axios.post('/api/motivators', createdFields);
 
       commit('setUser', data);
     } catch (error) {
@@ -15,9 +15,9 @@ const actions = {
     }
   },
 
-  async taskEdit({commit}, {id, updatedFields}) {
+  async motivatorEdit({commit}, {id, updatedFields}) {
     try {
-      const {data} = await axios.put(`/api/tasks/${id}`, updatedFields);
+      const {data} = await axios.put(`/api/motivators/${id}`, updatedFields);
 
       commit('setUser', data);
     } catch (error) {
@@ -29,9 +29,9 @@ const actions = {
     }
   },
 
-  async taskDelete({commit}, id) {
+  async motivatorDelete({commit}, id) {
     try {
-      const {data} = await axios.delete(`/api/tasks/${id}`);
+      const {data} = await axios.delete(`/api/motivators/${id}`);
 
       commit('setUser', data);
     } catch (error) {
@@ -47,4 +47,3 @@ const actions = {
 export default {
   actions,
 };
-

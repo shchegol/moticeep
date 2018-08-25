@@ -5,7 +5,7 @@
         <div class="row justify-content-end no-gutters card-img-buttons mt-2">
           <div class="col-auto">
             <b-button @click="motivatorFavorite" variant="link">
-              <i class="material-icons md-24 color-orange-500">{{motivator.favourite ? 'star' : 'star_border' }}</i>
+              <i class="material-icons md-24 color-orange-500">{{motivator.favorite ? 'star' : 'star_border' }}</i>
             </b-button>
           </div>
           <div class="col-auto">
@@ -31,12 +31,6 @@
             <h4 class="card-title">{{ motivator.title }}</h4>
           </div>
         </div>
-
-        <!--<div class="row">-->
-          <!--<div class="col">-->
-            <!--{{ motivator.description }}-->
-          <!--</div>-->
-        <!--</div>-->
 
         <div class="row">
           <div class="col">
@@ -68,10 +62,10 @@
         this.$emit('motivatorEdit', this.motivator);
       },
       motivatorDelete() {
-        this.$emit('motivatorDelete', this.motivator);
+        this.$emit('motivatorDelete', this.motivator._id);
       },
       motivatorFavorite() {
-        this.$emit('motivatorFavorite', this.motivator);
+        this.$emit('motivatorFavorite', this.motivator._id, {favorite: !this.motivator.favorite});
       }
     },
   };

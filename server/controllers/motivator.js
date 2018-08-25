@@ -1,51 +1,39 @@
 import User from '../models/user';
+import _    from 'lodash';
+import {getLastValueFromURLPath} from '../utils/common'
 
 export const createMotivator = async ctx => {
-  const ctxBody = ctx.request.body;
+  const user = await User.findOne({'_id': ctx.state.user._id}).exec();
 
-  try {
-    const user = await User.findOne({'_id': ctxBody.userId}).exec();
-    user.motivators.push(ctxBody.motivator);
-    await user.save();
+  user.motivators.push(ctx.request.body);
+  await user.save();
 
-    ctx.status = 200;
-    ctx.body = user.motivators;
-  } catch (error) {
-    ctx.throw(error.statusCode || error.status || 500, 'Ошибка на сервере');
-  }
+  ctx.status = 200;
+  ctx.body = user.getPublicFields();
 };
 
 export const updateMotivator = async ctx => {
+  const motivatorId = getLastValueFromURLPath(ctx.request.path);
   const ctxBody = ctx.request.body;
+  const user = await User.findOne({'_id': ctx.state.user._id}).exec();
+  const motivator = user.motivators.id(motivatorId);
 
-  try {
-    const user = await User.findOneAndUpdate(
-      {'_id': ctxBody.userId, 'motivators._id': ctxBody.motivator._id},
-      {'$set': {'motivators.$': ctxBody.motivator}},
-      {'new': true},
-    );
+  _.forIn(ctxBody, (value, key) => {
+    motivator[key] = value
+  });
+  await user.save();
 
-    ctx.status = 200;
-    ctx.body = user.motivators;
-  } catch (error) {
-    ctx.throw(error.statusCode || error.status || 500, 'Ошибка на сервере');
-  }
+  ctx.status = 200;
+  ctx.body = user.getPublicFields();
 };
 
 export const deleteMotivator = async ctx => {
-  const userId = ctx.request.query.userId;
-  let urlArr = ctx.request.path.split('/');
-  let taskId = urlArr[urlArr.length - 1];
+  const motivatorId = getLastValueFromURLPath(ctx.request.path);
+  const user = await User.findOne({'_id': ctx.state.user._id}).exec();
 
-  try {
-    const user = await User.findOne({'_id': userId}).exec();
+  user.motivators.remove({'_id': motivatorId});
+  await user.save();
 
-    user.motivators.remove({'_id': taskId});
-    await user.save();
-
-    ctx.status = 200;
-    ctx.body = user.motivators;
-  } catch (error) {
-    ctx.throw(error.statusCode || error.status || 500, 'Ошибка на сервере');
-  }
+  ctx.status = 200;
+  ctx.body = user.getPublicFields();
 };

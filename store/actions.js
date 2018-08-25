@@ -4,4 +4,4 @@ export default {
       commit('setUser', req.state.user.getPublicFields());
     }
   },
-}
+};

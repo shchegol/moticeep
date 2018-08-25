@@ -13,11 +13,11 @@
     </div>
 
     <div class="form-row">
-      <motivators-card v-for="motivator in motivators"
-                       :key="motivator.id" :motivator="motivator"
+      <motivators-card v-for="motivator in motivators" :key="motivator.id"
+                       :motivator="motivator"
                        @motivatorEdit="motivatorEditStart"
                        @motivatorDelete="motivatorDelete"
-                       @motivatorFavorite="motivatorFavorite"></motivators-card>
+                       @motivatorFavorite="motivatorEdit"></motivators-card>
     </div>
 
     <!-- Modal Component -->
@@ -45,7 +45,7 @@
 
       <div class="row mt-4">
         <div class="col-auto">
-          <b-button v-if="motivatorModal.isEdit" @click="motivatorEdit" variant="success">Редактировать</b-button>
+          <b-button v-if="motivatorModal.isEdit" @click="motivatorEdit(editMotivatorId, motivatorModal.data)" variant="success">Редактировать</b-button>
           <b-button v-else @click="motivatorCreate" variant="success">Создать</b-button>
         </div>
       </div>
@@ -75,16 +75,14 @@
       return {
         motivatorModal: {
           data: {
-            _id: '',
-            title: '',
-            img: 'http://www.stihi.ru/pics/2016/07/28/10120.jpg',
-            description: '',
-            value: 0,
-            maxValue: 0,
+            title: null,
+            img: null,
+            value: null,
+            maxValue: null,
           },
           isEdit: false,
         },
-
+        editMotivatorId: '',
         motivators: this.user.motivators,
       };
     },
@@ -102,36 +100,33 @@
       },
 
       motivatorEditStart(motivator) {
-        this.motivatorModal.data = motivator;
+        this.editMotivatorId = motivator._id;
+        this.motivatorModal.data.title = motivator.title;
+        this.motivatorModal.data.value = motivator.value;
+        this.motivatorModal.data.maxValue = motivator.maxValue;
+        this.motivatorModal.data.img = motivator.img;
         this.motivatorModal.isEdit = true;
         this.modalShow();
       },
 
       clearForm() {
-        this.motivatorModal.data._id = '';
-        this.motivatorModal.data.title = '';
-        this.motivatorModal.data.value = 0;
-        this.motivatorModal.data.img = 'http://www.stihi.ru/pics/2016/07/28/10120.jpg';
-        this.motivatorModal.data.description = '';
-        this.motivatorModal.data.maxValue = 0;
+        _.forIn(this.motivatorModal.data, (value, key) => {
+          this.motivatorModal.data[key] = null
+        });
       },
 
       async motivatorCreate() {
-        try {
-          const {data} = await axios.post(`/api/motivators`, {
-            userId: this.user._id,
-            motivator: {
-              title: this.motivatorModal.data.title,
-              value: this.motivatorModal.data.value,
-              img: this.motivatorModal.data.img,
-              // description: this.motivatorModal.data.description,
-              maxValue: this.motivatorModal.data.maxValue,
-            },
-          });
+        let createdFields = {
+          title: this.motivatorModal.data.title || 'Мечта',
+          value: this.motivatorModal.data.value || 1,
+          maxValue: this.motivatorModal.data.maxValue || 1000,
+          img: this.motivatorModal.data.img || 'http://www.stihi.ru/pics/2016/07/28/10120.jpg',
+          favorite: false,
+        };
 
-          this.motivators = data;
+        try {
+          await this.$store.dispatch('motivatorCreate', createdFields);
           this.modalHide();
-          this.clearForm();
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');
@@ -140,15 +135,11 @@
         }
       },
 
-      async motivatorEdit() {
+      async motivatorEdit(id, updatedFields) {
         try {
-          const {data} = await axios.put(`/api/motivators/${this.motivatorModal.data._id}`, {
-            userId: this.user._id,
-            motivator: this.motivatorModal.data,
-          });
-          this.motivators = data;
+          await this.$store.dispatch('motivatorEdit', {id, updatedFields});
+
           this.modalHide();
-          this.clearForm();
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');
@@ -158,32 +149,9 @@
         }
       },
 
-      async motivatorDelete(motivator) {
+      async motivatorDelete(id) {
         try {
-          const {data} = await axios.delete(`/api/motivators/${motivator._id}`, {
-            params: {
-              userId: this.user._id,
-            },
-          });
-          this.motivators = data;
-        } catch (error) {
-          if (!error.response) {
-            throw new Error('Ошибка на сервере');
-          }
-
-          throw error;
-        }
-      },
-
-      async motivatorFavorite(motivator) {
-        motivator.favourite = !motivator.favourite;
-
-        try {
-          const {data} = await axios.put(`/api/motivators/${motivator._id}`, {
-            userId: this.user._id,
-            motivator: motivator,
-          });
-          this.motivators = data;
+          await this.$store.dispatch('motivatorDelete', id);
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');
