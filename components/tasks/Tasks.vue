@@ -15,6 +15,7 @@
     <div class="form-row">
       <tasks-card v-for="task in tasks"
                   :key="task.id" :task="task"
+                  @pointsAdd="pointsAdd"
                   @taskEdit="taskEditStart"
                   @taskFavorite="taskEdit"
                   @taskDelete="taskDelete"></tasks-card>
@@ -118,7 +119,7 @@
 
       clearForm() {
         _.forIn(this.taskModal.data, (value, key) => {
-          this.taskModal.data[key] = null
+          this.taskModal.data[key] = null;
         });
       },
 
@@ -158,6 +159,20 @@
       async taskDelete(id) {
         try {
           await this.$store.dispatch('taskDelete', id);
+        } catch (error) {
+          if (!error.response) {
+            throw new Error('Ошибка на сервере');
+          }
+
+          throw error;
+        }
+      },
+
+      async pointsAdd(updatedFields) {
+        const userId = this.user._id;
+        console.log(updatedFields)
+        try {
+          await this.$store.dispatch('userEdit', {userId, updatedFields});
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');

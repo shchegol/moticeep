@@ -118,7 +118,7 @@
       async motivatorCreate() {
         let createdFields = {
           title: this.motivatorModal.data.title || 'Мечта',
-          value: this.motivatorModal.data.value || 1,
+          value: 0,
           maxValue: this.motivatorModal.data.maxValue || 1000,
           img: this.motivatorModal.data.img || 'http://www.stihi.ru/pics/2016/07/28/10120.jpg',
           favorite: false,

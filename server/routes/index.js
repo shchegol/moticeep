@@ -1,5 +1,6 @@
 import Router      from 'koa-router';
 import authRouter  from './auth';
+import userRouter  from './user';
 import tasksRouter from './tasks';
 import motivatorsRouter from './motivators';
 
@@ -9,6 +10,7 @@ export default app => {
   });
 
   authRouter(router, '/auth');
+  userRouter(router, '/user');
   tasksRouter(router, '/tasks');
   motivatorsRouter(router, '/motivators');
 
