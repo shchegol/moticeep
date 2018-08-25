@@ -155,11 +155,9 @@
         }
       },
 
-      async taskDelete(task) {
+      async taskDelete(id) {
         try {
-          await this.$store.dispatch('taskDelete', {
-            id: task._id,
-          });
+          await this.$store.dispatch('taskDelete', id);
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');

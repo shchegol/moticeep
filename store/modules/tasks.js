@@ -29,7 +29,7 @@ const actions = {
     }
   },
 
-  async taskDelete({commit}, {id}) {
+  async taskDelete({commit}, id) {
     try {
       const {data} = await axios.delete(`/api/tasks/${id}`);
 

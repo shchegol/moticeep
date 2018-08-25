@@ -71,7 +71,7 @@
         this.$emit('taskEdit', this.task);
       },
       taskDelete() {
-        this.$emit('taskDelete', this.task);
+        this.$emit('taskDelete', this.task._id);
       },
       taskFavorite() {
         this.$emit('taskFavorite', this.task._id, {favorite: !this.task.favorite});
