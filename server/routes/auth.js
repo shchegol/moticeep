@@ -1,4 +1,4 @@
-import {login, logout, register} from '../controllers/user';
+import {login, logout, register} from '../controllers/auth';
 
 const authRouts = (router, path) => {
   router

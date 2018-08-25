@@ -1,55 +1,39 @@
 import User from '../models/user';
+import _    from 'lodash';
+import {getLastValueFromURLPath} from '../utils/common'
 
 export const createTask = async ctx => {
+  const user = await User.findOne({'_id': ctx.state.user._id}).exec();
 
-  console.log('authenticate', ctx.isAuthenticated());
-  console.log('#############################################');
-  console.log('state', ctx.state.user);
-  console.log('#############################################');
+  user.tasks.push(ctx.request.body);
+  await user.save();
 
-  try {
-    const user = await User.findOne({'_id': ctx.state.user._id}).exec();
-    user.tasks.push(ctx.request.body);
-    await user.save();
-
-    ctx.status = 200;
-    ctx.body = user.tasks;
-  } catch (error) {
-    ctx.throw(error.statusCode || error.status || 500, 'Ошибка на сервере');
-  }
+  ctx.status = 200;
+  ctx.body = user.getPublicFields();
 };
 
 export const updateTask = async ctx => {
+  const taskId = getLastValueFromURLPath(ctx.request.path);
   const ctxBody = ctx.request.body;
+  const user = await User.findOne({'_id': ctx.state.user._id}).exec();
+  const task = user.tasks.id(taskId);
 
-  try {
-    const user = await User.findOneAndUpdate(
-      {'_id': ctxBody.userId, 'tasks._id': ctxBody.task._id},
-      {'$set': {'tasks.$': ctxBody.task}},
-      {'new': true},
-    );
+  _.forIn(ctxBody, (value, key) => {
+    task[key] = value
+  });
+  await user.save();
 
-    ctx.status = 200;
-    ctx.body = user.tasks;
-  } catch (error) {
-    ctx.throw(error.statusCode || error.status || 500, 'Ошибка на сервере');
-  }
+  ctx.status = 200;
+  ctx.body = user.getPublicFields();
 };
 
 export const deleteTask = async ctx => {
-  const userId = ctx.request.query.userId;
-  let urlArr = ctx.request.path.split('/');
-  let taskId = urlArr[urlArr.length - 1];
+  const taskId = getLastValueFromURLPath(ctx.request.path);
+  const user = await User.findOne({'_id': ctx.state.user._id}).exec();
 
-  try {
-    const user = await User.findOne({'_id': userId}).exec();
+  user.tasks.remove({'_id': taskId});
+  await user.save();
 
-    user.tasks.remove({'_id': taskId});
-    await user.save();
-
-    ctx.status = 200;
-    ctx.body = user.tasks;
-  } catch (error) {
-    ctx.throw(error.statusCode || error.status || 500, 'Ошибка на сервере');
-  }
+  ctx.status = 200;
+  ctx.body = user.getPublicFields();
 };

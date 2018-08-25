@@ -6,7 +6,7 @@ const taskSchema = new mongoose.Schema({
   title: String,
   value: Number,
   editable: Boolean,
-  favourite: Boolean,
+  favorite: Boolean,
 });
 
 const motivatorSchema = new mongoose.Schema({
@@ -15,7 +15,7 @@ const motivatorSchema = new mongoose.Schema({
   value: Number,
   maxValue: Number,
   done: Boolean,
-  favourite: Boolean,
+  favorite: Boolean,
 });
 
 const userSchema = new mongoose.Schema({

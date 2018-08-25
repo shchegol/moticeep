@@ -36,34 +36,6 @@ export const register = async ctx => {
   }
 };
 
-export const read = async ctx => {
-  let ctxBody = ctx.request.body;
-
-  try {
-    const user = await User.findOne({email: ctxBody.email}).exec();
-    ctx.body = user.getPublicFields();
-  } catch (error) {
-    ctx.throw(error.statusCode || error.status || 500, 'Ошибка на сервере');
-  }
-};
-
-export const updateUser = async ctx => {
-  const ctxBody = ctx.request.body;
-
-  try {
-    const user = await User.findOneAndUpdate(
-      {'_id': ctxBody.userId, 'tasks._id': ctxBody.task._id},
-      {'$set': {'tasks.$': ctxBody.task}},
-      {'new': true},
-    );
-
-    ctx.status = 200;
-    ctx.body = user.tasks;
-  } catch (error) {
-    ctx.throw(error.statusCode || error.status || 500, 'Ошибка на сервере');
-  }
-};
-
 export const login = async ctx => {
   return passport.authenticate('local', async (err, user, info) => {
     if (err) {
@@ -76,12 +48,7 @@ export const login = async ctx => {
 
     await ctx.login(user);
 
-    ctx.body = {
-      _id: user._id,
-      displayName: user.displayName,
-      tasks: user.tasks,
-      motivators: user.motivators,
-    };
+    ctx.body = user.getPublicFields();
   })(ctx);
 };
 

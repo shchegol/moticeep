@@ -4,7 +4,7 @@
       <div class="row align-items-center justify-content-end no-gutters mt-2">
         <div class="col-auto">
           <b-button @click="taskFavorite" variant="link">
-            <i class="material-icons md-24 color-orange-500">{{task.favourite ? 'star' : 'star_border' }}</i>
+            <i class="material-icons md-24 color-orange-500">{{task.favorite ? 'star' : 'star_border' }}</i>
           </b-button>
         </div>
 
@@ -45,7 +45,7 @@
 
         <div class="row mt-2">
           <div class="col">
-            <b-button @click="pointsAdd" variant="success" block v-b-tooltip.hover title="Добавить в копилку">
+            <b-button variant="success" block v-b-tooltip.hover title="Добавить в копилку">
               {{task.editable ? 'Добавить': 'Выполнено'}}
             </b-button>
           </div>
@@ -74,10 +74,7 @@
         this.$emit('taskDelete', this.task);
       },
       taskFavorite() {
-        this.$emit('taskFavorite', this.task);
-      },
-      pointsAdd() {
-        this.$emit('pointsAdd', this.task);
+        this.$emit('taskFavorite', this.task._id, {favorite: !this.task.favorite});
       }
     },
   };

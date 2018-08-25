@@ -16,12 +16,12 @@
       <tasks-card v-for="task in tasks"
                   :key="task.id" :task="task"
                   @taskEdit="taskEditStart"
-                  @taskDelete="taskDelete"
-                  @pointsAdd="pointsAdd"></tasks-card>
+                  @taskFavorite="taskEdit"
+                  @taskDelete="taskDelete"></tasks-card>
     </div>
 
     <!-- Modal Component -->
-    <b-modal ref="taskModal" centered hide-header hide-footer>
+    <b-modal ref="taskModal" @hidden="clearForm" centered hide-header hide-footer>
       <div class="row">
         <div class="col">
           <h3>{{ taskModal.isEdit ? 'Редактировать задание' : 'Новое задание'}}</h3>
@@ -53,7 +53,7 @@
 
       <div class="row mt-4">
         <div class="col-auto">
-          <b-button v-if="taskModal.isEdit" @click="taskEdit" variant="success">Редактировать</b-button>
+          <b-button v-if="taskModal.isEdit" @click="taskEdit(editTaskId, taskModal.data)" variant="success">Редактировать</b-button>
           <b-button v-else @click="taskCreate" variant="success">Создать</b-button>
         </div>
       </div>
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-  import axios     from 'axios';
+  import _         from 'lodash';
   import TasksCard from '~/components/tasks/TasksCard';
 
   export default {
@@ -83,14 +83,13 @@
       return {
         taskModal: {
           data: {
-            _id: '',
-            title: '',
-            value: 0,
-            editable: false,
+            title: null,
+            value: null,
+            editable: null,
           },
           isEdit: false,
         },
-
+        editTaskId: '',
         tasks: this.user.tasks,
       };
     },
@@ -108,29 +107,32 @@
       },
 
       taskEditStart(task) {
-        this.taskModal.data = task;
+        this.editTaskId = task._id;
+        this.taskModal.data.title = task.title;
+        this.taskModal.data.value = task.value;
+        this.taskModal.data.editable = task.editable;
+
         this.taskModal.isEdit = true;
         this.modalShow();
       },
 
       clearForm() {
-        this.taskModal.data._id = '';
-        this.taskModal.data.title = '';
-        this.taskModal.data.value = 0;
-        this.taskModal.data.editable = false;
+        _.forIn(this.taskModal.data, (value, key) => {
+          this.taskModal.data[key] = null
+        });
       },
 
       async taskCreate() {
-        try {
-          const {data} = await axios.post(`/api/tasks`, {
-              title: this.taskModal.data.title,
-              value: this.taskModal.data.value,
-              editable: this.taskModal.data.editable,
-          });
+        let createdFields = {
+          title: this.taskModal.data.title || 'За труды',
+          value: this.taskModal.data.value || 1,
+          editable: this.taskModal.data.editable || false,
+          favorite: false,
+        };
 
-          this.tasks = data;
+        try {
+          await this.$store.dispatch('taskCreate', createdFields);
           this.modalHide();
-          this.clearForm();
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');
@@ -139,15 +141,11 @@
         }
       },
 
-      async taskEdit() {
+      async taskEdit(id, updatedFields) {
         try {
-          const {data} = await axios.put(`/api/tasks/${this.taskModal.data._id}`, {
-            userId: this.user._id,
-            task: this.taskModal.data,
-          });
-          this.tasks = data;
+          await this.$store.dispatch('taskEdit', {id, updatedFields});
+
           this.modalHide();
-          this.clearForm();
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');
@@ -159,24 +157,9 @@
 
       async taskDelete(task) {
         try {
-          const {data} = await axios.delete(`/api/tasks/${task._id}`, {params: {userId: this.user._id}});
-          this.tasks = data;
-        } catch (error) {
-          if (!error.response) {
-            throw new Error('Ошибка на сервере');
-          }
-
-          throw error;
-        }
-      },
-
-      async pointsAdd(task) {
-        try {
-          const {data} = await axios.put(`/api/tasks/${this.taskModal.data._id}`, {
-            userId: this.user._id,
-            task: this.taskModal.data,
+          await this.$store.dispatch('taskDelete', {
+            id: task._id,
           });
-          this.tasks = data;
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');
