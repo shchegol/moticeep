@@ -170,7 +170,6 @@
 
       async pointsAdd(updatedFields) {
         const userId = this.user._id;
-        console.log(updatedFields)
         try {
           await this.$store.dispatch('userEdit', {userId, updatedFields});
         } catch (error) {

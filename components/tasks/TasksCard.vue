@@ -77,7 +77,6 @@
         this.$emit('taskFavorite', this.task._id, {favorite: !this.task.favorite});
       },
       pointsAdd() {
-        console.log(this.task.value);
         this.$emit('pointsAdd', {points: this.task.value});
       }
     },

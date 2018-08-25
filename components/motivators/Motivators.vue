@@ -54,6 +54,7 @@
 </template>
 
 <script>
+  import _              from 'lodash';
   import axios          from 'axios';
   import MotivatorsCard from '~/components/motivators/MotivatorsCard';
 
@@ -111,7 +112,7 @@
 
       clearForm() {
         _.forIn(this.motivatorModal.data, (value, key) => {
-          this.motivatorModal.data[key] = null
+          this.motivatorModal.data[key] = null;
         });
       },
 
