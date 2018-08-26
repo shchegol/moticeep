@@ -35,8 +35,8 @@
         <div class="row">
           <div class="col">
             <b-progress :max=" motivator.maxValue" height="1rem" variant="success" striped>
-              <b-progress-bar :value=" motivator.value">
-                <strong>{{ motivator.value}} / {{motivator.maxValue}}</strong>
+              <b-progress-bar :value="totalPoint">
+                <strong>{{ totalPoint }} / {{ motivator.maxValue }}</strong>
               </b-progress-bar>
             </b-progress>
           </div>
@@ -55,6 +55,22 @@
         type: Object,
         required: true,
       },
+
+      point: {
+        type: Object,
+      },
+    },
+
+    computed: {
+      totalPoint() {
+        if (this.point.byFavorite) {
+          if (this.motivator.favorite) {
+            return this.point.singlePoint
+          }
+        } else {
+          return this.point.singlePoint
+        }
+      }
     },
 
     methods: {
@@ -66,7 +82,7 @@
       },
       motivatorFavorite() {
         this.$emit('motivatorFavorite', this.motivator._id, {favorite: !this.motivator.favorite});
-      }
+      },
     },
   };
 </script>

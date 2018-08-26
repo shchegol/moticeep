@@ -14,7 +14,7 @@
 
     <div class="form-row">
       <motivators-card v-for="motivator in motivators" :key="motivator.id"
-                       :motivator="motivator"
+                       :motivator="motivator" :point="pointsDistribution"
                        @motivatorEdit="motivatorEditStart"
                        @motivatorDelete="motivatorDelete"
                        @motivatorFavorite="motivatorEdit"></motivators-card>
@@ -85,12 +85,33 @@
         },
         editMotivatorId: '',
         motivators: this.user.motivators,
+        point: 0,
       };
     },
 
     watch: {
       user(freshUser) {
         this.motivators = freshUser.motivators;
+      },
+    },
+
+    computed: {
+      pointsDistribution() {
+        let divisor = _.filter(this.user.motivators, 'favorite').length;
+        let totalPoints = this.user.points;
+        let pointsSystem = {
+          singlePoint: 0,
+          restPoint: 0,
+          byFavorite: divisor > 0,
+        };
+
+        if (divisor > 0) {
+          pointsSystem.singlePoint = Math.floor(totalPoints / divisor);
+        } else {
+          pointsSystem.singlePoint = Math.floor(totalPoints / this.user.motivators.length); ;
+        }
+
+        return pointsSystem
       },
     },
 
