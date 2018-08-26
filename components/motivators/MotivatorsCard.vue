@@ -1,8 +1,8 @@
 <template>
   <div class="col-12 col-md-6 col-lg-4 mb-2 align-items-stretch">
     <b-card no-body>
-      <div class="card-img-top" :style="{'background-image': `url(${motivator.img})`}">
-        <div class="row justify-content-end no-gutters card-img-buttons mt-2">
+      <div class="card-img-top" :style="{'background-image': `url('${motivator.img}')`}">
+        <div v-if="!motivator.done" class="row justify-content-end no-gutters card-img-buttons mt-2">
           <div class="col-auto">
             <b-button @click="motivatorFavorite" variant="link">
               <i class="material-icons md-24 color-orange-500">{{motivator.favorite ? 'star' : 'star_border' }}</i>
@@ -23,6 +23,12 @@
             </b-dropdown>
           </div>
         </div>
+
+        <div v-else class="row justify-content-end no-gutters card-img-buttons mt-2">
+          <b-button @click="motivatorDelete" variant="link" v-b-tooltip.hover title="Удалить навсегда?">
+            <i class="material-icons md-24 text-white">delete</i>
+          </b-button>
+        </div>
       </div>
 
       <div class="card-body">
@@ -35,10 +41,16 @@
         <div class="row">
           <div class="col">
             <b-progress :max=" motivator.maxValue" height="1rem" variant="success" striped>
-              <b-progress-bar :value="totalPoint">
-                <strong>{{ totalPoint }} / {{ motivator.maxValue }}</strong>
+              <b-progress-bar :value="motivator.value">
+                <strong>{{ motivator.value }} / {{ motivator.maxValue }}</strong>
               </b-progress-bar>
             </b-progress>
+          </div>
+        </div>
+
+        <div v-show="motivator.value >= motivator.maxValue && !motivator.done" class="row mt-2">
+          <div class="col">
+            <b-button @click="motivatorDone" variant="success" block>Достигнуто</b-button>
           </div>
         </div>
       </div>
@@ -56,21 +68,9 @@
         required: true,
       },
 
-      point: {
-        type: Object,
+      img: {
+        type: String,
       },
-    },
-
-    computed: {
-      totalPoint() {
-        if (this.point.byFavorite) {
-          if (this.motivator.favorite) {
-            return this.point.singlePoint
-          }
-        } else {
-          return this.point.singlePoint
-        }
-      }
     },
 
     methods: {
@@ -82,6 +82,9 @@
       },
       motivatorFavorite() {
         this.$emit('motivatorFavorite', this.motivator._id, {favorite: !this.motivator.favorite});
+      },
+      motivatorDone() {
+        this.$emit('motivatorDone', this.motivator._id, {done: true});
       },
     },
   };

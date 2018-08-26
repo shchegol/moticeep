@@ -13,15 +13,22 @@
     </div>
 
     <div class="form-row">
-      <motivators-card v-for="motivator in motivators" :key="motivator.id"
-                       :motivator="motivator" :point="pointsDistribution"
+      <motivators-card v-for="motivator in pointsDistribution" :key="motivator.id"
+                       :motivator="motivator"
                        @motivatorEdit="motivatorEditStart"
                        @motivatorDelete="motivatorDelete"
-                       @motivatorFavorite="motivatorEdit"></motivators-card>
+                       @motivatorFavorite="motivatorEdit"
+                       @motivatorDone="motivatorEdit"></motivators-card>
+    </div>
+
+    <div class="form-row">
+      <motivators-card v-for="motivator in archiveMotivators" :key="motivator.id"
+                       :motivator="motivator"
+                       @motivatorDelete="motivatorDelete"></motivators-card>
     </div>
 
     <!-- Modal Component -->
-    <b-modal ref="motivatorModal" centered hide-header hide-footer>
+    <b-modal ref="motivatorModal" @hidden="clearForm" centered hide-header hide-footer>
       <div class="row">
         <div class="col">
           <h3>{{ motivatorModal.isEdit ? 'Редактировать мотиватор' : 'Новый мотиватор'}}</h3>
@@ -78,41 +85,52 @@
           data: {
             title: null,
             img: null,
-            value: null,
             maxValue: null,
           },
           isEdit: false,
         },
+
         editMotivatorId: '',
-        motivators: this.user.motivators,
         point: 0,
       };
     },
 
-    watch: {
-      user(freshUser) {
-        this.motivators = freshUser.motivators;
-      },
-    },
-
+    // todo серверный рендеринг не выдаёт данную логику, при первой загрузке не видит обложку
     computed: {
       pointsDistribution() {
-        let divisor = _.filter(this.user.motivators, 'favorite').length;
+        let activeMotivators = _.filter(this.user.motivators, ['done', false])
+        let motivators = _.map(activeMotivators, motivator => Object.assign({}, motivator));
         let totalPoints = this.user.points;
-        let pointsSystem = {
-          singlePoint: 0,
-          restPoint: 0,
-          byFavorite: divisor > 0,
-        };
+        let favorite = _.filter(motivators, 'favorite')
+        let singlePoint;
 
-        if (divisor > 0) {
-          pointsSystem.singlePoint = Math.floor(totalPoints / divisor);
+        if (favorite.length > 0) {
+          singlePoint = Math.floor(totalPoints / favorite.length);
+
+          _.each(motivators, motivator => {
+            if (motivator.done) return;
+
+            if (motivator.favorite) {
+              motivator.value = singlePoint;
+            } else {
+              motivator.value = 0
+            }
+          });
         } else {
-          pointsSystem.singlePoint = Math.floor(totalPoints / this.user.motivators.length); ;
+          singlePoint = Math.floor(totalPoints / motivators.length);
+
+          _.each(motivators, motivator => {
+            if (motivator.done) return;
+
+            motivator.value = singlePoint;
+          });
         }
 
-        return pointsSystem
+        return motivators;
       },
+      archiveMotivators() {
+        return _.filter(this.user.motivators, 'done')
+      }
     },
 
     methods: {
@@ -124,17 +142,10 @@
       motivatorEditStart(motivator) {
         this.editMotivatorId = motivator._id;
         this.motivatorModal.data.title = motivator.title;
-        this.motivatorModal.data.value = motivator.value;
         this.motivatorModal.data.maxValue = motivator.maxValue;
         this.motivatorModal.data.img = motivator.img;
         this.motivatorModal.isEdit = true;
         this.modalShow();
-      },
-
-      clearForm() {
-        _.forIn(this.motivatorModal.data, (value, key) => {
-          this.motivatorModal.data[key] = null;
-        });
       },
 
       async motivatorCreate() {
@@ -142,8 +153,9 @@
           title: this.motivatorModal.data.title || 'Мечта',
           value: 0,
           maxValue: this.motivatorModal.data.maxValue || 1000,
-          img: this.motivatorModal.data.img || 'http://www.stihi.ru/pics/2016/07/28/10120.jpg',
+          img: this.motivatorModal.data.img || '/images/motivator.jpg',
           favorite: false,
+          done: false,
         };
 
         try {
@@ -189,6 +201,12 @@
 
       modalHide() {
         this.$refs.motivatorModal.hide();
+      },
+
+      clearForm() {
+        _.forIn(this.motivatorModal.data, (value, key) => {
+          this.motivatorModal.data[key] = null;
+        });
       },
     },
   };

@@ -1,6 +1,6 @@
-import User from '../models/user';
-import _    from 'lodash';
-import {getLastValueFromURLPath} from '../utils/common'
+import User                      from '../models/user';
+import _                         from 'lodash';
+import {getLastValueFromURLPath} from '../utils/common';
 
 export const createMotivator = async ctx => {
   const user = await User.findOne({'_id': ctx.state.user._id}).exec();
@@ -18,9 +18,16 @@ export const updateMotivator = async ctx => {
   const user = await User.findOne({'_id': ctx.state.user._id}).exec();
   const motivator = user.motivators.id(motivatorId);
 
-  _.forIn(ctxBody, (value, key) => {
-    motivator[key] = value
-  });
+  if (ctxBody.done) {
+    motivator.done = true;
+    motivator.value = motivator.maxValue;
+    user.points -= motivator.value;
+  } else {
+    _.forIn(ctxBody, (value, key) => {
+      motivator[key] = value;
+    });
+  }
+
   await user.save();
 
   ctx.status = 200;
