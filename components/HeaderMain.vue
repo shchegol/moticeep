@@ -23,15 +23,14 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex';
+
   export default {
     name: 'header-main',
 
-    props: {
-      user: {
-        type: Object,
-        required: true,
-      },
-    },
+    computed: mapState({
+      user: state => state.user.item,
+    }),
 
     methods: {
       async logout() {

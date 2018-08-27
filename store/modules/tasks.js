@@ -1,50 +1,47 @@
 import axios from 'axios/index';
 
+const state = {
+  all: [],
+};
+
 const actions = {
   async taskCreate({commit}, createdFields) {
     try {
       const {data} = await axios.post('/api/tasks', createdFields);
-
-      commit('setUser', data);
+      commit('setTasks', data);
     } catch (error) {
-      if (!error.response) {
-        throw new Error('Ошибка на сервере');
-      }
-
       throw error;
     }
   },
 
-  async taskEdit({commit}, {id, updatedFields}) {
+  async taskUpdate({commit}, {taskId, updatedFields}) {
     try {
-      const {data} = await axios.put(`/api/tasks/${id}`, updatedFields);
-
-      commit('setUser', data);
+      const {data} = await axios.put(`/api/tasks/${taskId}`, updatedFields);
+      commit('setTasks', data);
     } catch (error) {
-      if (!error.response) {
-        throw new Error('Ошибка на сервере');
-      }
-
       throw error;
     }
   },
 
-  async taskDelete({commit}, id) {
+  async taskDelete({commit}, taskId) {
     try {
-      const {data} = await axios.delete(`/api/tasks/${id}`);
-
-      commit('setUser', data);
+      const {data} = await axios.delete(`/api/tasks/${taskId}`);
+      commit('setTasks', data);
     } catch (error) {
-      if (!error.response) {
-        throw new Error('Ошибка на сервере');
-      }
-
       throw error;
     }
   },
 };
 
+const mutations = {
+  setTasks(state, tasks) {
+    state.all = tasks;
+  },
+};
+
 export default {
   actions,
+  state,
+  mutations,
 };
 

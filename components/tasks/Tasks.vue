@@ -22,6 +22,7 @@
     </div>
 
     <!-- Modal Component -->
+    <!-- todo переписать со всеми проверками -->
     <b-modal ref="taskModal" @hidden="clearForm" centered hide-header hide-footer>
       <div class="row">
         <div class="col">
@@ -63,21 +64,15 @@
 </template>
 
 <script>
-  import _         from 'lodash';
-  import TasksCard from '~/components/tasks/TasksCard';
+  import {mapState} from 'vuex';
+  import _          from 'lodash';
+  import TasksCard  from '~/components/tasks/TasksCard';
 
   export default {
     name: 'tasks',
 
     components: {
       TasksCard,
-    },
-
-    props: {
-      user: {
-        type: Object,
-        required: true,
-      },
     },
 
     data() {
@@ -91,15 +86,12 @@
           isEdit: false,
         },
         editTaskId: '',
-        tasks: this.user.tasks,
       };
     },
 
-    watch: {
-      user(freshUser) {
-        this.tasks = freshUser.tasks;
-      },
-    },
+    computed: mapState({
+      tasks: state => state.tasks.all,
+    }),
 
     methods: {
       taskCreateStart() {
@@ -135,9 +127,6 @@
           await this.$store.dispatch('taskCreate', createdFields);
           this.modalHide();
         } catch (error) {
-          if (!error.response) {
-            throw new Error('Ошибка на сервере');
-          }
           throw error;
         }
       },
@@ -148,10 +137,6 @@
 
           this.modalHide();
         } catch (error) {
-          if (!error.response) {
-            throw new Error('Ошибка на сервере');
-          }
-
           throw error;
         }
       },
@@ -160,10 +145,6 @@
         try {
           await this.$store.dispatch('taskDelete', id);
         } catch (error) {
-          if (!error.response) {
-            throw new Error('Ошибка на сервере');
-          }
-
           throw error;
         }
       },
@@ -171,7 +152,7 @@
       async pointsAdd(updatedFields) {
         const userId = this.user._id;
         try {
-          await this.$store.dispatch('userEdit', {userId, updatedFields});
+          await this.$store.dispatch('userUpdate', {userId, updatedFields});
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');

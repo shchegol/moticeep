@@ -9,7 +9,7 @@ export const createMotivator = async ctx => {
   await user.save();
 
   ctx.status = 200;
-  ctx.body = user.getPublicFields();
+  ctx.body = user.motivators;
 };
 
 export const updateMotivator = async ctx => {
@@ -18,20 +18,26 @@ export const updateMotivator = async ctx => {
   const user = await User.findOne({'_id': ctx.state.user._id}).exec();
   const motivator = user.motivators.id(motivatorId);
 
-  if (ctxBody.done) {
-    motivator.done = true;
-    motivator.value = motivator.maxValue;
-    user.points -= motivator.value;
-  } else {
+  // if (_.has(ctxBody, 'favorite')) {
+  //
+  // }
+  //
+  // else if (_.has(ctxBody, 'done')) {
+  //   motivator.done = true;
+  //   motivator.value = motivator.maxValue;
+  //   user.points -= motivator.value;
+  // }
+  //
+  // else {
     _.forIn(ctxBody, (value, key) => {
       motivator[key] = value;
     });
-  }
+  // }
 
   await user.save();
 
   ctx.status = 200;
-  ctx.body = user.getPublicFields();
+  ctx.body = user.motivators;
 };
 
 export const deleteMotivator = async ctx => {
@@ -42,5 +48,5 @@ export const deleteMotivator = async ctx => {
   await user.save();
 
   ctx.status = 200;
-  ctx.body = user.getPublicFields();
+  ctx.body = user.motivators;
 };

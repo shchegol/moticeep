@@ -13,19 +13,19 @@
     </div>
 
     <div class="form-row">
-      <motivators-card v-for="motivator in pointsDistribution" :key="motivator.id"
+      <motivators-card v-for="motivator in motivators" :key="motivator.id"
                        :motivator="motivator"
-                       @motivatorEdit="motivatorEditStart"
+                       @motivatorUpdate="motivatorUpdateStart"
                        @motivatorDelete="motivatorDelete"
-                       @motivatorFavorite="motivatorEdit"
-                       @motivatorDone="motivatorEdit"></motivators-card>
+                       @motivatorFavorite="motivatorUpdate"
+                       @motivatorDone="motivatorUpdate"></motivators-card>
     </div>
 
-    <div class="form-row">
-      <motivators-card v-for="motivator in archiveMotivators" :key="motivator.id"
-                       :motivator="motivator"
-                       @motivatorDelete="motivatorDelete"></motivators-card>
-    </div>
+    <!--<div class="form-row">-->
+      <!--<motivators-card v-for="motivator in archiveMotivators" :key="motivator.id"-->
+                       <!--:motivator="motivator"-->
+                       <!--@motivatorDelete="motivatorDelete"></motivators-card>-->
+    <!--</div>-->
 
     <!-- Modal Component -->
     <b-modal ref="motivatorModal" @hidden="clearForm" centered hide-header hide-footer>
@@ -52,7 +52,7 @@
 
       <div class="row mt-4">
         <div class="col-auto">
-          <b-button v-if="motivatorModal.isEdit" @click="motivatorEdit(editMotivatorId, motivatorModal.data)" variant="success">Редактировать</b-button>
+          <b-button v-if="motivatorModal.isEdit" @click="motivatorUpdate(editMotivatorId, motivatorModal.data)" variant="success">Редактировать</b-button>
           <b-button v-else @click="motivatorCreate" variant="success">Создать</b-button>
         </div>
       </div>
@@ -61,6 +61,7 @@
 </template>
 
 <script>
+  import {mapState} from 'vuex';
   import _              from 'lodash';
   import axios          from 'axios';
   import MotivatorsCard from '~/components/motivators/MotivatorsCard';
@@ -72,12 +73,12 @@
       MotivatorsCard,
     },
 
-    props: {
-      user: {
-        type: Object,
-        required: true,
-      },
-    },
+    // props: {
+    //   user: {
+    //     type: Object,
+    //     required: true,
+    //   },
+    // },
 
     data() {
       return {
@@ -95,43 +96,48 @@
       };
     },
 
+    computed: mapState({
+      motivators: state => state.motivators.all
+    }),
+
     // todo серверный рендеринг не выдаёт данную логику, при первой загрузке не видит обложку
-    computed: {
-      pointsDistribution() {
-        let activeMotivators = _.filter(this.user.motivators, ['done', false])
-        let motivators = _.map(activeMotivators, motivator => Object.assign({}, motivator));
-        let totalPoints = this.user.points;
-        let favorite = _.filter(motivators, 'favorite')
-        let singlePoint;
+    // computed: {
+    //   pointsDistribution() {
+        // let activeMotivators = _.filter(this.user.motivators, ['done', false])
+        // let motivators = _.map(activeMotivators, motivator => Object.assign({}, motivator));
+        // let totalPoints = this.user.points;
+        // let favorite = _.filter(motivators, 'favorite')
+        // let singlePoint;
+        //
+        // if (favorite.length > 0) {
+        //   singlePoint = Math.floor(totalPoints / favorite.length);
+        //
+        //   _.each(motivators, motivator => {
+        //     if (motivator.done) return;
+        //
+        //     if (motivator.favorite) {
+        //       motivator.value = singlePoint;
+        //     } else {
+        //       motivator.value = 0
+        //     }
+        //   });
+        // } else {
+        //   singlePoint = Math.floor(totalPoints / motivators.length);
+        //
+        //   _.each(motivators, motivator => {
+        //     if (motivator.done) return;
+        //
+        //     motivator.value = singlePoint;
+        //   });
+        // }
 
-        if (favorite.length > 0) {
-          singlePoint = Math.floor(totalPoints / favorite.length);
-
-          _.each(motivators, motivator => {
-            if (motivator.done) return;
-
-            if (motivator.favorite) {
-              motivator.value = singlePoint;
-            } else {
-              motivator.value = 0
-            }
-          });
-        } else {
-          singlePoint = Math.floor(totalPoints / motivators.length);
-
-          _.each(motivators, motivator => {
-            if (motivator.done) return;
-
-            motivator.value = singlePoint;
-          });
-        }
-
-        return motivators;
-      },
-      archiveMotivators() {
-        return _.filter(this.user.motivators, 'done')
-      }
-    },
+    //     return _.filter(this.user.motivators, ['done', false]);
+    //   },
+    //
+    //   archiveMotivators() {
+    //     return _.filter(this.user.motivators, 'done')
+    //   }
+    // },
 
     methods: {
       motivatorCreateStart() {
@@ -139,7 +145,7 @@
         this.modalShow();
       },
 
-      motivatorEditStart(motivator) {
+      motivatorUpdateStart(motivator) {
         this.editMotivatorId = motivator._id;
         this.motivatorModal.data.title = motivator.title;
         this.motivatorModal.data.maxValue = motivator.maxValue;
@@ -169,9 +175,9 @@
         }
       },
 
-      async motivatorEdit(id, updatedFields) {
+      async motivatorUpdate(id, updatedFields) {
         try {
-          await this.$store.dispatch('motivatorEdit', {id, updatedFields});
+          await this.$store.dispatch('motivatorUpdate', {id, updatedFields});
 
           this.modalHide();
         } catch (error) {

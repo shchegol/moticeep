@@ -9,7 +9,7 @@ export const createTask = async ctx => {
   await user.save();
 
   ctx.status = 200;
-  ctx.body = user.getPublicFields();
+  ctx.body = user.tasks;
 };
 
 export const updateTask = async ctx => {
@@ -24,7 +24,7 @@ export const updateTask = async ctx => {
   await user.save();
 
   ctx.status = 200;
-  ctx.body = user.getPublicFields();
+  ctx.body = user.tasks;
 };
 
 export const deleteTask = async ctx => {
@@ -35,5 +35,5 @@ export const deleteTask = async ctx => {
   await user.save();
 
   ctx.status = 200;
-  ctx.body = user.getPublicFields();
+  ctx.body = user.tasks;
 };
