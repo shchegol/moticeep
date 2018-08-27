@@ -1,8 +1,8 @@
 import axios from 'axios/index';
 
-const state = {
+const state = () => ({
   all: [],
-};
+})
 
 const actions = {
   async taskCreate({commit}, createdFields) {

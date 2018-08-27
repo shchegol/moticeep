@@ -21,12 +21,6 @@
                        @motivatorDone="motivatorUpdate"></motivators-card>
     </div>
 
-    <!--<div class="form-row">-->
-      <!--<motivators-card v-for="motivator in archiveMotivators" :key="motivator.id"-->
-                       <!--:motivator="motivator"-->
-                       <!--@motivatorDelete="motivatorDelete"></motivators-card>-->
-    <!--</div>-->
-
     <!-- Modal Component -->
     <b-modal ref="motivatorModal" @hidden="clearForm" centered hide-header hide-footer>
       <div class="row">
@@ -72,13 +66,6 @@
     components: {
       MotivatorsCard,
     },
-
-    // props: {
-    //   user: {
-    //     type: Object,
-    //     required: true,
-    //   },
-    // },
 
     data() {
       return {

@@ -1,8 +1,8 @@
 import axios from 'axios/index';
 
-const state = {
+const state = () => ({
   item: [],
-};
+});
 
 const actions = {
   async userUpdate({commit}, {userId, updatedFields}) {
