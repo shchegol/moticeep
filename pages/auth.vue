@@ -165,7 +165,6 @@
           this.$router.push('/');
         } catch (error) {
           this.serverError.message = error.response.data;
-          console.log('error', error.response);
         }
 
         this.email.state = this.password.state = this.passwordConfirm.state = null;

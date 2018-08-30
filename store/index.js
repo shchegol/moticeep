@@ -22,6 +22,5 @@ export default () => {
       tasks,
       motivators,
     },
-    strict: process.env.NODE_ENV !== 'production',
   });
 };

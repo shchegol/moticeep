@@ -2,7 +2,7 @@ import axios from 'axios/index';
 
 const getters = {
   isAuthenticated: (state, getters, rootState) => {
-    return Object.keys(rootState.user).length !== 0;
+    return Object.keys(rootState.user.item).length !== 0;
 
   },
 };

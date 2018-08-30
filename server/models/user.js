@@ -76,8 +76,6 @@ userSchema.methods.getPublicFields = function() {
     displayName: this.displayName,
     email: this.email,
     points: this.points,
-    // tasks: this.tasks,
-    // motivators: this.motivators,
     deleted: this.deleted,
   };
 };

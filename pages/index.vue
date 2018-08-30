@@ -1,11 +1,8 @@
 <template>
   <div class="container">
     <header-main></header-main>
-
     <tasks></tasks>
-
     <hr class="mt-4 mb-5">
-
     <motivators></motivators>
   </div>
 </template>
