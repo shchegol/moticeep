@@ -16,8 +16,8 @@
       <tasks-card v-for="task in tasks"
                   :key="task.id" :task="task"
                   @pointsAdd="pointsAdd"
-                  @taskEdit="taskEditStart"
-                  @taskFavorite="taskEdit"
+                  @taskUpdate="taskUpdateStart"
+                  @taskFavorite="taskUpdate"
                   @taskDelete="taskDelete"></tasks-card>
     </div>
 
@@ -55,7 +55,7 @@
 
       <div class="row mt-4">
         <div class="col-auto">
-          <b-button v-if="taskModal.isEdit" @click="taskEdit(editTaskId, taskModal.data)" variant="success">Редактировать</b-button>
+          <b-button v-if="taskModal.isEdit" @click="taskUpdate(editTaskId, taskModal.data)" variant="success">Редактировать</b-button>
           <b-button v-else @click="taskCreate" variant="success">Создать</b-button>
         </div>
       </div>
@@ -99,7 +99,7 @@
         this.modalShow();
       },
 
-      taskEditStart(task) {
+      taskUpdateStart(task) {
         this.editTaskId = task._id;
         this.taskModal.data.title = task.title;
         this.taskModal.data.value = task.value;
@@ -131,9 +131,10 @@
         }
       },
 
-      async taskEdit(id, updatedFields) {
+      async taskUpdate(id, updatedFields) {
+        console.log('vue tasks', id, updatedFields);
         try {
-          await this.$store.dispatch('taskEdit', {id, updatedFields});
+          await this.$store.dispatch('taskUpdate', {id: id, ...updatedFields});
 
           this.modalHide();
         } catch (error) {
@@ -152,7 +153,10 @@
       async pointsAdd(updatedFields) {
         const userId = this.user._id;
         try {
-          await this.$store.dispatch('userUpdate', {userId, updatedFields});
+          await this.$store.dispatch('userUpdate', {
+            userId,
+            updatedFields,
+          });
         } catch (error) {
           if (!error.response) {
             throw new Error('Ошибка на сервере');

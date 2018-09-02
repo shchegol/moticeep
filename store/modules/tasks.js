@@ -2,7 +2,7 @@ import axios from 'axios/index';
 
 const state = () => ({
   all: [],
-})
+});
 
 const actions = {
   async taskCreate({commit}, createdFields) {
@@ -14,9 +14,9 @@ const actions = {
     }
   },
 
-  async taskUpdate({commit}, {taskId, updatedFields}) {
+  async taskUpdate({commit}, updated) {
     try {
-      const {data} = await axios.put(`/api/tasks/${taskId}`, updatedFields);
+      const {data} = await axios.put(`/api/tasks/${updated.id}`, updated);
       commit('setTasks', data);
     } catch (error) {
       throw error;

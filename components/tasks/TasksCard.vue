@@ -74,11 +74,11 @@
         this.$emit('taskDelete', this.task._id);
       },
       taskFavorite() {
-        this.$emit('taskFavorite', this.task._id, {favorite: !this.task.favorite});
+        this.$emit('taskFavorite', this.task._id, { favorite: !this.task.favorite});
       },
       pointsAdd() {
         this.$emit('pointsAdd', {points: this.task.value});
-      }
+      },
     },
   };
 </script>
