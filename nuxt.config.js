@@ -22,6 +22,10 @@ export default {
       },
       {
         rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:300,400,500&amp;subset=cyrillic',
+      },
+      {
+        rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/icon?family=Material+Icons',
       },
     ],

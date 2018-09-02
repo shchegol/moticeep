@@ -1,13 +1,15 @@
 // custom global
-@import "common/variables";
-@import "common/utils";
+@import "~bootstrap/scss/bootstrap";
 @import "~sass-material-colors";
 @import "~sass-material-colors/sass/sass-material-colors-classes";
+@import "common/variables";
+@import "common/utils";
 
 // custom
 @import "common/base";
 @import "common/animation";
 @import "vendors/material-icons";
 @import "vendors/bootstrap";
+@import "components/buttons";
 
 @import "common/modificators";

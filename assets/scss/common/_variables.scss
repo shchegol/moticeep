@@ -1,7 +1,29 @@
-$mdc-theme-primary: gray;
-$mdc-theme-secondary: yellow;
-$mdc-theme-background: #fff;
-
-// custom
+$font-family-sans-serif: 'Roboto', sans-serif;
 $font-family-base: 'Roboto', sans-serif;
+$font-family-title: 'Roboto Condensed', sans-serif;
+
 $border-radius-pill: 1000rem;
+$border-radius: 10px;
+$border-radius-lg: 10px;
+$border-radius-sm: 10px;
+
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+
+$blue: material-color('blue', '500');
+$indigo: material-color('indigo', '500');
+$purple: material-color('purple', '500');
+$pink: material-color('pink', '500');
+$red: material-color('red', '500');
+$orange: material-color('orange', '500');
+$yellow: material-color('yellow', '500');
+$green: material-color('green', '500');
+$teal: material-color('teal', '500');
+$cyan: material-color('cyan', '500');
