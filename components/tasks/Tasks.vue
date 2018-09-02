@@ -132,7 +132,6 @@
       },
 
       async taskUpdate(id, updatedFields) {
-        console.log('vue tasks', id, updatedFields);
         try {
           await this.$store.dispatch('taskUpdate', {id: id, ...updatedFields});
 
