@@ -3,7 +3,6 @@ import axios from 'axios/index';
 const getters = {
   isAuthenticated: (state, getters, rootState) => {
     return Object.keys(rootState.user.item).length !== 0;
-
   },
 };
 
@@ -34,7 +33,9 @@ const actions = {
         password,
       });
 
-      commit('setUser', data);
+      commit('setUser', data.user);
+      commit('setTasks', data.tasks);
+      commit('setMotivators', data.motivators);
     } catch (error) {
       if (!error.response) {
         throw new Error('Ошибка на сервере');

@@ -6,9 +6,9 @@
       </div>
 
       <div class="col-auto">
-        <b-button @click="taskCreateStart" variant="link" v-b-tooltip.hover title="Добавить задание">
+        <button @click="taskCreateStart" v-b-tooltip.hover title="Добавить задание" type="button" class="btn btn_icon">
           <i class="material-icons md-24">add</i>
-        </b-button>
+        </button>
       </div>
     </div>
 

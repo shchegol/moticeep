@@ -1,11 +1,11 @@
 <template>
   <header class="row align-items-center">
     <div class="col-auto">
-      <h1>MOTIKEEP</h1>
+      <h1>Motikeep</h1>
     </div>
 
     <div class="col">
-      <nuxt-link to="/donate" class="btn btn-link">Помочь проекту</nuxt-link>
+      <nuxt-link to="/donate" class="btn btn_link">Помочь проекту</nuxt-link>
     </div>
 
     <div class="col-auto">
@@ -13,11 +13,11 @@
     </div>
 
     <div class="col-auto">
-      <nuxt-link to="/user" class="btn btn-link">{{ user.displayName }}</nuxt-link>
+      <nuxt-link to="/user" class="btn btn_link">{{ user.displayName }}</nuxt-link>
     </div>
 
     <div class="col-auto">
-      <button @click="logout" class="btn btn-link">Выйти</button>
+      <button @click="logout" class="btn btn_link">Выйти</button>
     </div>
   </header>
 </template>

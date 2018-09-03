@@ -1,9 +1,9 @@
 <template>
-  <div class="container-fluid ">
-    <div class="row">
+  <div class="container-fluid">
+    <div class="row mt-3">
       <div class="col-auto">
-        <nuxt-link to="/" class="btn" v-b-tooltip.hover title="Назад">
-          <i class="material-icons md-36">arrow_back</i>
+        <nuxt-link to="/" class="btn btn_icon" v-b-tooltip.hover title="Назад">
+          <i class="material-icons">arrow_back</i>
         </nuxt-link>
       </div>
     </div>
@@ -17,7 +17,9 @@
           </div>
 
           <div class="col-auto">
-            <b-btn @click="isRegister = !isRegister" variant="link">{{ isRegister ? 'Вход' : 'Регистрация' }}</b-btn>
+            <button @click="isRegister = !isRegister" type="button" class="btn btn_link">
+              {{ isRegister ? 'Вход' : 'Регистрация' }}
+            </button>
           </div>
         </div>
 
@@ -67,8 +69,8 @@
 
         <div class="row mt-2">
           <div class="col">
-            <b-btn v-if="!isRegister" @click="loginStart" variant="primary">Войти</b-btn>
-            <b-btn v-else @click="registerStart" variant="primary">Зарегистрироваться</b-btn>
+            <button v-if="!isRegister" @click="loginStart" type="button" class="btn btn_green">Войти</button>
+            <button v-else @click="registerStart" type="button" class="btn btn_green">Зарегистрироваться</button>
           </div>
         </div>
       </div>

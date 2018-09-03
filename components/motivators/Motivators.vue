@@ -6,9 +6,10 @@
       </div>
 
       <div class="col-auto">
-        <b-button @click="motivatorCreateStart" variant="link" v-b-tooltip.hover title="Добавить мотиватор">
+        <button @click="motivatorCreateStart" v-b-tooltip.hover title="Добавить мотиватор"
+                type="button" class="btn btn_icon">
           <i class="material-icons md-24">add</i>
-        </b-button>
+        </button>
       </div>
     </div>
 

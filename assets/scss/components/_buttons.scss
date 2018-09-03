@@ -24,6 +24,20 @@
     }
   }
 
+  &_icon {
+    height: 48px;
+    width: 48px;
+    font-size: 32px;
+    border-radius: 100%;
+    background-color: transparent;
+    color: $gray-800;
+
+    &:hover {
+      color: $gray-800;
+      background-color: black(.05);
+    }
+  }
+
   &_white {
     @include btn-color('white')
   }
@@ -43,5 +57,19 @@
 
   &_pill {
     border-radius: 1000px;
+  }
+
+  &_link {
+    color: $blue;
+    background-color: transparent;
+    border: transparent;
+    text-transform: none;
+
+    &:hover {
+      color: $blue;
+      background-color: transparent;
+      border: transparent;
+      text-decoration: underline;
+    }
   }
 }

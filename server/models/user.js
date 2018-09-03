@@ -80,4 +80,12 @@ userSchema.methods.getPublicFields = function() {
   };
 };
 
+userSchema.methods.getTasks = function() {
+  return this.tasks;
+};
+
+userSchema.methods.getMotivators = function() {
+  return this.motivators;
+};
+
 export default mongoose.model('User', userSchema);

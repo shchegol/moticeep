@@ -60,9 +60,6 @@
   background-color: material-color-safe($bg-color);
 
   &:hover {
-    @if $text-color == 'white' {
-      color: material-color('grey', '800')
-    }
     background-color: material-color-safe($bg-color, '600');
   }
 
@@ -71,6 +68,10 @@
     border-color: material-color-safe($bg-color);
 
     &:hover {
+      @if $text-color == 'white' {
+        color: material-color('grey', '800')
+      }
+
       background-color: material-color-safe($bg-color, '600');
       border-color: material-color-safe($bg-color, '600');
     }

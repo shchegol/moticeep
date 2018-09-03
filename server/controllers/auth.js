@@ -1,5 +1,5 @@
-import passport                           from 'koa-passport';
-import User from '../models/user';
+import passport from 'koa-passport';
+import User     from '../models/user';
 
 // todo trough mail
 export const register = async ctx => {
@@ -48,7 +48,11 @@ export const login = async ctx => {
 
     await ctx.login(user);
 
-    ctx.body = user.getPublicFields();
+    ctx.body = {
+      user: user.getPublicFields(),
+      tasks: user.getTasks(),
+      motivators: user.getMotivators(),
+    };
   })(ctx);
 };
 
