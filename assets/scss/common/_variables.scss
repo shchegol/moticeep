@@ -1,11 +1,11 @@
-$font-family-sans-serif: 'Roboto', sans-serif;
-$font-family-base: 'Roboto', sans-serif;
-$font-family-title: 'Roboto Condensed', sans-serif;
+$font-family-sans-serif: 'Open Sans Condensed', sans-serif;
+$font-family-base: 'Open Sans Condensed', sans-serif;
+$font-family-title: 'Pacifico', cursive;;
 
 $border-radius-pill: 1000rem;
-$border-radius: 10px;
-$border-radius-lg: 10px;
-$border-radius-sm: 10px;
+$border-radius: 4px;
+$border-radius-lg: 4px;
+$border-radius-sm: 4px;
 
 $gray-100: #f8f9fa;
 $gray-200: #e9ecef;
@@ -17,13 +17,13 @@ $gray-700: #495057;
 $gray-800: #343a40;
 $gray-900: #212529;
 
-$blue: material-color('blue', '500');
-$indigo: material-color('indigo', '500');
-$purple: material-color('purple', '500');
-$pink: material-color('pink', '500');
-$red: material-color('red', '500');
-$orange: material-color('orange', '500');
-$yellow: material-color('yellow', '500');
-$green: material-color('green', '500');
-$teal: material-color('teal', '500');
-$cyan: material-color('cyan', '500');
+$blue: material-color('blue');
+$indigo: material-color('indigo');
+$purple: material-color('purple');
+$pink: material-color('pink');
+$red: material-color('red');
+$orange: material-color('orange');
+$yellow: material-color('yellow');
+$green: material-color('green');
+$teal: material-color('teal');
+$cyan: material-color('cyan');

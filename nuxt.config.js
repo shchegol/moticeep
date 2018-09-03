@@ -22,7 +22,7 @@ export default {
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:300,400,500&amp;subset=cyrillic',
+        href: "https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700|Pacifico&amp;subset=cyrillic",
       },
       {
         rel: 'stylesheet',

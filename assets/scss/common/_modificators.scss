@@ -1,4 +1,3 @@
-// width
 .minw {
   &_100 {
     min-width: 100px;
@@ -21,10 +20,23 @@
   }
 }
 
-// height
-
 .height {
   &_full {
     height: 100vh
+  }
+}
+
+.bg {
+  &_main {
+    background: url("/static/images/bg.jpg");
+    background-size: cover;
+  }
+}
+
+.font {
+  &-size {
+    &_100 {
+      font-size: 8rem;
+    }
   }
 }

@@ -6,6 +6,16 @@
   @return rgba(255, 255, 255, $opacity);
 }
 
+@function material-color-safe($color-name, $color-variant: '500') {
+  @if $color-name == 'white' {
+    @return #ffffff;
+  } @else if $color-name == 'black' {
+    @return 000000;
+  } @else {
+    @return material-color($color-name, $color-variant);
+  }
+}
+
 @mixin center($xy:xy) {
   @if $xy == xy {
     left: 50%;
@@ -35,5 +45,34 @@
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   } @else if $level == 5 {
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+  }
+}
+
+@mixin btn-color($bg-color, $text-color: 'white') {
+  @if $text-color == 'white' {
+    color: #ffffff;
+  } @else if $text-color == 'black' {
+    color: material-color('grey', '800')
+  } @else {
+    @warn "!!! ERROR: TEXT COLOR NOT VALID !!! | $text-color must be 'white' or 'black'";
+  }
+
+  background-color: material-color-safe($bg-color);
+
+  &:hover {
+    @if $text-color == 'white' {
+      color: material-color('grey', '800')
+    }
+    background-color: material-color-safe($bg-color, '600');
+  }
+
+  &.btn_outline {
+    background-color: transparent;
+    border-color: material-color-safe($bg-color);
+
+    &:hover {
+      background-color: material-color-safe($bg-color, '600');
+      border-color: material-color-safe($bg-color, '600');
+    }
   }
 }

@@ -1,0 +1,18 @@
+.start {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  background: material-color('blue') url("/static/images/bg.jpg") center no-repeat;
+  background-size: cover;
+  color: #fff;
+  text-align: center;
+
+  &__logo {
+    margin: 0;
+    padding: 0;
+    font-size: 120px;
+    line-height: 1;
+    font-weight: 400;
+    text-shadow: 1px 2px 3px material-color('grey', '700'), 2px 5px 10px black(.5), 0 0 100px black(.3);
+  }
+}

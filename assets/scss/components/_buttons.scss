@@ -1,1 +1,47 @@
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: #fff;
+  background-color: $gray-600;
+  border-radius: 4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color .3s ease;
 
+  &:hover {
+    color: #fff;
+    background-color: $gray-700;
+  }
+
+  &_outline {
+    background-color: transparent;
+    border: 2px solid $gray-600;
+
+    &:hover {
+      border-color: $gray-700;
+    }
+  }
+
+  &_white {
+    @include btn-color('white')
+  }
+
+  &_green {
+    @include btn-color('green')
+  }
+
+  &_blue {
+    @include btn-color('blue')
+  }
+
+  &_lg {
+    font-size: 1.5rem;
+    padding: .5rem 3rem;
+  }
+
+  &_pill {
+    border-radius: 1000px;
+  }
+}
