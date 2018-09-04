@@ -1,7 +1,7 @@
 <template>
   <header class="row align-items-center">
     <div class="col-auto">
-      <h1>Motikeep</h1>
+      <h1 class="font_pacifico">Motikeep</h1>
     </div>
 
     <div class="col">

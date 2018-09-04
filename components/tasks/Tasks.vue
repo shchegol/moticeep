@@ -12,14 +12,19 @@
       </div>
     </div>
 
-    <div class="form-row">
-      <tasks-card v-for="task in tasks"
-                  :key="task.id" :task="task"
-                  @pointsAdd="pointsAdd"
-                  @taskUpdate="taskUpdateStart"
-                  @taskFavorite="taskUpdate"
-                  @taskDelete="taskDelete"></tasks-card>
+    <div class="slider">
+      <div class="slider__content">
+        <tasks-card v-for="task in tasks"
+                    :key="task.id" :task="task"
+                    @pointsAdd="pointsAdd"
+                    @taskUpdate="taskUpdateStart"
+                    @taskFavorite="taskUpdate"
+                    @taskDelete="taskDelete">
+        </tasks-card>
+      </div>
     </div>
+
+
 
     <!-- Modal Component -->
     <!-- todo переписать со всеми проверками -->

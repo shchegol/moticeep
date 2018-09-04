@@ -12,7 +12,6 @@ export default () => {
           commit('setUser', req.state.user.getPublicFields());
           commit('setTasks', req.state.user.tasks);
           commit('setMotivators', req.state.user.motivators);
-
         }
       },
     },
