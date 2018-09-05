@@ -36,13 +36,13 @@ export default app => {
         path:      '/',
         overwrite: true,
         signed:    false,
-        maxAge:    3600 * 24 * 10 // session expires in 4 hours, remember me lives longer
+        maxAge:    3600 * 24 * 100
       },
       rolling: true,
 
       store: mongooseStore.create({
         name: 'Session',
-        expires: 3600 * 24 * 10,
+        expires: 3600 * 24 * 100,
         connection: mongoose,
       }),
     }, app))

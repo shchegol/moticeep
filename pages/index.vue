@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <header-main></header-main>
     <tasks></tasks>
     <hr class="mt-4 mb-5">
@@ -8,7 +8,6 @@
 </template>
 
 <script>
-
   import {getRundomInt} from '~/assets/js/utils';
   import HeaderMain     from '~/components/HeaderMain';
   import Tasks          from '~/components/tasks/Tasks';
