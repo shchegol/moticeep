@@ -2,11 +2,13 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  min-height: 2rem;
+  padding: 0 2rem;
   font-size: 1rem;
   color: #fff;
   background-color: $gray-600;
   border: none;
-  border-radius: 4px;
+  border-radius: $border-radius;
   text-decoration: none;
   text-transform: uppercase;
   transition: background-color .3s ease;
@@ -33,12 +35,13 @@
   }
 
   &_icon {
-    height: 48px;
-    width: 48px;
-    font-size: 32px;
+    height: 3rem;
+    width: 3rem;
+    padding: 0;
+    font-size: 2rem;
     border-radius: 100%;
     background-color: transparent;
-    color: $gray-800;
+    color: $gray-600;
 
     &:hover {
       color: $gray-800;
@@ -58,9 +61,28 @@
     @include btn-color('blue')
   }
 
+  &_sm {
+    font-size: 0.5rem;
+    padding: .25rem 2rem;
+
+    &.btn_icon {
+      height: 1rem;
+      width: 1rem;
+      padding: 0;
+      font-size: .5rem;
+    }
+  }
+
   &_lg {
     font-size: 1.5rem;
     padding: .5rem 3rem;
+
+    &.btn_icon {
+      height: 4rem;
+      width: 4rem;
+      padding: 0;
+      font-size: 3rem;
+    }
   }
 
   &_pill {

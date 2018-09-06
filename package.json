@@ -40,7 +40,8 @@
     "mongoose": "^5.1.5",
     "nuxt": "^1.0.0",
     "passport-local": "^1.0.0",
-    "source-map-support": "^0.5.6"
+    "source-map-support": "^0.5.6",
+    "vue-smooth-dnd": "^0.2.5"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",

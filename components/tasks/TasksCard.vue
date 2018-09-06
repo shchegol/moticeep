@@ -1,7 +1,15 @@
 <template>
-  <div class="col-12 col-md-4 col-lg-3 col-xl-2 mb-2 align-items-stretch">
+  <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-2 align-items-stretch">
     <div class="card">
       <div class="card__header">
+        <button @click="taskEdit" type="button" class="btn btn_icon">
+          <i class="material-icons md-24">edit</i>
+        </button>
+
+        <button @click="taskDelete" type="button" class="btn btn_icon">
+          <i class="material-icons md-24">delete</i>
+        </button>
+
         <button @click="taskFavorite" type="button" class="btn btn_icon">
           <i class="material-icons md-24 color-orange-500">{{task.favorite ? 'star' : 'star_border' }}</i>
         </button>
