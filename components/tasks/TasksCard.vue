@@ -22,7 +22,7 @@
       <div class="card__cost">+ {{task.value}} {{task.currency}}</div>
 
       <div class="card__footer">
-        <button @click="pointsAdd" v-b-tooltip.hover title="Добавить в копилку" type="button" class="btn btn_green">
+        <button @click="pointsAdd" type="button" class="btn btn_green">
           {{task.editable ? 'Добавить': 'Выполнено'}}
         </button>
       </div>

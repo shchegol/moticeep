@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div class="row">
+  <div class="mt-3">
+    <div class="row align-items-center">
       <div class="col">
-        <h4>Задания</h4>
+        <h6>Задания</h6>
       </div>
 
       <div class="col-auto">
