@@ -1,41 +1,59 @@
 <template>
   <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-2 align-items-stretch">
     <div class="card">
-      <div class="card__header">
-        <button @click="taskEdit" type="button" class="btn btn_icon">
-          <i class="material-icons md-24">edit</i>
-        </button>
+      <div class="row">
+        <div class="col">
 
-        <button @click="taskDelete" type="button" class="btn btn_icon">
-          <i class="material-icons md-24">delete</i>
-        </button>
-
-        <button @click="taskFavorite" type="button" class="btn btn_icon">
-          <i class="material-icons md-24 color-orange-500">{{task.favorite ? 'star' : 'star_border' }}</i>
-        </button>
-      </div>
-
-      <div class="card__body">
-        <h6>{{ task.title }}</h6>
-      </div>
-
-      <div class="card__footer">
-        <button @click="pointsAdd" type="button" class="btn btn_green">
-          + {{task.value}} {{task.currency}}
-        </button>
-
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown button
-          </button>
-
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col">
+          <h6>{{ task.title }}</h6>
+        </div>
+      </div>
+
+      <div class="row align-items-center no-gutters">
+        <div class="col">
+          <button @click="pointsAdd" type="button" class="btn btn_green">
+            + {{task.value}} {{task.currency}}
+          </button>
+        </div>
+
+        <div class="col-auto">
+          <button @click="taskFavorite" type="button" class="btn btn_icon">
+            <i class="material-icons md-24 color-orange-500">{{task.favorite ? 'star' : 'star_border' }}</i>
+          </button>
+        </div>
+
+        <div class="col-auto">
+          <dropdown>
+            <ul>
+              <li>Удалить</li>
+              <li>Редактировать</li>
+            </ul>
+          </dropdown>
+        </div>
+      </div>
+
+      <!--<div class="card__header">-->
+      <!--<button @click="taskEdit" type="button" class="btn btn_icon">-->
+      <!--<i class="material-icons md-24">edit</i>-->
+      <!--</button>-->
+
+      <!--<button @click="taskDelete" type="button" class="btn btn_icon">-->
+      <!--<i class="material-icons md-24">delete</i>-->
+      <!--</button>-->
+
+
+      <!--</div>-->
+
+      <!--<div class="card__body">-->
+
+      <!--</div>-->
+
+      <!--<div class="card__footer">-->
+
     </div>
   </div>
   <!--<div class="col-12 col-md-6 col-lg-4 mb-2 align-items-stretch">-->
@@ -96,8 +114,14 @@
 </template>
 
 <script>
+  import Dropdown from '@/components/common/Dropdown';
+
   export default {
     name: 'TasksCars',
+
+    components: {
+      Dropdown,
+    },
 
     props: {
       task: {

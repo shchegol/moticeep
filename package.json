@@ -36,6 +36,7 @@
     "koa-session-mongoose": "^2.0.5",
     "koa-static": "^4.0.3",
     "lodash": "^4.17.10",
+    "material-components-web": "^0.39.3",
     "moment": "^2.22.1",
     "mongoose": "^5.1.5",
     "nuxt": "^1.0.0",
@@ -52,7 +53,8 @@
     "eslint-plugin-vue": "^4.0.0",
     "node": "^10.7.0",
     "node-sass": "^4.9.2",
+    "sass-loader": "^7.0.3",
     "sass-material-colors": "0.0.5",
-    "sass-loader": "^7.0.3"
+    "vue-mdc-adapter": "^0.18.2"
   }
 }

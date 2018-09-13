@@ -22,7 +22,7 @@ export default {
       },
       {
         rel: 'stylesheet',
-        href: "https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700|Pacifico&amp;subset=cyrillic",
+        href: 'https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700|Pacifico&amp;subset=cyrillic',
       },
       {
         rel: 'stylesheet',
@@ -35,10 +35,18 @@ export default {
 
   css: [
     '@/assets/scss/main.scss',
+    // 'vue-mdc-adapter/dist/styles',
   ],
 
   modules: [
-    ['bootstrap-vue/nuxt', { css: false }],
+    ['bootstrap-vue/nuxt', {css: false}],
+  ],
+
+  plugins: [
+    {
+      src: '~/plugins/vue-mdc-adapter',
+      ssr: false,
+    },
   ],
 
   build: {
@@ -47,6 +55,14 @@ export default {
       'axios',
       'moment',
     ],
+
+    // styleResources: {
+    //   scss: './assets/scss/main.scss',
+    //   options: {
+    //     sourceMap: false,
+    //     includePaths: ['node_modules', 'node_modules/@material'],
+    //   },
+    // },
 
     extend(config, {isDev, isClient}) {
       if (isDev && isClient) {
