@@ -3,25 +3,6 @@
     <div class="row align-items-center">
       <div class="col">
         <h6>Задания</h6>
-
-        <mdc-card>
-          <mdc-card-primary-action>
-            <mdc-card-media>
-            </mdc-card-media>
-          </mdc-card-primary-action>
-          <mdc-card-header
-            title="Title goes here"
-            subtitle="subtitle here" >
-          </mdc-card-header>
-          <mdc-card-actions>
-            <mdc-card-action-buttons>
-              <mdc-card-action-button>ACTION</mdc-card-action-button>
-            </mdc-card-action-buttons>
-            <mdc-card-action-icons>
-              <mdc-card-action-icon icon="star" />
-            </mdc-card-action-icons>
-          </mdc-card-actions>
-        </mdc-card>
       </div>
 
       <div class="col-auto">
@@ -40,6 +21,29 @@
                     @taskFavorite="taskUpdate"
                     @taskDelete="taskDelete">
         </tasks-card>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-4">
+        <mdc-card>
+          <mdc-card-primary-action>
+            <!--<mdc-card-media>-->
+            <!--</mdc-card-media>-->
+          </mdc-card-primary-action>
+          <mdc-card-header
+            title="Title goes here"
+            subtitle="subtitle here" >
+          </mdc-card-header>
+          <mdc-card-actions>
+            <mdc-card-action-buttons>
+              <mdc-card-action-button>ACTION</mdc-card-action-button>
+            </mdc-card-action-buttons>
+            <mdc-card-action-icons>
+              <mdc-card-action-icon icon="star" />
+            </mdc-card-action-icons>
+          </mdc-card-actions>
+        </mdc-card>
       </div>
     </div>
 

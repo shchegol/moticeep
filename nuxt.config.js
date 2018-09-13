@@ -22,7 +22,7 @@ export default {
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700|Pacifico&amp;subset=cyrillic',
+        href: 'https://fonts.googleapis.com/css?family=Pacifico|Roboto:300,400,500,700&amp;subset=cyrillic',
       },
       {
         rel: 'stylesheet',
@@ -34,8 +34,8 @@ export default {
   loading: {color: '#3B8070'},
 
   css: [
+    'vue-mdc-adapter/dist/vue-mdc-adapter.css',
     '@/assets/scss/main.scss',
-    // 'vue-mdc-adapter/dist/styles',
   ],
 
   modules: [
@@ -43,10 +43,7 @@ export default {
   ],
 
   plugins: [
-    {
-      src: '~/plugins/vue-mdc-adapter',
-      ssr: false,
-    },
+    '~/plugins/vue-mdc-adapter',
   ],
 
   build: {
@@ -56,13 +53,11 @@ export default {
       'moment',
     ],
 
-    // styleResources: {
-    //   scss: './assets/scss/main.scss',
-    //   options: {
-    //     sourceMap: false,
-    //     includePaths: ['node_modules', 'node_modules/@material'],
-    //   },
-    // },
+    postcss: {
+      plugins: {
+        'postcss-custom-properties': false,
+      },
+    },
 
     extend(config, {isDev, isClient}) {
       if (isDev && isClient) {
