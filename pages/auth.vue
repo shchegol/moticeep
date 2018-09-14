@@ -33,21 +33,28 @@
 
         <div class="row">
           <div class="col">
-            <b-form-group :state="email.state" :invalid-feedback="email.message"
-                          label="Email" label-for="inputEmail">
-              <b-form-input v-model.trim="email.value" :state="email.state"
-                            type="email" id="inputEmail" placeholder="your@email.ru"></b-form-input>
-            </b-form-group>
+            <!--<b-form-group :state="email.state" :invalid-feedback="email.message"-->
+                          <!--label="Email" label-for="inputEmail">-->
+              <!--<b-form-input v-model.trim="email.value" :state="email.state"-->
+                            <!--type="email" id="inputEmail" placeholder="your@email.ru"></b-form-input>-->
+            <!--</b-form-group>-->
+
+            <mdc-textfield type="email" label="Email" v-model.trim="email.value" fullwidth />
           </div>
         </div>
 
         <div class="row">
           <div class="col">
-            <b-form-group :state="password.state" :invalid-feedback="password.message"
-                          label="Пароль" label-for="inputPassword">
-              <b-form-input v-model.trim="password.value" :state="password.state"
-                            type="password" id="inputPassword" placeholder="Введите пароль"></b-form-input>
-            </b-form-group>
+            <!--<b-form-group :state="password.state" :invalid-feedback="password.message"-->
+                          <!--label="Пароль" label-for="inputPassword">-->
+              <!--<b-form-input v-model.trim="password.value" :state="password.state"-->
+                            <!--type="password" id="inputPassword" placeholder="Введите пароль"></b-form-input>-->
+            <!--</b-form-group>-->
+
+            <mdc-textfield type="password" label="Пароль"
+                           v-model.trim="password.value"
+                           :valid="password.state" helptext="password.message"
+                           fullwidth />
           </div>
         </div>
 
@@ -69,8 +76,8 @@
 
         <div class="row mt-2">
           <div class="col">
-            <button v-if="!isRegister" @click="loginStart" type="button" class="btn btn_green">Войти</button>
-            <button v-else @click="registerStart" type="button" class="btn btn_green">Зарегистрироваться</button>
+            <mdc-button v-if="!isRegister" @click="loginStart" raised>Войти</mdc-button>
+            <mdc-button v-else @click="registerStart" raised>Зарегистрироваться</mdc-button>
           </div>
         </div>
       </div>
