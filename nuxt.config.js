@@ -22,6 +22,10 @@ export default {
       },
       {
         rel: 'stylesheet',
+        href: 'https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css',
+      },
+      {
+        rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Pacifico|Roboto:300,400,500,700&amp;subset=cyrillic',
       },
       {
@@ -38,9 +42,9 @@ export default {
     '@/assets/scss/main.scss',
   ],
 
-  modules: [
-    ['bootstrap-vue/nuxt', {css: false}],
-  ],
+  // modules: [
+  //   ['bootstrap-vue/nuxt', {css: false}],
+  // ],
 
   plugins: [
     '~/plugins/vue-mdc-adapter',

@@ -5,7 +5,7 @@
         <div class="col-auto">
           <h1 class="start__logo">
             Motikeep
-            <span class="start__text">Удобное приложение для мотивации людей</span>
+            <span class="start__text">Простое приложение для мотивации людей</span>
           </h1>
         </div>
       </div>

@@ -56,10 +56,10 @@
   &__btn {
     padding: .7rem 2rem;
     font-size: 1.5rem;
-    font-weight: 500;
+    font-weight: 700;
     color: #fff;
     background-color: transparent;
-    border: 2px solid #fff;
+    border: 8px solid #fff;
     border-radius: 1000px;
     text-transform: uppercase;
     text-decoration: none;
@@ -81,17 +81,21 @@
 @keyframes move-background {
   from {
     background-position: 0 0;
+    opacity: 0;
   }
 
   25% {
     background-position: 100% 0;
+    opacity: .5;
   }
 
   50% {
     background-position: 100% 100%;
+    opacity: 0;
   }
 
   75% {
     background-position: 0 100%;
+    opacity: .5;
   }
 }
