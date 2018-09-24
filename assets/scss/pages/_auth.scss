@@ -2,7 +2,7 @@
   position: relative;
   width: auto;
   min-height: 100vh;
-  background: material-color('blue') url("/static/images/bg.jpg") no-repeat;
+  background: blue url("/static/images/bg.jpg") no-repeat;
   background-size: cover;
   color: #fff;
 
@@ -22,57 +22,13 @@
 
   &__logo {
     position: relative;
-    margin-bottom: 128px;
+    margin-bottom: 60px;
     font-family: $font-family-title;
     font-weight: 400;
     font-size: 20vw;
     line-height: 1;
-    text-shadow: 1px 2px 3px material-color('grey', '700'), 2px 5px 10px black(.3), 0 0 100px black(.3);
-
-    @include media-breakpoint-up(lg) {
-      font-size: 110px;
-    }
+    text-shadow: 1px 2px 3px grey, 2px 5px 10px black(.3), 0 0 100px black(.3);
   }
-
-  &__text {
-    position: absolute;
-    top: 100%;
-    left: 3vw;
-    padding-top: 4px;
-    font-family: $font-family-base;
-    font-weight: 300;
-    font-size: 3vw;
-    text-shadow: none;
-
-    @include media-breakpoint-up(lg) {
-      left: 16px;
-      font-size: 16px;
-    }
-  }
-
-  //&__btn {
-  //  padding: .7rem 2rem;
-  //  font-size: 1.5rem;
-  //  font-weight: 700;
-  //  color: #fff;
-  //  background-color: transparent;
-  //  border: 6px solid #fff;
-  //  border-radius: 1000px;
-  //  text-transform: uppercase;
-  //  text-decoration: none;
-  //  transition: background-color .3s ease;
-  //
-  //  &:hover {
-  //    color: $gray-800;
-  //    background-color: #fff;
-  //    text-decoration: none;
-  //    box-shadow: 1px 2px 3px material-color('grey', '700'), 2px 5px 10px black(.3), 0 0 100px black(.3);
-  //  }
-  //
-  //  &:active {
-  //    box-shadow: none;
-  //  }
-  //}
 }
 
 @keyframes move-background {

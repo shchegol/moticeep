@@ -22,42 +22,33 @@ export default {
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Pacifico|Roboto:300,400,500,700&amp;subset=cyrillic',
-      },
-      {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/icon?family=Material+Icons',
+        href: 'https://fonts.googleapis.com/css?family=Pacifico|Roboto:300,400,500,700&amp;subset=cyrillic|Material+Icons',
       },
     ],
   },
 
-  loading: {color: '#3B8070'},
+  plugins: ['~/plugins/vuetify.js'],
 
   css: [
-    'vue-mdc-adapter/dist/vue-mdc-adapter.css',
     '@/assets/scss/main.scss',
   ],
 
-  // modules: [
-  //   ['bootstrap-vue/nuxt', {css: false}],
-  // ],
-
-  plugins: [
-    '~/plugins/vue-mdc-adapter',
-  ],
+  loading: {color: '#3B8070'},
 
   build: {
     vendor: [
+      '~/plugins/vuetify.js',
       'lodash',
       'axios',
       'moment',
     ],
 
-    postcss: {
-      plugins: {
-        'postcss-custom-properties': false,
-      },
-    },
+    // postcss: {
+    //   plugins: {
+    //     'postcss-custom-properties': false,
+    //   },
+    // },
+    extractCSS: true,
 
     extend(config, {isDev, isClient}) {
       if (isDev && isClient) {

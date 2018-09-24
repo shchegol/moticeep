@@ -8,7 +8,6 @@
 </template>
 
 <script>
-  import {getRundomInt} from '~/assets/js/utils';
   import HeaderMain     from '~/components/HeaderMain';
   import Tasks          from '~/components/tasks/Tasks';
   import Motivators     from '~/components/motivators/Motivators';
