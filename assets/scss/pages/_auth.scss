@@ -17,7 +17,7 @@
 
     background: url("/static/images/bg.jpg") no-repeat;
     background-size: 500%;
-    animation: move-background 70s linear infinite;
+    animation: move-background 10s linear infinite;
   }
 
   &__logo {
@@ -25,7 +25,7 @@
     margin-bottom: 60px;
     font-family: $font-family-title;
     font-weight: 400;
-    font-size: 20vw;
+    font-size: 100px;
     line-height: 1;
     text-shadow: 1px 2px 3px grey, 2px 5px 10px black(.3), 0 0 100px black(.3);
   }
@@ -50,5 +50,10 @@
   75% {
     background-position: 0 100%;
     opacity: .5;
+  }
+
+  to {
+    background-position: 0 0;
+    opacity: 0;
   }
 }

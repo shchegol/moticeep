@@ -1,7 +1,7 @@
 <template>
   <v-container fluid fill-height class="auth">
     <v-layout justify-center>
-      <v-flex xs12 sm10 md6 lg4 xl3>
+      <v-flex>
         <v-layout>
           <v-flex>
             <h1 class="auth__logo text-xs-center">
@@ -10,25 +10,30 @@
           </v-flex>
         </v-layout>
 
-        <v-layout>
-          <v-flex>
-            <v-tabs fixed-tabs centered>
-              <v-tab>Вход</v-tab>
-              <v-tab>Регистрация</v-tab>
-            </v-tabs>
-          </v-flex>
-        </v-layout>
+        <v-layout justify-center>
+          <v-flex xs12 sm6 md4 lg3 xl2>
 
-        <v-layout>
-          <v-flex>
-            <v-form>
               <v-text-field
                 v-model="email.value"
                 label="E-mail"
                 required
-                outline
+                box
+                dark
               ></v-text-field>
-            </v-form>
+
+            <v-text-field
+              v-model="password"
+              :append-icon="show4 ? 'visibility_off' : 'visibility'"
+              :rules="[rules.required, rules.min]"
+              :type="show4 ? 'text' : 'password'"
+              name="input-10-2"
+              label="Пароль"
+              error
+              box
+              dark
+              @click:append="show4 = !show4"
+            ></v-text-field>
+
           </v-flex>
         </v-layout>
       </v-flex>
@@ -44,6 +49,14 @@
 
     data() {
       return {
+        show4: false,
+        password: '12345',
+        rules: {
+          required: value => !!value || 'Обязательное',
+          min: v => v.length >= 5 || 'Минимум 5 Знаков',
+          emailMatch: () => ('Email или пароль, который вы ввели, неверен')
+        },
+
         displayName: 'Александр',
 
         email: {
@@ -52,11 +65,11 @@
           message: '',
         },
 
-        password: {
-          value: '12345',
-          state: null,
-          message: '',
-        },
+        // password: {
+        //   value: '12345',
+        //   state: null,
+        //   message: '',
+        // },
 
         passwordConfirm: {
           value: '12345',

@@ -22,7 +22,11 @@ export default {
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Pacifico|Roboto:300,400,500,700&amp;subset=cyrillic|Material+Icons',
+        href: 'https://fonts.googleapis.com/css?family=Pacifico|Roboto:300,400,500,700&amp;subset=cyrillic',
+      },
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/icon?family=Material+Icons',
       },
     ],
   },
@@ -30,6 +34,7 @@ export default {
   plugins: ['~/plugins/vuetify.js'],
 
   css: [
+    'vuetify/dist/vuetify.css',
     '@/assets/scss/main.scss',
   ],
 
