@@ -53,7 +53,7 @@ export default {
     //     'postcss-custom-properties': false,
     //   },
     // },
-    extractCSS: true,
+    // extractCSS: true,
 
     extend(config, {isDev, isClient}) {
       if (isDev && isClient) {

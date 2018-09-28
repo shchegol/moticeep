@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid fill-height class="auth">
+  <v-container fluid>
     <v-layout justify-center>
       <v-flex>
         <v-layout>
@@ -11,65 +11,95 @@
         </v-layout>
 
         <v-layout justify-center>
-          <v-flex xs12 sm6 md4 lg3 xl2>
+          <v-flex ref="form" xs12 sm6 md4 lg3 xl2>
             <v-text-field
               v-if="isRegister"
-              v-model="email.value"
+              v-model="displayName"
               label="Логин"
+              placeholder="Alex Fincher"
               box
+              color="white"
               dark
             ></v-text-field>
 
             <v-text-field
-              v-model="email.value"
+              ref="email"
+              v-model="email"
+              :rules="[rules.required, rules.isEmail]"
               label="E-mail"
+              placeholder="name@mail.com"
+              color="white"
+              validate-on-blur
               required
               box
               dark
             ></v-text-field>
 
             <v-text-field
-              v-model="password.value"
-              :append-icon="password.isShow ? 'visibility_off' : 'visibility'"
+              ref="password"
+              v-model="password"
+              :append-icon="showPassword ? 'visibility_off' : 'visibility'"
               :rules="[rules.required, rules.min]"
-              :type="password.isShow ? 'text' : 'password'"
-              name="input-10-2"
+              :type="showPassword ? 'text' : 'password'"
               label="Пароль"
+              color="white"
+              validate-on-blur
               required
               box
               dark
-              @click:append="password.isShow = !password.isShow"
+              @click:append="showPassword = !showPassword"
             ></v-text-field>
 
             <v-text-field
+              ref="passConfirm"
               v-if="isRegister"
-              v-model="passConfirm.value"
-              :append-icon="passConfirm.isShow ? 'visibility_off' : 'visibility'"
-              :rules="[rules.required, rules.min]"
-              :type="passConfirm.isShow ? 'text' : 'password'"
+              v-model="passConfirm"
+              :append-icon="showPassConfirm ? 'visibility_off' : 'visibility'"
+              :rules="[rules.required, rules.min, rules.isEqualPass]"
+              :type="showPassConfirm ? 'text' : 'password'"
               name="input-10-2"
               label="Подтверждение пароля"
+              color="white"
+              validate-on-blur
               required
               box
               dark
-              @click:append="passConfirm.isShow = !passConfirm.isShow"
+              @click:append="showPassConfirm = !showPassConfirm"
             ></v-text-field>
+
+            <v-btn
+              large
+              outline
+              color="white"
+              dark
+              block
+              @click="submit"
+            >
+              {{ isRegister ? 'Зарегестрироваться' : 'Войти'}}
+            </v-btn>
+
+            <v-btn
+              small
+              flat
+              color="white"
+              dark
+              block
+              @click="isRegister = !isRegister"
+              class="mt-3"
+            >
+              {{ isRegister ? 'Войти' : 'Зарегестрироваться'}}
+            </v-btn>
 
             <v-alert
               :value="serverError.isShow"
-              color="error"
-              icon="warning"
+              :icon="serverError.icon"
+              transition="scale-transition"
+              color="white"
               outline
+              class="mt-5"
             >
               {{ serverError.message }}
             </v-alert>
-
-            <v-btn large outline dark block>{{ isRegister ? 'Зарегестрироваться' : 'Войти'}}</v-btn>
-            <v-btn small flat dark block
-                   @click="isRegister = !isRegister"
-                   class="mt-3">
-              {{ isRegister ? 'Войти' : 'Зарегестрироваться'}}
-            </v-btn>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -78,6 +108,7 @@
 </template>
 
 <script>
+  let emailCheck = value => /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(value);
   export default {
     name: 'auth-index',
 
@@ -85,80 +116,90 @@
 
     data() {
       return {
-        rules: {
-          required: value => !!value || 'Обязательное',
-          min: v => v.length >= 5 || 'Минимум 5 Знаков',
-          emailMatch: () => ('Email или пароль, который вы ввели, неверен'),
-        },
-
+        // email: 'test@test.ru',
+        // password: '12345',
+        email: '',
+        password: '',
+        passConfirm: '',
         displayName: 'Александр',
 
-        email: {
-          value: 'test@test.ru',
+        rules: {
+          required: value => !!value || 'Это поле обязательно для заполнения',
+          min: v => v.length >= 5 || 'Минимум 5 знаков',
+          isEmail: v => emailCheck(v) || 'Пример: name@mail.com',
+          isEqualPass: value => value === this.password || 'Должен совпадать с паролем',
         },
 
-        password: {
-          value: '12345',
-          isShow: false,
-        },
-
-        passConfirm: {
-          value: '12345',
-          isShow: false,
-        },
+        showPassword: false,
+        showPassConfirm: false,
 
         serverError: {
           isShow: false,
-          message: 'Ошибка на сервере.',
+          icon: 'priority_high',
+          message: 'Не выходит. Попробуйте попозже.',
         },
 
         isRegister: false,
       };
     },
 
+    computed: {
+      form() {
+        return {
+          email: this.email,
+          password: this.password,
+          passConfirm: this.passConfirm,
+        };
+      },
+    },
+
     methods: {
-      async loginStart() {
-        this.serverError.message = '';
+      showMessage(text) {
+        this.serverError.message = text;
+        this.serverError.isShow = true;
 
-        if (!this.email.state || !this.password.state) return;
-
-        try {
-          await this.$store.dispatch('login', {
-            email: this.email.value,
-            password: this.password.value,
-          });
-
-          this.$router.push('/');
-        } catch (error) {
-          this.serverError.message = error.response.data;
-        }
-
-        this.email.state = this.password.state = this.passwordConfirm.state = null;
+        setTimeout(() => {
+          this.serverError.isShow = false;
+        }, 3000);
       },
 
-      async registerStart() {
-        this.serverError.message = '';
+      async submit() {
+        let formHasErrors = false;
+        let action = this.isRegister ? 'register' : 'login';
 
-        this.emailCheck();
-        this.passwordCheck();
-        this.passwordConfirmCheck();
+        Object.keys(this.form).forEach(field => {
+          let value = this.form[field];
 
-        if (!this.email.state || !this.password.state || !this.passwordConfirm.state) return;
+          if (!this.isRegister && field === 'passConfirm') return;
+
+          if (this.isRegister && field === 'passConfirm') {
+            if (this.form['password'] !== value) formHasErrors = true;
+          }
+
+          if (field === 'password' && emailCheck(value)) {
+            formHasErrors = true;
+          }
+
+          if (!value || value.length < 5) {
+            formHasErrors = true;
+          }
+
+          this.$refs[field].validate(true)
+        });
+
+        if (formHasErrors) return;
 
         try {
-          await this.$store.dispatch('register', {
-            displayName: this.displayName,
-            email: this.email.value,
-            password: this.password.value,
+          await this.$store.dispatch(action, {
+            displayName: this.displayName || null,
+            email: this.email,
+            password: this.password,
           });
 
           this.$router.push('/');
         } catch (error) {
-          this.serverError.message = error.response.data;
-          console.log('error', error.response);
+          this.showMessage(error.response.data || 'Не выходит. Попробуйте попозже.');
         }
-
-        this.email.state = this.password.state = this.passwordConfirm.state = null;
       },
     },
   };

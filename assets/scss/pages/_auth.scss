@@ -2,9 +2,8 @@
   position: relative;
   width: auto;
   min-height: 100vh;
-  background: blue url("/static/images/bg.jpg") no-repeat;
-  background-size: cover;
-  color: #fff;
+  background: #1976D2 url("/static/images/bg.jpg") no-repeat !important;
+  background-size: cover !important;
 
   &::before {
     content: '';
@@ -22,11 +21,13 @@
 
   &__logo {
     position: relative;
+    margin-top: 60px;
     margin-bottom: 60px;
     font-family: $font-family-title;
     font-weight: 400;
     font-size: 100px;
     line-height: 1;
+    color: #fff;
     text-shadow: 1px 2px 3px grey, 2px 5px 10px black(.3), 0 0 100px black(.3);
   }
 }

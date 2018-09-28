@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app class="auth">
     <nuxt/>
-  </div>
+  </v-app>
 </template>
