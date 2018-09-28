@@ -12,28 +12,64 @@
 
         <v-layout justify-center>
           <v-flex xs12 sm6 md4 lg3 xl2>
-
-              <v-text-field
-                v-model="email.value"
-                label="E-mail"
-                required
-                box
-                dark
-              ></v-text-field>
-
             <v-text-field
-              v-model="password"
-              :append-icon="show4 ? 'visibility_off' : 'visibility'"
-              :rules="[rules.required, rules.min]"
-              :type="show4 ? 'text' : 'password'"
-              name="input-10-2"
-              label="Пароль"
-              error
+              v-if="isRegister"
+              v-model="email.value"
+              label="Логин"
               box
               dark
-              @click:append="show4 = !show4"
             ></v-text-field>
 
+            <v-text-field
+              v-model="email.value"
+              label="E-mail"
+              required
+              box
+              dark
+            ></v-text-field>
+
+            <v-text-field
+              v-model="password.value"
+              :append-icon="password.isShow ? 'visibility_off' : 'visibility'"
+              :rules="[rules.required, rules.min]"
+              :type="password.isShow ? 'text' : 'password'"
+              name="input-10-2"
+              label="Пароль"
+              required
+              box
+              dark
+              @click:append="password.isShow = !password.isShow"
+            ></v-text-field>
+
+            <v-text-field
+              v-if="isRegister"
+              v-model="passConfirm.value"
+              :append-icon="passConfirm.isShow ? 'visibility_off' : 'visibility'"
+              :rules="[rules.required, rules.min]"
+              :type="passConfirm.isShow ? 'text' : 'password'"
+              name="input-10-2"
+              label="Подтверждение пароля"
+              required
+              box
+              dark
+              @click:append="passConfirm.isShow = !passConfirm.isShow"
+            ></v-text-field>
+
+            <v-alert
+              :value="serverError.isShow"
+              color="error"
+              icon="warning"
+              outline
+            >
+              {{ serverError.message }}
+            </v-alert>
+
+            <v-btn large outline dark block>{{ isRegister ? 'Зарегестрироваться' : 'Войти'}}</v-btn>
+            <v-btn small flat dark block
+                   @click="isRegister = !isRegister"
+                   class="mt-3">
+              {{ isRegister ? 'Войти' : 'Зарегестрироваться'}}
+            </v-btn>
           </v-flex>
         </v-layout>
       </v-flex>
@@ -49,36 +85,31 @@
 
     data() {
       return {
-        show4: false,
-        password: '12345',
         rules: {
           required: value => !!value || 'Обязательное',
           min: v => v.length >= 5 || 'Минимум 5 Знаков',
-          emailMatch: () => ('Email или пароль, который вы ввели, неверен')
+          emailMatch: () => ('Email или пароль, который вы ввели, неверен'),
         },
 
         displayName: 'Александр',
 
         email: {
           value: 'test@test.ru',
-          state: null,
-          message: '',
         },
 
-        // password: {
-        //   value: '12345',
-        //   state: null,
-        //   message: '',
-        // },
-
-        passwordConfirm: {
+        password: {
           value: '12345',
-          state: null,
-          message: '',
+          isShow: false,
+        },
+
+        passConfirm: {
+          value: '12345',
+          isShow: false,
         },
 
         serverError: {
-          message: '',
+          isShow: false,
+          message: 'Ошибка на сервере.',
         },
 
         isRegister: false,
@@ -86,50 +117,8 @@
     },
 
     methods: {
-      changeTab() {
-        this.isRegister = !this.isRegister;
-      },
-
-      emailCheck() {
-        if (!/^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(this.email.value)) {
-          this.email.state = false;
-          this.email.message = 'Пожалуйста введите корректный email';
-        } else {
-          this.email.state = true;
-          this.email.message = '';
-        }
-      },
-
-      passwordCheck() {
-        if (this.password.value.length <= 4) {
-          this.password.state = false;
-          this.password.message = 'Пароль должен быть более 4х символов';
-        } else {
-          this.password.state = true;
-          this.password.message = '';
-        }
-      },
-
-      passwordConfirmCheck() {
-        if (this.password.value.length > 4) {
-          if (this.passwordConfirm.value !== this.password.value) {
-            this.passwordConfirm.state = false;
-            this.passwordConfirm.message = 'Поле "Пароль" и "Подтверждение пароля" должны совпадать';
-          } else {
-            this.passwordConfirm.state = true;
-            this.passwordConfirm.message = '';
-          }
-        } else {
-          this.passwordConfirm.state = null;
-          this.passwordConfirm.message = '';
-        }
-      },
-
       async loginStart() {
         this.serverError.message = '';
-
-        this.emailCheck();
-        this.passwordCheck();
 
         if (!this.email.state || !this.password.state) return;
 
