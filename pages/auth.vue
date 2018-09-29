@@ -41,6 +41,8 @@
               :append-icon="showPassword ? 'visibility_off' : 'visibility'"
               :rules="[rules.required, rules.min]"
               :type="showPassword ? 'text' : 'password'"
+              :success="passEquality"
+              :loading="isRegister"
               label="Пароль"
               color="white"
               validate-on-blur
@@ -48,7 +50,14 @@
               box
               dark
               @click:append="showPassword = !showPassword"
-            ></v-text-field>
+            >
+              <v-progress-linear
+                slot="progress"
+                :value="passProgress"
+                :color="passProgressColor"
+                height="2"
+              ></v-progress-linear>
+            </v-text-field>
 
             <v-text-field
               ref="passConfirm"
@@ -57,6 +66,7 @@
               :append-icon="showPassConfirm ? 'visibility_off' : 'visibility'"
               :rules="[rules.required, rules.min, rules.isEqualPass]"
               :type="showPassConfirm ? 'text' : 'password'"
+              :success="passEquality"
               name="input-10-2"
               label="Подтверждение пароля"
               color="white"
@@ -84,7 +94,7 @@
               color="white"
               dark
               block
-              @click="isRegister = !isRegister"
+              @click="changeAuthMethod"
               class="mt-3"
             >
               {{ isRegister ? 'Войти' : 'Зарегестрироваться'}}
@@ -116,10 +126,8 @@
 
     data() {
       return {
-        // email: 'test@test.ru',
-        // password: '12345',
-        email: '',
-        password: '',
+        email: 'test@test.ru',
+        password: '12345',
         passConfirm: '',
         displayName: 'Александр',
 
@@ -139,41 +147,41 @@
           message: 'Не выходит. Попробуйте попозже.',
         },
 
-        isRegister: false,
+        isRegister: true,
       };
     },
 
     computed: {
-      form() {
+      verifiableValues() {
         return {
           email: this.email,
           password: this.password,
           passConfirm: this.passConfirm,
         };
       },
+      passProgress() {
+        return Math.min(100, this.password.length * 10);
+      },
+      passProgressColor() {
+        return ['error', 'warning', 'success'][Math.floor(this.passProgress / 40)];
+      },
+      passEquality() {
+        return this.password === this.passConfirm && this.password.length >= 5;
+      },
     },
 
     methods: {
-      showMessage(text) {
-        this.serverError.message = text;
-        this.serverError.isShow = true;
-
-        setTimeout(() => {
-          this.serverError.isShow = false;
-        }, 3000);
-      },
-
       async submit() {
         let formHasErrors = false;
         let action = this.isRegister ? 'register' : 'login';
 
-        Object.keys(this.form).forEach(field => {
-          let value = this.form[field];
+        Object.keys(this.verifiableValues).forEach(field => {
+          let value = this.verifiableValues[field];
 
           if (!this.isRegister && field === 'passConfirm') return;
 
           if (this.isRegister && field === 'passConfirm') {
-            if (this.form['password'] !== value) formHasErrors = true;
+            if (this.verifiableValues['password'] !== value) formHasErrors = true;
           }
 
           if (field === 'password' && emailCheck(value)) {
@@ -184,7 +192,7 @@
             formHasErrors = true;
           }
 
-          this.$refs[field].validate(true)
+          this.$refs[field].validate(true);
         });
 
         if (formHasErrors) return;
@@ -200,6 +208,18 @@
         } catch (error) {
           this.showMessage(error.response.data || 'Не выходит. Попробуйте попозже.');
         }
+      },
+      showMessage(text) {
+        this.serverError.message = text;
+        this.serverError.isShow = true;
+
+        setTimeout(() => {
+          this.serverError.isShow = false;
+        }, 3000);
+      },
+      changeAuthMethod() {
+        this.passConfirm = this.password = '';
+        this.isRegister = !this.isRegister;
       },
     },
   };
