@@ -78,9 +78,11 @@
             ></v-text-field>
 
             <v-btn
+              :loading="loading"
+              :disabled="loading"
+              color="white"
               large
               outline
-              color="white"
               dark
               block
               @click="submit"
@@ -89,9 +91,9 @@
             </v-btn>
 
             <v-btn
+              color="white"
               small
               flat
-              color="white"
               dark
               block
               @click="changeAuthMethod"
@@ -147,7 +149,8 @@
           message: 'Не выходит. Попробуйте попозже.',
         },
 
-        isRegister: true,
+        isRegister: false,
+        loading: false,
       };
     },
 
@@ -197,6 +200,8 @@
 
         if (formHasErrors) return;
 
+        this.loading = true;
+
         try {
           await this.$store.dispatch(action, {
             displayName: this.displayName || null,
@@ -208,6 +213,8 @@
         } catch (error) {
           this.showMessage(error.response.data || 'Не выходит. Попробуйте попозже.');
         }
+
+        this.loading = false;
       },
       showMessage(text) {
         this.serverError.message = text;
