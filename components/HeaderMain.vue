@@ -1,25 +1,23 @@
 <template>
-  <header class="row align-items-center">
-    <div class="col-auto">
-      <h1 class="font_pacifico">Motikeep</h1>
-    </div>
+  <v-toolbar color="amber" app absolute clipped-left>
+    <v-toolbar-title>Motikeep</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-btn flat to="/donate">Помочь проекту</v-btn>
+      <v-btn flat>{{ user.points }} p</v-btn>
+      <!--<v-btn flat to="/user">{{ user.displayName }}</v-btn>-->
+      <v-btn icon to="/user">
+        <v-avatar
+          size="38"
+          color="red"
+        >
+          <span class="white--text headline">A</span>
+        </v-avatar>
+      </v-btn>
 
-    <div class="col">
-      <nuxt-link to="/donate" class="btn btn_link">Помочь проекту</nuxt-link>
-    </div>
-
-    <div class="col-auto">
-      {{ user.points }}
-    </div>
-
-    <div class="col-auto">
-      <nuxt-link to="/user" class="btn btn_link">{{ user.displayName }}</nuxt-link>
-    </div>
-
-    <div class="col-auto">
-      <button @click="logout" class="btn btn_link">Выйти</button>
-    </div>
-  </header>
+      <v-btn flat @click="logout">Выйти</v-btn>
+    </v-toolbar-items>
+  </v-toolbar>
 </template>
 
 <script>

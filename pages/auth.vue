@@ -42,7 +42,7 @@
               :rules="[rules.required, rules.min]"
               :type="showPassword ? 'text' : 'password'"
               :success="passEquality"
-              :loading="isRegister"
+              :loading="isRegister && password.length > 0"
               label="Пароль"
               color="white"
               validate-on-blur
@@ -123,7 +123,7 @@
   let emailCheck = value => /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(value);
   export default {
     name: 'auth-index',
-
+    layout: 'auth',
     middleware: 'authenticated',
 
     data() {

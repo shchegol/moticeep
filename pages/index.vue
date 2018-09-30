@@ -1,20 +1,16 @@
 <template>
-  <div class="container-fluid">
-    <header-main></header-main>
+  <div>
     <tasks></tasks>
-    <hr class="mt-4 mb-5">
     <motivators></motivators>
   </div>
 </template>
 
 <script>
-  import HeaderMain     from '~/components/HeaderMain';
   import Tasks          from '~/components/tasks/Tasks';
   import Motivators     from '~/components/motivators/Motivators';
 
   export default {
     components: {
-      HeaderMain,
       Tasks,
       Motivators,
     },
