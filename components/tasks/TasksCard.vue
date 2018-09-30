@@ -1,116 +1,41 @@
 <template>
-  <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-2 align-items-stretch">
-    <div class="card">
-      <div class="row">
-        <div class="col">
+  <v-flex xs12 sm6 md4 lg3 xl2>
+    <v-card>
+      <v-card-title>
+        <p class="headline mb-0">{{ task.title }}</p>
+      </v-card-title>
 
-        </div>
-      </div>
+      <v-card-actions>
+        <v-btn
+          flat
+          large
+          color="primary"
+          @click="pointsAdd"
+        >
+          + {{task.value}} {{task.currency}}
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="taskFavorite">
+          <v-icon color="orange">{{task.favorite ? 'star' : 'star_border' }}</v-icon>
+        </v-btn>
 
-      <div class="row">
-        <div class="col">
-          <h6>{{ task.title }}</h6>
-        </div>
-      </div>
+        <v-menu bottom left>
+          <v-btn icon slot="activator">
+            <v-icon>more_vert</v-icon>
+          </v-btn>
 
-      <div class="row align-items-center no-gutters">
-        <div class="col">
-          <button @click="pointsAdd" type="button" class="btn btn_green">
-            + {{task.value}} {{task.currency}}
-          </button>
-        </div>
-
-        <div class="col-auto">
-          <button @click="taskFavorite" type="button" class="btn btn_icon">
-            <i class="material-icons md-24 color-orange-500">{{task.favorite ? 'star' : 'star_border' }}</i>
-          </button>
-        </div>
-
-        <div class="col-auto">
-          <dropdown>
-            <ul>
-              <li>Удалить</li>
-              <li>Редактировать</li>
-            </ul>
-          </dropdown>
-        </div>
-      </div>
-
-      <!--<div class="card__header">-->
-      <!--<button @click="taskEdit" type="button" class="btn btn_icon">-->
-      <!--<i class="material-icons md-24">edit</i>-->
-      <!--</button>-->
-
-      <!--<button @click="taskDelete" type="button" class="btn btn_icon">-->
-      <!--<i class="material-icons md-24">delete</i>-->
-      <!--</button>-->
-
-
-      <!--</div>-->
-
-      <!--<div class="card__body">-->
-
-      <!--</div>-->
-
-      <!--<div class="card__footer">-->
-
-    </div>
-  </div>
-  <!--<div class="col-12 col-md-6 col-lg-4 mb-2 align-items-stretch">-->
-  <!--<b-card bg-variant="primary" text-variant="white" class="h-100" no-body>-->
-  <!--<div class="row align-items-center justify-content-end no-gutters mt-2">-->
-  <!--<div class="col-auto">-->
-  <!--<b-button @click="taskFavorite" variant="link">-->
-  <!--<i class="material-icons md-24 color-orange-500">{{task.favorite ? 'star' : 'star_border' }}</i>-->
-  <!--</b-button>-->
-  <!--</div>-->
-
-  <!--<div class="col-auto">-->
-  <!--<b-dropdown variant="primary" right no-caret>-->
-  <!--<template slot="button-content">-->
-  <!--<i class="material-icons md-24">more_vert</i>-->
-  <!--</template>-->
-
-  <!--<b-dropdown-item-button @click="taskEdit">-->
-  <!--<i class="material-icons">edit</i>&nbsp;Редактировать-->
-  <!--</b-dropdown-item-button>-->
-
-  <!--<b-dropdown-item-button @click="taskDelete">-->
-  <!--<i class="material-icons">delete</i>&nbsp;Удалить-->
-  <!--</b-dropdown-item-button>-->
-  <!--</b-dropdown>-->
-  <!--</div>-->
-  <!--</div>-->
-
-  <!--<b-card-body class="d-flex flex-column pt-0">-->
-  <!--<div class="row flex-grow-1">-->
-  <!--<div class="col">-->
-  <!--<h4 class="card-title">{{ task.title }}</h4>-->
-  <!--</div>-->
-  <!--</div>-->
-
-  <!--<div class="row mt-2">-->
-  <!--<div v-if="task.editable" class="col">-->
-  <!--<b-input-group :append="task.currency">-->
-  <!--<b-form-input v-model="task.value" placeholder="Награда"></b-form-input>-->
-  <!--</b-input-group>-->
-  <!--</div>-->
-
-  <!--<div v-else class="col text-center">-->
-  <!--<p class="h3">+ {{task.value}} {{task.currency}}</p>-->
-  <!--</div>-->
-  <!--</div>-->
-
-  <!--<div class="row mt-2">-->
-  <!--<div class="col">-->
-  <!--<b-button @click="pointsAdd" variant="success" block v-b-tooltip.hover title="Добавить в копилку">-->
-  <!--{{task.editable ? 'Добавить': 'Выполнено'}}-->
-  <!--</b-button>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</b-card-body>-->
-  <!--</b-card>-->
-  <!--</div>-->
+          <v-list>
+            <v-list-tile @click="taskEdit">
+              <v-list-tile-title>Редактировать</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile @click="taskDelete">
+              <v-list-tile-title>Удалить</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+      </v-card-actions>
+    </v-card>
+  </v-flex>
 </template>
 
 <script>

@@ -1,10 +1,7 @@
 <template>
   <v-app>
     <header-main></header-main>
-
-    <v-container class="mt-5">
-      <nuxt/>
-    </v-container>
+    <nuxt/>
   </v-app>
 </template>
 

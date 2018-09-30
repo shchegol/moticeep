@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <v-container class="mt-5">
     <tasks></tasks>
     <motivators></motivators>
-  </div>
+  </v-container>
 </template>
 
 <script>

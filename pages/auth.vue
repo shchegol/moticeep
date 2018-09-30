@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-layout justify-center>
-      <v-flex>
+        <v-flex>
         <v-layout>
           <v-flex>
             <h1 class="auth__logo text-xs-center">
