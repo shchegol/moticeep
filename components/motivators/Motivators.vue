@@ -1,62 +1,31 @@
 <template>
-  <div>
-    <div class="row">
-      <div class="col">
-        <h4>Мотиваторы</h4>
-      </div>
+  <v-layout class="mt-3">
+    <v-flex>
+      <v-layout align-center>
+        <v-flex>
+          <h3>Мотиваторы</h3>
+        </v-flex>
+      </v-layout>
 
-      <div class="col-auto">
-        <button @click="motivatorCreateStart" v-b-tooltip.hover title="Добавить мотиватор"
-                type="button" class="btn btn_icon">
-          <i class="material-icons md-24">add</i>
-        </button>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <motivators-card v-for="motivator in motivators" :key="motivator.id"
-                       :motivator="motivator"
-                       @motivatorUpdate="motivatorUpdateStart"
-                       @motivatorDelete="motivatorDelete"
-                       @motivatorFavorite="motivatorUpdate"
-                       @motivatorDone="motivatorUpdate"></motivators-card>
-    </div>
-
-    <!-- Modal Component -->
-    <b-modal ref="motivatorModal" @hidden="clearForm" centered hide-header hide-footer>
-      <div class="row">
-        <div class="col">
-          <h3>{{ motivatorModal.isEdit ? 'Редактировать мотиватор' : 'Новый мотиватор'}}</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <b-form-group label="Заголовок" label-for="inputTitle">
-            <b-form-input v-model="motivatorModal.data.title" id="inputTitle" placeholder="Lego"></b-form-input>
-          </b-form-group>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <b-form-group label="Стоимость" label-for="inputValue">
-            <b-form-input v-model.number="motivatorModal.data.maxValue" type="number" id="inputValue" placeholder="300"></b-form-input>
-          </b-form-group>
-        </div>
-      </div>
-
-      <div class="row mt-4">
-        <div class="col-auto">
-          <b-button v-if="motivatorModal.isEdit" @click="motivatorUpdate(editMotivatorId, motivatorModal.data)" variant="success">Редактировать</b-button>
-          <b-button v-else @click="motivatorCreate" variant="success">Создать</b-button>
-        </div>
-      </div>
-    </b-modal>
-  </div>
+      <v-container fluid grid-list-md class="pa-0 mt-3">
+        <v-layout row wrap>
+          <motivators-card
+            v-for="motivator in motivators"
+            :key="motivator.id"
+            :motivator="motivator"
+            @motivatorUpdate="motivatorUpdateStart"
+            @motivatorDelete="motivatorDelete"
+            @motivatorFavorite="motivatorUpdate"
+            @motivatorDone="motivatorUpdate"
+          ></motivators-card>
+        </v-layout>
+      </v-container>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
-  import {mapState} from 'vuex';
+  import {mapState}     from 'vuex';
   import _              from 'lodash';
   import axios          from 'axios';
   import MotivatorsCard from '~/components/motivators/MotivatorsCard';
@@ -85,39 +54,39 @@
     },
 
     computed: mapState({
-      motivators: state => state.motivators.all
+      motivators: state => state.motivators.all,
     }),
 
     // todo серверный рендеринг не выдаёт данную логику, при первой загрузке не видит обложку
     // computed: {
     //   pointsDistribution() {
-        // let activeMotivators = _.filter(this.user.motivators, ['done', false])
-        // let motivators = _.map(activeMotivators, motivator => Object.assign({}, motivator));
-        // let totalPoints = this.user.points;
-        // let favorite = _.filter(motivators, 'favorite')
-        // let singlePoint;
-        //
-        // if (favorite.length > 0) {
-        //   singlePoint = Math.floor(totalPoints / favorite.length);
-        //
-        //   _.each(motivators, motivator => {
-        //     if (motivator.done) return;
-        //
-        //     if (motivator.favorite) {
-        //       motivator.value = singlePoint;
-        //     } else {
-        //       motivator.value = 0
-        //     }
-        //   });
-        // } else {
-        //   singlePoint = Math.floor(totalPoints / motivators.length);
-        //
-        //   _.each(motivators, motivator => {
-        //     if (motivator.done) return;
-        //
-        //     motivator.value = singlePoint;
-        //   });
-        // }
+    // let activeMotivators = _.filter(this.user.motivators, ['done', false])
+    // let motivators = _.map(activeMotivators, motivator => Object.assign({}, motivator));
+    // let totalPoints = this.user.points;
+    // let favorite = _.filter(motivators, 'favorite')
+    // let singlePoint;
+    //
+    // if (favorite.length > 0) {
+    //   singlePoint = Math.floor(totalPoints / favorite.length);
+    //
+    //   _.each(motivators, motivator => {
+    //     if (motivator.done) return;
+    //
+    //     if (motivator.favorite) {
+    //       motivator.value = singlePoint;
+    //     } else {
+    //       motivator.value = 0
+    //     }
+    //   });
+    // } else {
+    //   singlePoint = Math.floor(totalPoints / motivators.length);
+    //
+    //   _.each(motivators, motivator => {
+    //     if (motivator.done) return;
+    //
+    //     motivator.value = singlePoint;
+    //   });
+    // }
 
     //     return _.filter(this.user.motivators, ['done', false]);
     //   },

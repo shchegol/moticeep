@@ -1,61 +1,79 @@
 <template>
-  <div class="col-12 col-md-6 col-lg-4 mb-2 align-items-stretch">
-    <b-card no-body>
-      <div class="card-img-top" :style="{'background-image': `url('${motivator.img}')`}">
-        <div v-if="!motivator.done" class="row justify-content-end no-gutters card-img-buttons mt-2">
-          <div class="col-auto">
-            <b-button @click="motivatorFavorite" variant="link">
-              <i class="material-icons md-24 color-orange-500">{{motivator.favorite ? 'star' : 'star_border' }}</i>
-            </b-button>
-          </div>
-          <div class="col-auto">
-            <b-dropdown variant="link" right no-caret>
-              <template slot="button-content">
-                <i class="material-icons md-24 text-white">more_vert</i>
-              </template>
+  <v-flex xs12 sm6 md4 lg3 xl2>
+    <v-card>
+      <v-img
+        :src="motivator.img"
+        aspect-ratio="2.75"
+      ></v-img>
 
-              <b-dropdown-item-button @click="motivatorEdit">
-                <i class="material-icons">edit</i>&nbsp;Редактировать
-              </b-dropdown-item-button>
-              <b-dropdown-item-button @click="motivatorDelete">
-                <i class="material-icons">delete</i>&nbsp;Удалить
-              </b-dropdown-item-button>
-            </b-dropdown>
-          </div>
-        </div>
+      <v-card-title>
+        <p class="headline mb-0">{{ motivator.title }}</p>
+      </v-card-title>
 
-        <div v-else class="row justify-content-end no-gutters card-img-buttons mt-2">
-          <b-button @click="motivatorDelete" variant="link" v-b-tooltip.hover title="Удалить навсегда?">
-            <i class="material-icons md-24 text-white">delete</i>
-          </b-button>
-        </div>
-      </div>
+      <v-card-actions>
+        <template v-if="!motivator.done">
+          <v-btn
+            v-show="motivator.value >= motivator.maxValue && !motivator.done"
+            flat
+            large
+            color="primary"
+            @click="motivatorDone"
+          >
+            Достигнуто
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn
+            icon
+            @click="taskFavorite">
+            <v-icon color="orange">
+              {{motivator.favorite ? 'star' : 'star_border' }}
+            </v-icon>
+          </v-btn>
 
-      <div class="card-body">
-        <div class="row">
-          <div class="col">
-            <h4 class="card-title">{{ motivator.title }}</h4>
-          </div>
-        </div>
+          <v-menu bottom left>
+            <v-btn
+              icon
+              slot="activator">
+              <v-icon>more_vert</v-icon>
+            </v-btn>
 
-        <div class="row">
-          <div class="col">
-            <b-progress :max=" motivator.maxValue" height="1rem" variant="success" striped>
-              <b-progress-bar :value="motivator.value">
-                <strong>{{ motivator.value }} / {{ motivator.maxValue }}</strong>
-              </b-progress-bar>
-            </b-progress>
-          </div>
-        </div>
+            <v-list>
+              <v-list-tile @click="motivatorEdit">
+                <v-list-tile-title>Редактировать</v-list-tile-title>
+              </v-list-tile>
+              <v-list-tile @click="motivatorDelete">
+                <v-list-tile-title>Удалить</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </template>
 
-        <div v-show="motivator.value >= motivator.maxValue && !motivator.done" class="row mt-2">
-          <div class="col">
-            <b-button @click="motivatorDone" variant="success" block>Достигнуто</b-button>
-          </div>
-        </div>
-      </div>
-    </b-card>
-  </div>
+        <template v-else>
+          <v-spacer></v-spacer>
+          <v-tooltip bottom>
+          <v-btn
+            slot="activator"
+            icon
+            @click="motivatorDelete">
+            <v-icon color="red">delete</v-icon>
+          </v-btn>
+            <span>Удалить навсегда</span>
+          </v-tooltip>
+        </template>
+
+      </v-card-actions>
+      <v-tooltip bottom>
+        <v-progress-linear
+          v-model="motivator.value"
+          slot="activator"
+          height="4"
+          color="green"
+          class="mt-0"
+        ></v-progress-linear>
+        <span>{{ motivator.value }} / {{ motivator.maxValue }}</span>
+      </v-tooltip>
+    </v-card>
+  </v-flex>
 </template>
 
 <script>

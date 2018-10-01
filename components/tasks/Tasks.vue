@@ -5,25 +5,21 @@
         <v-flex>
           <h3>Задания</h3>
         </v-flex>
-
-        <v-flex class="text-xs-right">
-          <v-tooltip bottom>
-            <v-btn slot="activator" icon @click="taskCreateStart">
-              <v-icon>add</v-icon>
-            </v-btn>
-            <span>Добавить задание</span>
-          </v-tooltip>
-        </v-flex>
       </v-layout>
 
-      <v-container fluid grid-list-md>
-        <v-layout row wrap >
-          <tasks-card v-for="task in tasks"
-                      :key="task.id" :task="task"
-                      @pointsAdd="pointsAdd"
-                      @taskUpdate="taskUpdateStart"
-                      @taskFavorite="taskUpdate"
-                      @taskDelete="taskDelete">
+      <v-container
+        fluid
+        grid-list-md
+        class="pa-0 mt-3"
+      >
+        <v-layout row wrap>
+          <tasks-card
+            v-for="task in tasks"
+            :key="task.id" :task="task"
+            @pointsAdd="pointsAdd"
+            @taskUpdate="taskUpdateStart"
+            @taskFavorite="taskUpdate"
+            @taskDelete="taskDelete">
           </tasks-card>
         </v-layout>
       </v-container>

@@ -1,6 +1,7 @@
 <template>
   <v-container class="mt-5">
     <tasks></tasks>
+    <v-divider class="mt-5 mb-5"></v-divider>
     <motivators></motivators>
   </v-container>
 </template>
