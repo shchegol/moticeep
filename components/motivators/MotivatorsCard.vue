@@ -24,7 +24,7 @@
           <v-spacer></v-spacer>
           <v-btn
             icon
-            @click="taskFavorite">
+            @click="motivatorFavorite">
             <v-icon color="orange">
               {{motivator.favorite ? 'star' : 'star_border' }}
             </v-icon>

@@ -1,10 +1,26 @@
 <template>
-  <v-toolbar color="amber" app absolute clipped-left>
+  <v-toolbar
+    color="primary"
+    app
+    absolute
+    clipped-left
+    dark
+  >
     <v-toolbar-title>Motikeep</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn flat to="/donate">Помочь проекту</v-btn>
-      <v-btn flat>{{ user.points }} p</v-btn>
+      <v-btn
+        flat
+        to="/donate"
+        class="mr-5"
+      >
+        Помочь проекту
+      </v-btn>
+
+      <v-flex  class="mr-5 align-self-center">
+        <span class="title">{{ user.points }} p.</span>
+      </v-flex>
+
       <!--<v-btn flat to="/user">{{ user.displayName }}</v-btn>-->
       <v-btn icon to="/user">
         <v-avatar
