@@ -1,106 +1,23 @@
-.btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 2rem;
-  padding: 0 2rem;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #fff;
-  background-color: $gray-600;
-  border: none;
-  border-radius: $border-radius;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: background-color .3s ease;
-  cursor: pointer;
-  user-select: none;
-
-  &:hover {
-    text-decoration: none;
-    color: #fff;
-    background-color: $gray-700;
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &_outline {
-    background-color: transparent;
-    border: 2px solid $gray-600;
-
-    &:hover {
-      border-color: $gray-700;
-    }
-  }
-
-  &_icon {
-    height: 3rem;
-    width: 3rem;
-    padding: 0;
-    font-size: 2rem;
-    border-radius: 100%;
-    background-color: transparent;
-    color: $gray-600;
-
-    &:hover {
-      color: $gray-800;
-      background-color: black(.05);
-    }
-  }
-
-  &_white {
-    @include btn-color('white')
-  }
-
-  &_green {
-    @include btn-color('green')
-  }
-
-  &_blue {
-    @include btn-color('blue')
-  }
-
-  &_sm {
-    font-size: 0.5rem;
-    padding: .25rem 2rem;
-
-    &.btn_icon {
-      height: 1rem;
-      width: 1rem;
-      padding: 0;
-      font-size: .5rem;
-    }
-  }
-
-  &_lg {
-    font-size: 1.5rem;
-    padding: .5rem 3rem;
-
-    &.btn_icon {
-      height: 4rem;
-      width: 4rem;
-      padding: 0;
-      font-size: 3rem;
-    }
-  }
-
-  &_pill {
-    border-radius: 1000px;
-  }
-
-  &_link {
-    color: $blue;
-    background-color: transparent;
-    border: transparent;
-    text-transform: none;
-
-    &:hover {
-      color: $blue;
-      background-color: transparent;
-      border: transparent;
-      text-decoration: underline;
+.v-btn {
+  &--floating {
+    .v-btn__content {
+      :not(:only-child) {
+        &.v-btn__label {
+          z-index: 1;
+          @include center(y);
+          left: auto;
+          right: 100%;
+          padding: .5rem 1.25rem;
+          margin-right: 1rem;
+          font-weight: 400;
+          color: $gray-800;
+          background-color: #fff;
+          opacity: 1;
+          border-radius: 4px;
+          @include box_shadow_material(1);
+          text-transform: none;
+        }
+      }
     }
   }
 }
