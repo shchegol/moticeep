@@ -39,14 +39,8 @@
 </template>
 
 <script>
-  import Dropdown from '@/components/common/Dropdown';
-
   export default {
     name: 'TasksCars',
-
-    components: {
-      Dropdown,
-    },
 
     props: {
       task: {
@@ -56,15 +50,27 @@
     },
 
     methods: {
+      /**
+       * Emit action taskUpdate with task data as parameter to the task.vue
+       */
       taskEdit() {
         this.$emit('taskUpdate', this.task);
       },
+      /**
+       * Emit action taskDelete with task id as parameter to the task.vue
+       */
       taskDelete() {
         this.$emit('taskDelete', this.task._id);
       },
+      /**
+       * Emit action taskFavorite with task id as parameter to the task.vue
+       */
       taskFavorite() {
         this.$emit('taskFavorite', this.task._id, {favorite: !this.task.favorite});
       },
+      /**
+       * Emit action pointsAdd with task.value as parameter to the task.vue
+       */
       pointsAdd() {
         this.$emit('pointsAdd', {points: this.task.value});
       },
