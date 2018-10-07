@@ -35,7 +35,6 @@ const actions = {
   },
 
   showModal({commit}, data) {
-    console.log('showModal motivators')
     commit('toggleModalVisibility', true);
     commit('setModalData', data);
   },

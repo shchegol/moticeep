@@ -15,23 +15,28 @@
         <v-layout row wrap>
           <tasks-card
             v-for="task in tasks"
-            :key="task.id" :task="task"
-            @pointsAdd="pointsAdd"
-            @taskUpdate="taskUpdateStart"
-            @taskFavorite="taskUpdate"
-            @taskDelete="taskDelete">
+            :key="task.id"
+            :task="task"
+            @points-add="pointsAdd"
+            @task-edit="taskEditStart"
+            @task-favorite="taskEdit"
+            @task-delete="taskDelete"
+          >
           </tasks-card>
         </v-layout>
       </v-container>
     </v-flex>
 
-    <tasks-modal></tasks-modal>
+    <tasks-modal
+      @task-create="taskCreate"
+      @task-edit="taskEdit"
+    >
+    </tasks-modal>
   </v-layout>
 </template>
 
 <script>
-  import {mapState} from 'vuex';
-  import _          from 'lodash';
+  import {mapState, mapActions} from 'vuex';
   import TasksCard  from '~/components/tasks/TasksCard';
   import TasksModal  from '~/components/tasks/TasksModal';
 
@@ -43,62 +48,32 @@
       TasksModal
     },
 
-    data() {
-      return {
-        taskModal: {
-          data: {
-            title: null,
-            value: null,
-            editable: null,
-          },
-          isEdit: false,
-        },
-        editTaskId: '',
-      };
-    },
-
     computed: mapState({
       tasks: state => state.tasks.all,
     }),
 
     methods: {
-      taskUpdateStart(task) {
-        // this.editTaskId = task._id;
-        // this.taskModal.data.title = task.title;
-        // this.taskModal.data.value = task.value;
-        // this.taskModal.data.editable = task.editable;
-        //
-        // this.taskModal.isEdit = true;
+      ...mapActions('tasks', [
+        'hideModal',
+      ]),
+
+      taskEditStart(task) {
         this.$store.dispatch('tasks/showModal', task)
       },
 
-      clearForm() {
-        _.forIn(this.taskModal.data, (value, key) => {
-          this.taskModal.data[key] = null;
-        });
-      },
-
-      async taskCreate() {
-        let createdFields = {
-          title: this.taskModal.data.title || 'За труды',
-          value: this.taskModal.data.value || 1,
-          editable: this.taskModal.data.editable || false,
-          favorite: false,
-        };
-
+      async taskCreate(task) {
         try {
-          await this.$store.dispatch('task/create', createdFields);
-          this.modalHide();
+          await this.$store.dispatch('tasks/create', task);
+          this.hideModal();
         } catch (error) {
           throw error;
         }
       },
 
-      async taskUpdate(id, updatedFields) {
+      async taskEdit(task) {
         try {
-          await this.$store.dispatch('task/update', {id: id, ...updatedFields});
-
-          this.modalHide();
+          await this.$store.dispatch('tasks/update', task);
+          this.hideModal();
         } catch (error) {
           throw error;
         }
@@ -106,7 +81,7 @@
 
       async taskDelete(id) {
         try {
-          await this.$store.dispatch('task/remove', id);
+          await this.$store.dispatch('tasks/remove', id);
         } catch (error) {
           throw error;
         }

@@ -1,11 +1,14 @@
 <template>
   <v-dialog
-    v-modal="isShow"
+    :value="modalIsActive"
+    @input="hideModal"
     width="500"
   >
     <v-card>
       <v-card-title>
-        <span class="headline">Создать задание</span>
+        <span class="headline">
+          {{isEdit ? 'Редактировать' : 'Создать'}} задание
+        </span>
       </v-card-title>
 
       <v-card-text>
@@ -13,12 +16,32 @@
           <v-layout wrap>
             <v-flex xs12>
               <v-text-field
-                v-model="values.title"
+                ref="title"
+                :value="modalData.title"
                 label="Заголовок"
                 placeholder="За труды"
                 box
                 class="w-100"
               ></v-text-field>
+            </v-flex>
+
+            <v-flex xs12>
+              <v-text-field
+                ref="value"
+                :value="modalData.value"
+                label="Награда"
+                placeholder="300"
+                box
+                class="w-100"
+              ></v-text-field>
+            </v-flex>
+
+            <v-flex xs12>
+              <v-switch
+                ref="editable"
+                label="редактируемое"
+                :value="modalData.editable"
+              ></v-switch>
             </v-flex>
           </v-layout>
         </v-container>
@@ -37,9 +60,9 @@
         <v-btn
           color="primary"
           flat
-          @click="hideModal"
+          @click="submit"
         >
-          Создать
+          {{isEdit ? 'Редактировать' : 'Создать'}}
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -48,22 +71,58 @@
 
 <script>
   import {mapState, mapActions} from 'vuex';
+  import {isEmptyObject}        from '~/assets/js/utils';
 
   export default {
     name: 'tasks-modal',
+
     data() {
       return {
-        isShow: this.isVisible
-      }
+        task: {
+          _id: null,
+          title: '',
+          value: '',
+          editable: false,
+        },
+      };
     },
-    computed: mapState({
-      isVisible: state => state.tasks.modalVisibility,
-      values: state => state.tasks.modalData,
-    }),
-    methods: {
-      ...mapActions({
-        hideModal: 'tasks/hideModal',
+
+    computed: {
+      ...mapState('tasks', {
+        modalIsActive: state => state.modalIsActive,
+        modalData: state => state.modalData,
       }),
+      isEdit() {
+        return !isEmptyObject(this.modalData);
+      },
+    },
+
+    methods: {
+      ...mapActions('tasks', [
+        'hideModal',
+      ]),
+
+      submit() {
+        let action;
+
+        if (this.isEdit) {
+          action = 'task-edit';
+          this.task._id = this.modalData._id
+        } else {
+          action = 'task-create';
+          this.task._id = null
+        }
+
+        _.each(this.$refs, (field, name) => {
+          let input = field.$refs.input;
+
+          this.task[name] = (name === 'editable')
+            ? input.checked
+            : input.value;
+        });
+
+        this.$emit(action, this.task);
+      },
     },
   };
 </script>

@@ -1,3 +1,8 @@
-export let getRundomInt = (min, max) => {
-  return Math.floor(Math.random() * (max - min)) + min;
-};
+export function isEmptyObject(obj) {
+  for (var i in obj) {
+    if (obj.hasOwnProperty(i)) {
+      return false;
+    }
+  }
+  return true;
+}
