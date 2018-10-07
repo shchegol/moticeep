@@ -79,7 +79,6 @@
     data() {
       return {
         task: {
-          _id: null,
           title: '',
           value: '',
           editable: false,
@@ -103,15 +102,9 @@
       ]),
 
       submit() {
-        let action;
-
-        if (this.isEdit) {
-          action = 'task-edit';
-          this.task._id = this.modalData._id
-        } else {
-          action = 'task-create';
-          this.task._id = null
-        }
+        let action = this.isEdit
+          ? 'task-edit'
+          : 'task-create';
 
         _.each(this.$refs, (field, name) => {
           let input = field.$refs.input;
@@ -121,7 +114,7 @@
             : input.value;
         });
 
-        this.$emit(action, this.task);
+        this.$emit(action, this.modalData._id, this.task);
       },
     },
   };

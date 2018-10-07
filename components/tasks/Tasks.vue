@@ -37,15 +37,15 @@
 
 <script>
   import {mapState, mapActions} from 'vuex';
-  import TasksCard  from '~/components/tasks/TasksCard';
-  import TasksModal  from '~/components/tasks/TasksModal';
+  import TasksCard              from '~/components/tasks/TasksCard';
+  import TasksModal             from '~/components/tasks/TasksModal';
 
   export default {
     name: 'tasks',
 
     components: {
       TasksCard,
-      TasksModal
+      TasksModal,
     },
 
     computed: mapState({
@@ -53,29 +53,31 @@
     }),
 
     methods: {
-      ...mapActions('tasks', [
-        'hideModal',
-      ]),
+      ...mapActions({
+        hideModal: 'tasks/hideModal',
+        snackbarShow: 'common/snackbarShow',
+      }),
 
       taskEditStart(task) {
-        this.$store.dispatch('tasks/showModal', task)
+        this.$store.dispatch('tasks/showModal', task);
       },
 
-      async taskCreate(task) {
+      async taskCreate(id, createdFields) {
         try {
-          await this.$store.dispatch('tasks/create', task);
+          await this.$store.dispatch('tasks/create', createdFields);
           this.hideModal();
         } catch (error) {
-          throw error;
+          this.snackbarShow({active: true, message: 'Не выходит. Попробуйте попозже.'});
         }
       },
 
-      async taskEdit(task) {
+      async taskEdit(id, updatedFields) {
+        console.log('taskEdit', id, updatedFields);
         try {
-          await this.$store.dispatch('tasks/update', task);
+          await this.$store.dispatch('tasks/update', {id: id, ...updatedFields});
           this.hideModal();
         } catch (error) {
-          throw error;
+          this.snackbarShow({active: true, message: 'Не выходит. Попробуйте попозже.'});
         }
       },
 
@@ -83,7 +85,7 @@
         try {
           await this.$store.dispatch('tasks/remove', id);
         } catch (error) {
-          throw error;
+          this.snackbarShow({active: true, message: 'Не выходит. Попробуйте попозже.'});
         }
       },
 
@@ -95,11 +97,7 @@
             updatedFields,
           });
         } catch (error) {
-          if (!error.response) {
-            throw new Error('Ошибка на сервере');
-          }
-
-          throw error;
+          this.snackbarShow({active: true, message: 'Не выходит. Попробуйте попозже.'});
         }
       },
     },

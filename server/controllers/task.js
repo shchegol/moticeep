@@ -1,9 +1,21 @@
-import User from '../models/user';
-import _    from 'lodash';
-import {getLastValueFromURLPath} from '../utils/common'
+import User                      from '../models/user';
+import _                         from 'lodash';
+import {getLastValueFromURLPath} from '../utils/common';
 
 export const createTask = async ctx => {
   const user = await User.findOne({'_id': ctx.state.user._id}).exec();
+
+  if (ctx.request.body.title === '') {
+    ctx.request.body.title = 'За труды';
+  }
+
+  if (ctx.request.body.value === '') {
+    ctx.request.body.value = 1;
+  }
+
+  if (ctx.request.body._id === null) {
+    delete ctx.request.body._id;
+  }
 
   user.tasks.push(ctx.request.body);
   await user.save();
@@ -19,7 +31,7 @@ export const updateTask = async ctx => {
   const task = user.tasks.id(taskId);
 
   _.forIn(ctxBody, (value, key) => {
-    task[key] = value
+    task[key] = value;
   });
   await user.save();
 

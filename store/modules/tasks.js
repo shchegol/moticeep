@@ -17,8 +17,9 @@ const actions = {
   },
 
   async update({commit}, updatedFields) {
+    console.log(updatedFields)
     try {
-      const {data} = await axios.put(`/api/tasks/${updatedFields._id}`, updatedFields);
+      const {data} = await axios.put(`/api/tasks/${updatedFields.id}`, updatedFields);
       commit('setTasks', data);
     } catch (error) {
       throw error;

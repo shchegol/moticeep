@@ -1,4 +1,5 @@
 import Vuex       from 'vuex';
+import common       from './modules/common';
 import auth       from './modules/auth';
 import user       from './modules/user';
 import tasks      from './modules/tasks';
@@ -16,6 +17,7 @@ export default () => {
       },
     },
     modules: {
+      common,
       auth,
       user,
       tasks,
