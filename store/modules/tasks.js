@@ -2,10 +2,12 @@ import axios from 'axios/index';
 
 const state = () => ({
   all: [],
+  modalVisibility: false,
+  modalData: {}
 });
 
 const actions = {
-  async taskCreate({commit}, createdFields) {
+  async create({commit}, createdFields) {
     try {
       const {data} = await axios.post('/api/tasks', createdFields);
       commit('setTasks', data);
@@ -14,7 +16,7 @@ const actions = {
     }
   },
 
-  async taskUpdate({commit}, updated) {
+  async update({commit}, updated) {
     try {
       const {data} = await axios.put(`/api/tasks/${updated.id}`, updated);
       commit('setTasks', data);
@@ -23,7 +25,7 @@ const actions = {
     }
   },
 
-  async taskDelete({commit}, taskId) {
+  async remove({commit}, taskId) {
     try {
       const {data} = await axios.delete(`/api/tasks/${taskId}`);
       commit('setTasks', data);
@@ -31,15 +33,34 @@ const actions = {
       throw error;
     }
   },
+
+  showModal({commit}, data) {
+    commit('toggleModalVisibility', true);
+    commit('setModalData', data);
+  },
+
+  hideModal({commit}) {
+    commit('toggleModalVisibility', false);
+    commit('setModalData', {});
+  }
 };
 
 const mutations = {
   setTasks(state, tasks) {
     state.all = tasks;
   },
+
+  toggleModalVisibility(state, isVisible) {
+    state.modalVisibility = isVisible
+  },
+
+  setModalData(state, data) {
+    state.modalData = data;
+  },
 };
 
 export default {
+  namespaced: true,
   actions,
   state,
   mutations,

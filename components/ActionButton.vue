@@ -24,7 +24,7 @@
         dark
         small
         color="second"
-        @click="dialogShow('task')"
+        @click="showTaskModal({})"
       >
         <v-icon>assignment</v-icon>
         <span class="v-btn__label">Задание</span>
@@ -35,56 +35,31 @@
         dark
         small
         color="second"
-        @click="dialogShow('motivator')"
+        @click="showMotivatorModal({})"
       >
         <v-icon>cake</v-icon>
         <span class="v-btn__label">Мотиватор</span>
       </v-btn>
     </v-speed-dial>
-
-    <v-dialog
-      v-model="dialog"
-      width="500"
-    >
-      <dialog-create-card
-        :dialog-type="dialogType"
-        @dialog-hide="dialogHide"
-      >
-      </dialog-create-card>
-    </v-dialog>
   </div>
 </template>
 
 <script>
-  import DialogCreateCard from '~/components/DialogCreateCard';
+  import {mapActions} from 'vuex';
 
   export default {
     name: 'action-button',
-    components: {
-      DialogCreateCard,
-    },
     data() {
       return {
-        dialogType: 'task',
-        dialog: false,
         fab: false,
       };
     },
     methods: {
-      /**
-       * Show dialog window for create/update tasks/motivators
-       * @param {string} type - type of card. Can be 'task' or 'motivator'
-       */
-      dialogShow(type) {
-        this.dialogType = type;
-        this.dialog = true;
-      },
-      /**
-       * Hide task/motivator dialog window
-       */
-      dialogHide() {
-        this.dialog = false;
-      },
+      ...mapActions({
+          'showTaskModal': 'tasks/showModal',
+          'showMotivatorModal': 'motivators/showModal',
+        },
+      ),
     },
   };
 </script>

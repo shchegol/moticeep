@@ -24,6 +24,8 @@
         </v-layout>
       </v-container>
     </v-flex>
+
+    <tasks-modal></tasks-modal>
   </v-layout>
 </template>
 
@@ -31,12 +33,14 @@
   import {mapState} from 'vuex';
   import _          from 'lodash';
   import TasksCard  from '~/components/tasks/TasksCard';
+  import TasksModal  from '~/components/tasks/TasksModal';
 
   export default {
     name: 'tasks',
 
     components: {
       TasksCard,
+      TasksModal
     },
 
     data() {
@@ -58,19 +62,14 @@
     }),
 
     methods: {
-      taskCreateStart() {
-        this.taskModal.isEdit = false;
-        this.modalShow();
-      },
-
       taskUpdateStart(task) {
-        this.editTaskId = task._id;
-        this.taskModal.data.title = task.title;
-        this.taskModal.data.value = task.value;
-        this.taskModal.data.editable = task.editable;
-
-        this.taskModal.isEdit = true;
-        this.modalShow();
+        // this.editTaskId = task._id;
+        // this.taskModal.data.title = task.title;
+        // this.taskModal.data.value = task.value;
+        // this.taskModal.data.editable = task.editable;
+        //
+        // this.taskModal.isEdit = true;
+        this.$store.dispatch('tasks/showModal', task)
       },
 
       clearForm() {
@@ -88,7 +87,7 @@
         };
 
         try {
-          await this.$store.dispatch('taskCreate', createdFields);
+          await this.$store.dispatch('task/create', createdFields);
           this.modalHide();
         } catch (error) {
           throw error;
@@ -97,7 +96,7 @@
 
       async taskUpdate(id, updatedFields) {
         try {
-          await this.$store.dispatch('taskUpdate', {id: id, ...updatedFields});
+          await this.$store.dispatch('task/update', {id: id, ...updatedFields});
 
           this.modalHide();
         } catch (error) {
@@ -107,7 +106,7 @@
 
       async taskDelete(id) {
         try {
-          await this.$store.dispatch('taskDelete', id);
+          await this.$store.dispatch('task/remove', id);
         } catch (error) {
           throw error;
         }
@@ -116,7 +115,7 @@
       async pointsAdd(updatedFields) {
         const userId = this.user._id;
         try {
-          await this.$store.dispatch('userUpdate', {
+          await this.$store.dispatch('user/update', {
             userId,
             updatedFields,
           });
@@ -127,14 +126,6 @@
 
           throw error;
         }
-      },
-
-      modalShow() {
-        this.$refs.taskModal.show();
-      },
-
-      modalHide() {
-        this.$refs.taskModal.hide();
       },
     },
   };

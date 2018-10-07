@@ -5,7 +5,7 @@ const state = () => ({
 });
 
 const actions = {
-  async userUpdate({commit}, {userId, updatedFields}) {
+  async update({commit}, {userId, updatedFields}) {
     try {
       const {data} = await axios.put(`/api/user/${userId}`, updatedFields);
       commit('setUser', data);
@@ -22,6 +22,7 @@ const mutations = {
 };
 
 export default {
+  namespaced: true,
   state,
   actions,
   mutations,

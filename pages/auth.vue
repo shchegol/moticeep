@@ -176,7 +176,7 @@
     methods: {
       async submit() {
         let formHasErrors = false;
-        let action = this.isRegister ? 'register' : 'login';
+        let action = this.isRegister ? 'auth/register' : 'auth/login';
 
         Object.keys(this.verifiableValues).forEach(field => {
           let value = this.verifiableValues[field];

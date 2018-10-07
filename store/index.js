@@ -9,9 +9,9 @@ export default () => {
     actions: {
       nuxtServerInit({commit}, {req}) {
         if (req.session.passport && req.state.user) {
-          commit('setUser', req.state.user.getPublicFields());
-          commit('setTasks', req.state.user.tasks);
-          commit('setMotivators', req.state.user.motivators);
+          commit('user/setUser', req.state.user.getPublicFields());
+          commit('tasks/setTasks', req.state.user.tasks);
+          commit('motivators/setMotivators', req.state.user.motivators);
         }
       },
     },
