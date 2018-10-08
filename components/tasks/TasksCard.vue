@@ -51,16 +51,16 @@
 
     methods: {
       taskEdit() {
-        this.$emit('task-edit', this.task);
-      },
-      taskDelete() {
-        this.$emit('task-delete', this.task._id);
+        this.$emit('show-modal', this.task);
       },
       taskFavorite() {
-        this.$emit('task-favorite', this.task._id, {favorite: !this.task.favorite});
+        this.$emit('edit', this.task._id, {favorite: !this.task.favorite});
       },
       pointsAdd() {
         this.$emit('points-add', {points: this.task.value});
+      },
+      taskDelete() {
+        this.$emit('delete', this.task._id);
       },
     },
   };

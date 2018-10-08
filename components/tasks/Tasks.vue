@@ -18,9 +18,9 @@
             :key="task.id"
             :task="task"
             @points-add="pointsAdd"
-            @task-edit="taskEditStart"
-            @task-favorite="taskEdit"
-            @task-delete="taskDelete"
+            @show-modal="taskEditStart"
+            @edit="taskEdit"
+            @delete="taskDelete"
           >
           </tasks-card>
         </v-layout>
@@ -50,6 +50,7 @@
 
     computed: mapState({
       tasks: state => state.tasks.all,
+      user: state => state.user.item,
     }),
 
     methods: {
