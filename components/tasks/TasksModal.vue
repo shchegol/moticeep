@@ -74,7 +74,7 @@
   import {isEmptyObject}        from '~/assets/js/utils';
 
   export default {
-    name: 'tasks-modal',
+    name: 'TaskModal',
 
     data() {
       return {

@@ -66,7 +66,7 @@
         <v-progress-linear
           v-model="motivator.value"
           slot="activator"
-          height="4"
+          height="12"
           color="green"
           class="mt-0"
         ></v-progress-linear>
@@ -93,16 +93,16 @@
 
     methods: {
       motivatorEdit() {
-        this.$emit('motivatorEdit', this.motivator);
-      },
-      motivatorDelete() {
-        this.$emit('motivatorDelete', this.motivator._id);
+        this.$emit('show-modal', this.motivator);
       },
       motivatorFavorite() {
-        this.$emit('motivatorFavorite', this.motivator._id, {favorite: !this.motivator.favorite});
+        this.$emit('edit', this.motivator._id, {favorite: !this.motivator.favorite});
       },
       motivatorDone() {
-        this.$emit('motivatorDone', this.motivator._id, {done: true});
+        this.$emit('edit', this.motivator._id, {done: true});
+      },
+      motivatorDelete() {
+        this.$emit('delete', this.motivator._id);
       },
     },
   };

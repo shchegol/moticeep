@@ -4,6 +4,7 @@
     <v-divider class="mt-5 mb-5"></v-divider>
     <motivators></motivators>
     <action-button></action-button>
+
     <v-snackbar
       :value="snackbar.active"
       :color="snackbar.color"

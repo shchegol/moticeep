@@ -41,7 +41,7 @@
   import TasksModal             from '~/components/tasks/TasksModal';
 
   export default {
-    name: 'tasks',
+    name: 'Tasks',
 
     components: {
       TasksCard,
@@ -72,7 +72,6 @@
       },
 
       async taskEdit(id, updatedFields) {
-        console.log('taskEdit', id, updatedFields);
         try {
           await this.$store.dispatch('tasks/update', {id: id, ...updatedFields});
           this.hideModal();

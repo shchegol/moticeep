@@ -40,7 +40,7 @@
 
 <script>
   export default {
-    name: 'TasksCars',
+    name: 'TasksCard',
 
     props: {
       task: {
@@ -48,8 +48,6 @@
         required: true,
       },
     },
-
-
 
     methods: {
       taskEdit() {

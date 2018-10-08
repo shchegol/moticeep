@@ -2,7 +2,7 @@ import axios from 'axios/index';
 
 const state = () => ({
   all: [],
-  modalVisibility: false,
+  modalIsActive: false,
   modalData: {}
 });
 
@@ -16,9 +16,9 @@ const actions = {
     }
   },
 
-  async update({commit}, {id, updatedFields}) {
+  async update({commit}, updatedFields) {
     try {
-      const {data} = await axios.put(`/api/motivators/${id}`, updatedFields);
+      const {data} = await axios.put(`/api/motivators/${updatedFields.id}`, updatedFields);
       commit('setMotivators', data);
     } catch (error) {
       throw error;
@@ -46,16 +46,16 @@ const actions = {
 };
 
 const mutations = {
-  setMotivators(state, motivators) {
-    state.all = motivators;
+  setMotivators(state, payload) {
+    state.all = payload;
   },
 
-  toggleModalVisibility(state, isVisible) {
-    state.modalVisibility = isVisible
+  toggleModalVisibility(state, payload) {
+    state.modalIsActive = payload
   },
 
-  setModalData(state, data) {
-    state.modalData = data;
+  setModalData(state, payload) {
+    state.modalData = payload;
   },
 };
 
