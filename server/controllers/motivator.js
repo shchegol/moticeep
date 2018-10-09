@@ -9,7 +9,6 @@ export const createMotivator = async ctx => {
   ctx.request.body.favorite = false;
   ctx.request.body.done = false;
 
-
   if (!ctx.request.body.title) {
     ctx.request.body.title = 'Мечта';
   }
@@ -50,14 +49,18 @@ export const updateMotivator = async ctx => {
   // }
   //
   // else {
-    _.forIn(ctxBody, (value, key) => {
-      motivator[key] = value;
-    });
+  _.forIn(ctxBody, (value, key) => {
+    motivator[key] = value;
+  });
   // }
+
+  console.log('before save');
 
   await user.save();
 
   ctx.status = 200;
+
+  console.log('motivators after save', user.motivators);
   ctx.body = user.motivators;
 };
 

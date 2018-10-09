@@ -23,5 +23,6 @@ export default () => {
       tasks,
       motivators,
     },
+    strict: true
   });
 };

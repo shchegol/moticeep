@@ -62,16 +62,12 @@
         </template>
 
       </v-card-actions>
-      <v-tooltip bottom>
         <v-progress-linear
           v-model="motivator.value"
-          slot="activator"
           height="12"
           color="green"
           class="mt-0"
         ></v-progress-linear>
-        <span>{{ motivator.value }} / {{ motivator.maxValue }}</span>
-      </v-tooltip>
     </v-card>
   </v-flex>
 </template>

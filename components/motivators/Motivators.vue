@@ -62,9 +62,11 @@
       };
     },
 
-    computed: mapState({
-      motivators: state => state.motivators.all,
-    }),
+    computed: {
+      ...mapState({
+        motivators: state => state.motivators.all,
+      }),
+    },
 
     methods: {
       ...mapActions({

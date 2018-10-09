@@ -1,10 +1,41 @@
-import axios from 'axios/index';
+import axios from 'axios';
+import _     from 'lodash';
 
 const state = () => ({
   all: [],
   modalIsActive: false,
-  modalData: {}
+  modalData: {},
 });
+
+const getters = {
+  sortedMotivators: (state, getters, rootState) => {
+    let activeMotivators = _.filter(state.all, ['done', false]);
+    let motivators = _.map(activeMotivators, motivator => Object.assign({}, motivator));
+    let favorite = _.filter(motivators, 'favorite');
+    let totalPoints = rootState.user.item.points;
+    let singlePoint;
+
+    if (favorite.length > 0) {
+      singlePoint = Math.floor(totalPoints / favorite.length);
+
+      _.each(motivators, motivator => {
+        if (motivator.favorite) {
+          motivator.value = singlePoint / motivator.maxValue * 100;
+        } else {
+          motivator.value = 0;
+        }
+      });
+    } else {
+      singlePoint = Math.floor(totalPoints / motivators.length);
+
+      _.each(motivators, motivator => {
+        motivator.value = singlePoint / motivator.maxValue * 100;
+      });
+    }
+
+    return motivators;
+  },
+};
 
 const actions = {
   async create({commit}, createdFields) {
@@ -42,7 +73,7 @@ const actions = {
   hideModal({commit}) {
     commit('toggleModalVisibility', false);
     commit('setModalData', {});
-  }
+  },
 };
 
 const mutations = {
@@ -51,7 +82,7 @@ const mutations = {
   },
 
   toggleModalVisibility(state, payload) {
-    state.modalIsActive = payload
+    state.modalIsActive = payload;
   },
 
   setModalData(state, payload) {
@@ -62,6 +93,7 @@ const mutations = {
 export default {
   namespaced: true,
   state,
+  getters,
   actions,
   mutations,
 };
