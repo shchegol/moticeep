@@ -7,21 +7,28 @@
       ></v-img>
 
       <v-card-title>
-        <p class="headline mb-0">{{ motivator.title }}</p>
+          <div class="headline mb-0">{{ motivator.title }}</div>
       </v-card-title>
 
       <v-card-actions>
         <template v-if="!motivator.done">
-          <v-btn
-            v-show="motivator.value >= motivator.maxValue && !motivator.done"
-            flat
-            large
-            color="primary"
-            @click="motivatorDone"
-          >
-            Достигнуто
-          </v-btn>
+          <template v-if="motivator.value >= motivator.maxValue">
+            <v-btn
+              flat
+              large
+              color="primary"
+              @click="motivatorDone"
+            >
+              Достигнуто
+            </v-btn>
+          </template>
+
+          <template v-else>
+            <span class="grey--text ml-2">{{motivator.value}} из {{motivator.maxValue}}</span>
+          </template>
+
           <v-spacer></v-spacer>
+
           <v-btn
             icon
             @click="motivatorFavorite">
