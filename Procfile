@@ -1,1 +1,1 @@
-web: npm run build -p $PORT
+web: npm run build -p $HOST
