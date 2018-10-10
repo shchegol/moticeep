@@ -1,5 +1,5 @@
 module.exports = {
-  // secret data can be moved to env variables
+  // todo secret data can be moved to env variables
   // or a separate config
   secret: 'mysecret',
 
@@ -9,48 +9,49 @@ module.exports = {
     port: '3000',
   },
 
-  providers: {
-    facebook: {
-      appId: '1584514044907807',
-      appSecret: 'f0f14ef63e0c6b9ec549b9b15f63a808',
-      test: {
-        login: 'course.test.facebook@gmail.com',
-        password: 'course-test-facebook',
-      },
-      passportOptions: {
-        display: 'popup',
-        scope: ['email'],
-      },
-    },
-  },
+  // providers: {
+  //   facebook: {
+  //     appId: '1584514044907807',
+  //     appSecret: 'f0f14ef63e0c6b9ec549b9b15f63a808',
+  //     test: {
+  //       login: 'course.test.facebook@gmail.com',
+  //       password: 'course-test-facebook',
+  //     },
+  //     passportOptions: {
+  //       display: 'popup',
+  //       scope: ['email'],
+  //     },
+  //   },
+  // },
 
-  mailer: {
-    transport: 'gmail',
-
-    gmail: {
-      user: 'course.test.mailer',
-      password: 'course-test-password1',
-    },
-
-    senders: {
-      // transactional emails, register/forgot pass etc
-      default: {
-        fromEmail: 'course.test.mailer@gmail.com',
-        fromName: 'Motikeep',
-        signature: '<em>С уважением,<br>Motikeep</em>',
-      },
-      // newsletters
-      informer: {
-        fromEmail: 'someother@email.com',
-        fromName: 'Newsletters',
-        signature: '<em>Have fun!</em>',
-      },
-    },
-  },
+  // mailer: {
+  //   transport: 'gmail',
+  //
+  //   gmail: {
+  //     user: 'course.test.mailer',
+  //     password: 'course-test-password1',
+  //   },
+  //
+  //   senders: {
+  //     // transactional emails, register/forgot pass etc
+  //     default: {
+  //       fromEmail: 'course.test.mailer@gmail.com',
+  //       fromName: 'Motikeep',
+  //       signature: '<em>С уважением,<br>Motikeep</em>',
+  //     },
+  //     // newsletters
+  //     informer: {
+  //       fromEmail: 'someother@email.com',
+  //       fromName: 'Newsletters',
+  //       signature: '<em>Have fun!</em>',
+  //     },
+  //   },
+  // },
 
   mongoose: {
-    uri: 'mongodb://localhost:27017/motikeep',
-    options: { useNewUrlParser: true },
+    uri: 'mongodb://ds125713.mlab.com:25713/motikeep',
+    user: 'zelenzoom',
+    password: 'shchegol041642'
   },
 
   crypto: {
