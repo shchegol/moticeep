@@ -46,6 +46,7 @@ const actions = {
   },
 
   async logout({commit}) {
+    console.log(123)
     await axios.get('/api/auth/logout');
     commit('user/setUser', {}, { root: true });
   },

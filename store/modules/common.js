@@ -11,7 +11,7 @@ const actions = {
     commit('snackbarShow', data);
   },
   snackbarHide({commit}) {
-    commit('snackbarHide', data);
+    commit('snackbarHide');
   },
 };
 

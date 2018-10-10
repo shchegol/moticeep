@@ -1,6 +1,7 @@
-import mongoose        from 'mongoose';
-import config          from 'config';
-import bcrypt          from 'bcrypt';
+import mongoose from 'mongoose';
+import config   from 'config';
+import bcrypt   from 'bcrypt';
+import _        from 'lodash';
 
 const taskSchema = new mongoose.Schema({
   title: String,
@@ -16,6 +17,10 @@ const motivatorSchema = new mongoose.Schema({
   maxValue: Number,
   done: Boolean,
   favorite: Boolean,
+}, {
+  toObject: {
+    virtuals: true
+  }
 });
 
 const userSchema = new mongoose.Schema({
@@ -64,6 +69,40 @@ userSchema
     const salt = bcrypt.genSaltSync(config.crypto.hash.iterations);
     this.passwordHash = bcrypt.hashSync(password, salt);
   });
+
+motivatorSchema
+  .virtual('valuePercent')
+  .get(function() {
+    return Math.ceil(this.value / this.maxValue * 100);
+  });
+
+userSchema.pre('save', function(next) {
+  // todo сделать более умную функцию, которая наполняет мотиваторы последовательно
+  let motivators = _.filter(this.motivators, ['done', false]);
+  let favorite = _.filter(motivators, 'favorite');
+  let totalPoints = this.points;
+  let singlePoint;
+
+  if (favorite.length > 0) {
+    singlePoint = Math.floor(totalPoints / favorite.length);
+
+    _.each(motivators, motivator => {
+      if (motivator.favorite) {
+        motivator.value = singlePoint;
+      } else {
+        motivator.value = 0;
+      }
+    });
+  } else {
+    singlePoint = Math.floor(totalPoints / motivators.length);
+
+    _.each(motivators, motivator => {
+      motivator.value = singlePoint;
+    });
+  }
+
+  next();
+});
 
 userSchema.methods.checkPassword = function(password) {
   if (!password) return false;

@@ -70,7 +70,7 @@
 
       </v-card-actions>
         <v-progress-linear
-          v-model="motivator.value"
+          v-model="motivator.valuePercent"
           height="12"
           color="green"
           class="mt-0"

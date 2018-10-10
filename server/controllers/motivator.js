@@ -38,29 +38,13 @@ export const updateMotivator = async ctx => {
   const user = await User.findOne({'_id': ctx.state.user._id}).exec();
   const motivator = user.motivators.id(motivatorId);
 
-  // if (_.has(ctxBody, 'favorite')) {
-  //
-  // }
-  //
-  // else if (_.has(ctxBody, 'done')) {
-  //   motivator.done = true;
-  //   motivator.value = motivator.maxValue;
-  //   user.points -= motivator.value;
-  // }
-  //
-  // else {
   _.forIn(ctxBody, (value, key) => {
     motivator[key] = value;
   });
-  // }
-
-  console.log('before save');
 
   await user.save();
 
   ctx.status = 200;
-
-  console.log('motivators after save', user.motivators);
   ctx.body = user.motivators;
 };
 

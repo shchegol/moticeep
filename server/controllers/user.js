@@ -12,5 +12,9 @@ export const updateUser = async ctx => {
   await user.save();
 
   ctx.status = 200;
-  ctx.body = user.getPublicFields();
+  ctx.body = {
+    user: user.getPublicFields(),
+    motivators: user.motivators,
+    tasks: user.tasks
+  };
 };

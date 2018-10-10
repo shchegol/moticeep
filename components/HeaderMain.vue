@@ -9,15 +9,15 @@
     <v-toolbar-title>Motikeep</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn
-        flat
-        to="/donate"
-        class="mr-5"
-      >
-        Помочь проекту
-      </v-btn>
+      <!--<v-btn-->
+      <!--flat-->
+      <!--to="/donate"-->
+      <!--class="mr-5"-->
+      <!--&gt;-->
+      <!--Помочь проекту-->
+      <!--</v-btn>-->
 
-      <v-flex  class="mr-5 align-self-center">
+      <v-flex class="mr-5 align-self-center">
         <span class="title">{{ user.points }} p.</span>
       </v-flex>
 
@@ -31,25 +31,30 @@
         </v-avatar>
       </v-btn>
 
-      <v-btn flat @click="logout">Выйти</v-btn>
+      <v-btn flat @click="logoutStart">Выйти</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
 
 <script>
-  import {mapState} from 'vuex';
+  import {mapState, mapActions} from 'vuex';
 
   export default {
     name: 'header-main',
 
-    computed: mapState({
-      user: state => state.user.item,
-    }),
+    computed: {
+      ...mapState({
+        user: state => state.user.item,
+      }),
+    },
 
     methods: {
-      async logout() {
+      ...mapActions('auth', [
+        'logout',
+      ]),
+      async logoutStart() {
         try {
-          await this.$store.dispatch('logout');
+          await this.logout();
           this.$router.push('/auth');
         } catch (e) {
           console.log(e.message);
