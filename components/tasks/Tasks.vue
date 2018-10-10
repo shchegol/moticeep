@@ -14,7 +14,7 @@
       >
         <v-layout row wrap>
           <tasks-card
-            v-for="task in tasks"
+            v-for="task in sortedTasks"
             :key="task.id"
             :task="task"
             @points-add="pointsAdd"
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-  import {mapState, mapActions} from 'vuex';
+  import {mapState, mapGetters, mapActions} from 'vuex';
   import TasksCard              from '~/components/tasks/TasksCard';
   import TasksModal             from '~/components/tasks/TasksModal';
 
@@ -48,10 +48,15 @@
       TasksModal,
     },
 
-    computed: mapState({
-      tasks: state => state.tasks.all,
-      user: state => state.user.item,
-    }),
+    computed: {
+      ...mapState({
+        // tasks: state => state.tasks.all,
+        user: state => state.user.item,
+      }),
+      ...mapGetters('tasks', [
+        'sortedTasks',
+      ]),
+    },
 
     methods: {
       ...mapActions({
@@ -68,7 +73,10 @@
           await this.$store.dispatch('tasks/create', createdFields);
           this.hideModal();
         } catch (error) {
-          this.snackbarShow({active: true, message: 'Не выходит. Попробуйте попозже.'});
+          this.snackbarShow({
+            active: true,
+            message: 'Не выходит. Попробуйте попозже.',
+          });
         }
       },
 
@@ -77,7 +85,10 @@
           await this.$store.dispatch('tasks/update', {id: id, ...updatedFields});
           this.hideModal();
         } catch (error) {
-          this.snackbarShow({active: true, message: 'Не выходит. Попробуйте попозже.'});
+          this.snackbarShow({
+            active: true,
+            message: 'Не выходит. Попробуйте попозже.',
+          });
         }
       },
 
@@ -85,7 +96,10 @@
         try {
           await this.$store.dispatch('tasks/remove', id);
         } catch (error) {
-          this.snackbarShow({active: true, message: 'Не выходит. Попробуйте попозже.'});
+          this.snackbarShow({
+            active: true,
+            message: 'Не выходит. Попробуйте попозже.',
+          });
         }
       },
 
@@ -97,7 +111,10 @@
             updatedFields,
           });
         } catch (error) {
-          this.snackbarShow({active: true, message: 'Не выходит. Попробуйте попозже.'});
+          this.snackbarShow({
+            active: true,
+            message: 'Не выходит. Попробуйте попозже.',
+          });
         }
       },
     },

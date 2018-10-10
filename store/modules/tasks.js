@@ -1,10 +1,17 @@
 import axios from 'axios/index';
+import _     from 'lodash';
 
 const state = () => ({
   all: [],
   modalIsActive: false,
   modalData: {},
 });
+
+const getters = {
+  sortedTasks: (state) => {
+    return _.orderBy(state.all, 'favorite', 'desc');
+  },
+};
 
 const actions = {
   async create({commit}, createdFields) {
@@ -62,6 +69,7 @@ const mutations = {
 export default {
   namespaced: true,
   state,
+  getters,
   actions,
   mutations,
 };

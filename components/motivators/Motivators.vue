@@ -14,13 +14,14 @@
       >
         <v-layout row wrap>
           <motivators-card
-            v-for="motivator in motivators"
+            v-for="motivator in sortedMotivators"
             :key="motivator.id"
             :motivator="motivator"
             @show-modal="showModal"
             @edit="motivatorEdit"
             @delete="motivatorDelete"
-          ></motivators-card>
+          >
+          </motivators-card>
         </v-layout>
       </v-container>
     </v-flex>
@@ -34,7 +35,7 @@
 </template>
 
 <script>
-  import {mapState, mapActions}     from 'vuex';
+  import {mapState, mapGetters, mapActions}     from 'vuex';
   import MotivatorsCard from '~/components/motivators/MotivatorsCard';
   import MotivatorsModal     from '~/components/motivators/MotivatorsModal';
 
@@ -63,9 +64,12 @@
     },
 
     computed: {
-      ...mapState({
-        motivators: state => state.motivators.all,
-      }),
+      // ...mapState({
+      //   motivators: state => state.motivators.all,
+      // }),
+      ...mapGetters('motivators', [
+        'sortedMotivators'
+      ]),
     },
 
     methods: {

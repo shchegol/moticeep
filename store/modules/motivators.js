@@ -8,33 +8,9 @@ const state = () => ({
 });
 
 const getters = {
-  // sortedMotivators: (state, getters, rootState) => {
-  //   let activeMotivators = _.filter(state.all, ['done', false]);
-  //   let motivators = _.map(activeMotivators, motivator => Object.assign({}, motivator));
-  //   let favorite = _.filter(motivators, 'favorite');
-  //   let totalPoints = rootState.user.item.points;
-  //   let singlePoint;
-  //
-  //   if (favorite.length > 0) {
-  //     singlePoint = Math.floor(totalPoints / favorite.length);
-  //
-  //     _.each(motivators, motivator => {
-  //       if (motivator.favorite) {
-  //         motivator.value = singlePoint / motivator.maxValue * 100;
-  //       } else {
-  //         motivator.value = 0;
-  //       }
-  //     });
-  //   } else {
-  //     singlePoint = Math.floor(totalPoints / motivators.length);
-  //
-  //     _.each(motivators, motivator => {
-  //       motivator.value = singlePoint / motivator.maxValue * 100;
-  //     });
-  //   }
-  //
-  //   return motivators;
-  // },
+  sortedMotivators: (state) => {
+    return _.orderBy(state.all, 'favorite', 'desc');
+  },
 };
 
 const actions = {
