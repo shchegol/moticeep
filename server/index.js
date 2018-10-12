@@ -7,9 +7,12 @@ import middlewares     from './middlewares';
 import apiRouter       from './routes';
 
 async function start() {
+
   const host = process.env.HOST || config.server.host,
         port = process.env.PORT || config.server.port,
         app  = new Koa();
+
+  console.log(host, port, '**********************')
 
   app.proxy = true;
   app.keys = [config.secret];
@@ -37,7 +40,7 @@ async function start() {
     await koaConnect(nuxt.render)(ctx, next);
   });
 
-  app.listen(process.env.HOST || 5000);
+  app.listen(port, host);
 
   console.log(`Server listening on ${host}:${port}`); // eslint-disable-line no-console
 }
