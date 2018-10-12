@@ -37,7 +37,7 @@ async function start() {
     await koaConnect(nuxt.render)(ctx, next);
   });
 
-  app.listen(port, host);
+  app.listen(process.env.HOST || 5000);
 
   console.log(`Server listening on ${host}:${port}`); // eslint-disable-line no-console
 }
