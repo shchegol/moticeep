@@ -30,3 +30,7 @@
 .fade-enter, .fade-leave-active {
   opacity: 0
 }
+
+.flip-list-move {
+  transition: transform .3s;
+}

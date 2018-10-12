@@ -8,7 +8,7 @@ const state = () => ({
 });
 
 const getters = {
-  sortedTasks: (state) => {
+  sortedTasks: state => {
     return _.orderBy(state.all, 'favorite', 'desc');
   },
 };
@@ -23,9 +23,9 @@ const actions = {
     }
   },
 
-  async update({commit}, updatedFields) {
+  async update({commit}, {id, ...updatedFields}) {
     try {
-      const {data} = await axios.put(`/api/tasks/${updatedFields.id}`, updatedFields);
+      const {data} = await axios.put(`/api/tasks/${id}`, updatedFields);
       commit('setTasks', data);
     } catch (error) {
       throw error;
