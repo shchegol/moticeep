@@ -1,10 +1,10 @@
 <template>
   <v-flex xs12 sm6 md4 lg3 xl2>
     <v-card>
-      <v-img
-        :src="motivator.img"
-        aspect-ratio="2.75"
-      ></v-img>
+      <!--<v-img-->
+        <!--:src="motivator.img"-->
+        <!--aspect-ratio="2.75"-->
+      <!--&gt;</v-img>-->
 
       <v-card-title>
           <div class="headline mb-0">{{ motivator.title }}</div>

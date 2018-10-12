@@ -12,10 +12,10 @@
         grid-list-md
         class="pa-0 mt-3"
       >
-        <v-layout row wrap>
+        <transition-group name="flip-list" tag="div" class="layout row wrap">
           <tasks-card
             v-for="task in sortedTasks"
-            :key="task.id"
+            :key="task._id"
             :task="task"
             @points-add="pointsAdd"
             @show-modal="taskEditStart"
@@ -23,7 +23,7 @@
             @delete="taskDelete"
           >
           </tasks-card>
-        </v-layout>
+        </transition-group>
       </v-container>
     </v-flex>
 
@@ -37,8 +37,8 @@
 
 <script>
   import {mapState, mapGetters, mapActions} from 'vuex';
-  import TasksCard              from '~/components/tasks/TasksCard';
-  import TasksModal             from '~/components/tasks/TasksModal';
+  import TasksCard                          from '~/components/tasks/TasksCard';
+  import TasksModal                         from '~/components/tasks/TasksModal';
 
   export default {
     name: 'Tasks',
@@ -50,7 +50,6 @@
 
     computed: {
       ...mapState({
-        // tasks: state => state.tasks.all,
         user: state => state.user.item,
       }),
       ...mapGetters('tasks', [

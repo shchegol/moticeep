@@ -12,17 +12,17 @@
         grid-list-md
         class="pa-0 mt-3"
       >
-        <v-layout row wrap>
+        <transition-group name="flip-list" tag="div" class="layout row wrap">
           <motivators-card
             v-for="motivator in sortedMotivators"
-            :key="motivator.id"
+            :key="motivator._id"
             :motivator="motivator"
             @show-modal="showModal"
             @edit="motivatorEdit"
             @delete="motivatorDelete"
           >
           </motivators-card>
-        </v-layout>
+        </transition-group>
       </v-container>
     </v-flex>
 
@@ -35,16 +35,16 @@
 </template>
 
 <script>
-  import {mapState, mapGetters, mapActions}     from 'vuex';
-  import MotivatorsCard from '~/components/motivators/MotivatorsCard';
-  import MotivatorsModal     from '~/components/motivators/MotivatorsModal';
+  import {mapGetters, mapActions} from 'vuex';
+  import MotivatorsCard           from '~/components/motivators/MotivatorsCard';
+  import MotivatorsModal          from '~/components/motivators/MotivatorsModal';
 
   export default {
     name: 'Motivators',
 
     components: {
       MotivatorsCard,
-      MotivatorsModal
+      MotivatorsModal,
     },
 
     data() {
@@ -64,11 +64,8 @@
     },
 
     computed: {
-      // ...mapState({
-      //   motivators: state => state.motivators.all,
-      // }),
       ...mapGetters('motivators', [
-        'sortedMotivators'
+        'sortedMotivators',
       ]),
     },
 
@@ -87,7 +84,10 @@
           await this.$store.dispatch('motivators/create', createdFields);
           this.hideModal();
         } catch (error) {
-          this.snackbarShow({active: true, message: 'Не выходит. Попробуйте попозже.'});
+          this.snackbarShow({
+            active: true,
+            message: 'Не выходит. Попробуйте попозже.',
+          });
         }
       },
 
@@ -96,7 +96,10 @@
           await this.$store.dispatch('motivators/update', {id: id, ...updatedFields});
           this.hideModal();
         } catch (error) {
-          this.snackbarShow({active: true, message: 'Не выходит. Попробуйте попозже.'});
+          this.snackbarShow({
+            active: true,
+            message: 'Не выходит. Попробуйте попозже.',
+          });
         }
       },
 
@@ -104,7 +107,10 @@
         try {
           await this.$store.dispatch('motivators/remove', id);
         } catch (error) {
-          this.snackbarShow({active: true, message: 'Не выходит. Попробуйте попозже.'});
+          this.snackbarShow({
+            active: true,
+            message: 'Не выходит. Попробуйте попозже.',
+          });
         }
       },
     },
