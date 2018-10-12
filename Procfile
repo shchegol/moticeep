@@ -1,1 +1,1 @@
-web: npm run build -p $HOST
+web: npm run build -p

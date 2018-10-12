@@ -33,7 +33,7 @@ const actions = {
         password,
       });
 
-      commit('user/setUser', data, { root: true });
+      commit('user/setUser', data.user, { root: true });
       commit('tasks/setTasks', data.tasks, { root: true });
       commit('motivators/setMotivators', data.motivators, { root: true });
     } catch (error) {
@@ -46,7 +46,6 @@ const actions = {
   },
 
   async logout({commit}) {
-    console.log(123)
     await axios.get('/api/auth/logout');
     commit('user/setUser', {}, { root: true });
   },
