@@ -25,9 +25,6 @@
 <script>
   export default {
     name: 'donate',
+    layout: 'modal',
   };
 </script>
-
-<style scoped>
-
-</style>
