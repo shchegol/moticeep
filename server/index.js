@@ -12,8 +12,6 @@ async function start() {
         port = process.env.PORT || config.server.port,
         app  = new Koa();
 
-  console.log(host, port, '**********************')
-
   app.proxy = true;
   app.keys = [config.secret];
 

@@ -15,7 +15,6 @@
           <template v-if="motivator.value >= motivator.maxValue">
             <v-btn
               flat
-              large
               color="primary"
               @click="motivatorDone"
             >
