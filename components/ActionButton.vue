@@ -48,12 +48,14 @@
   import {mapActions} from 'vuex';
 
   export default {
-    name: 'action-button',
+    name: 'ActionButton',
+
     data() {
       return {
         fab: false,
       };
     },
+
     methods: {
       ...mapActions({
           'showTaskModal': 'tasks/showModal',

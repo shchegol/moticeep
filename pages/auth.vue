@@ -122,8 +122,10 @@
 <script>
   let emailCheck = value => /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(value);
   export default {
-    name: 'auth-index',
+    name: 'AuthPage',
+
     layout: 'auth',
+
     middleware: 'authenticated',
 
     data() {

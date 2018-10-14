@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="mt-5">
     <v-layout justify-center>
       <v-flex xs12 sm6 md4>
         <v-layout align-center>
@@ -31,7 +31,7 @@
   import {mapState} from 'vuex';
 
   export default {
-    name: 'user',
+    name: 'User',
     middleware: 'notAuthenticated',
     computed: {
       ...mapState('user', {

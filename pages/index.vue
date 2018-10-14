@@ -24,6 +24,8 @@
   import ActionButton     from '~/components/ActionButton';
 
   export default {
+    name: 'IndexPage',
+
     components: {
       Tasks,
       Motivators,
