@@ -75,7 +75,15 @@
         this.$emit('edit', this.task._id, {favorite: !this.task.favorite});
       },
       pointsAdd() {
-        this.$emit('points-add', {points: this.task.value});
+        let value;
+
+        if(this.task.editable) {
+          value = this.points
+        } else {
+          value = this.task.value
+        }
+
+        this.$emit('points-add', {points: value});
       },
       taskDelete() {
         this.$emit('delete', this.task._id);

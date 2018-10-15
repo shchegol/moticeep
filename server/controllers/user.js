@@ -7,7 +7,7 @@ export const updateUser = async ctx => {
 
   _.forIn(ctxBody, (value, key) => {
     if (key !== 'points') return;
-    user[key] += value;
+    user[key] += Number(value);
   });
   await user.save();
 
