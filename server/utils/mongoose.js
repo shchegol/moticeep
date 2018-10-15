@@ -9,11 +9,17 @@ if (process.env.MONGOOSE_DEBUG) {
 
 mongoose
   .connect(config.mongoose.uri, {
+    useNewUrlParser: true,
     auth: {
       user: config.mongoose.user,
       password: config.mongoose.password,
     },
-    useNewUrlParser: true,
+    'server': {
+      'socketOptions': {
+        'keepAlive': 300000,
+        'connectTimeoutMS': 30000,
+      },
+    },
   })
   .then(() => {
     console.log('Database connection established');

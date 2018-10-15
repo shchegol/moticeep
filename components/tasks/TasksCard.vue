@@ -5,6 +5,18 @@
         <p class="headline mb-0">{{ task.title }}</p>
       </v-card-title>
 
+        <v-card-text class="py-0">
+          <v-text-field
+            v-if="task.editable"
+            v-model="points"
+            type="number"
+            label="Награда"
+            placeholder="10"
+            hide-details
+            box
+          ></v-text-field>
+        </v-card-text>
+
       <v-card-actions>
         <v-btn
           flat
@@ -12,7 +24,7 @@
           color="primary"
           @click="pointsAdd"
         >
-          + {{task.value}} {{task.currency}}
+          <v-icon>add</v-icon> {{points}}
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn icon @click="taskFavorite">
@@ -41,6 +53,12 @@
 <script>
   export default {
     name: 'TasksCard',
+
+    data() {
+      return {
+        points: this.task.value
+      }
+    },
 
     props: {
       task: {
