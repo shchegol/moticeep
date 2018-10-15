@@ -4,7 +4,7 @@ const state = () => ({
     message: '',
     color: undefined,
   },
-  drawer: true,
+  drawer: false,
 });
 
 const actions = {

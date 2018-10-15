@@ -1,42 +1,43 @@
 <template>
-    <v-toolbar
-      color="primary"
-      app
-      flat
-      dark
-      fixed
-      clipped-left
-      height="64"
-    >
-      <v-toolbar-side-icon @click.native="toggleDrawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Motikeep</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down">
-        <!--<v-btn-->
-        <!--flat-->
-        <!--to="/donate"-->
-        <!--class="mr-5"-->
-        <!--&gt;-->
-        <!--Помочь проекту-->
-        <!--</v-btn>-->
+  <v-toolbar
+    color="primary"
+    app
+    flat
+    dark
+    fixed
+    clipped-left
+    height="64"
+  >
+    <v-toolbar-side-icon @click.native="toggleDrawer"></v-toolbar-side-icon>
+    <v-toolbar-title>MOTIKEEP</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-flex class="mr-5 align-self-center">
+        <div class="d-flex align-center">
+          <v-icon medium class="mr-1">account_balance_wallet</v-icon>
+          <span class="title">
+            {{ user.points }} p.
+          </span>
+        </div>
 
-        <v-flex class="mr-5 align-self-center">
-          <span class="title">{{ user.points }} p.</span>
-        </v-flex>
+      </v-flex>
 
-        <!--<v-btn flat to="/user">{{ user.displayName }}</v-btn>-->
-        <v-btn icon to="/user">
-          <v-avatar
-            size="38"
-            color="red"
-          >
-            <span class="white--text headline">A</span>
-          </v-avatar>
-        </v-btn>
+      <!--<v-btn flat to="/user">{{ user.displayName }}</v-btn>-->
+      <v-btn icon to="/user">
+        <v-avatar
+          size="38"
+          color="red"
+        >
+          <!--<span class="white&#45;&#45;text headline">A</span>-->
+          <img src="https://randomuser.me/api/portraits/men/85.jpg">
+        </v-avatar>
+      </v-btn>
 
-        <v-btn flat @click="logoutStart">Выйти</v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
+      <v-btn icon @click="logoutStart">
+        <v-icon>exit_to_app</v-icon>
+      </v-btn>
+    </v-toolbar-items>
+  </v-toolbar>
 </template>
 
 <script>

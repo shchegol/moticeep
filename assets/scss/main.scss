@@ -1,8 +1,3 @@
-//@import "~sass-material-colors";
-//@import "~sass-material-colors/sass/sass-material-colors-classes";
-
-//@import "~vuetify-scss";
-
 @import "common/variables";
 @import "common/utils";
 
@@ -11,14 +6,10 @@
 @import "common/base";
 @import "common/animation";
 
-//@import "vendors/material-icons";
-//@import "vendors/bootstrap";
-
 @import "pages/auth";
 
 @import "components/buttons";
 @import "components/card";
-//@import "components/slider";
-//@import "components/dropdown";
+@import "components/icons";
 
 @import "common/modificators";
