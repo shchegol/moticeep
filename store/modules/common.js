@@ -4,6 +4,7 @@ const state = () => ({
     message: '',
     color: undefined,
   },
+  drawer: true,
 });
 
 const actions = {
@@ -13,6 +14,9 @@ const actions = {
   snackbarHide({commit}) {
     commit('snackbarHide');
   },
+  toggleDrawer({commit}) {
+    commit('toggleDrawer');
+  }
 };
 
 const mutations = {
@@ -26,6 +30,9 @@ const mutations = {
       color: undefined,
     };
   },
+  toggleDrawer(state) {
+    state.drawer = !state.drawer
+  }
 };
 
 export default {

@@ -4,9 +4,11 @@
       app
       flat
       dark
-      dense
-      class="pb-2 pt-2"
+      fixed
+      clipped-left
+      height="64"
     >
+      <v-toolbar-side-icon @click.native="toggleDrawer"></v-toolbar-side-icon>
       <v-toolbar-title>Motikeep</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
@@ -46,7 +48,7 @@
     data() {
       return {
         drawer: true,
-      }
+      };
     },
 
     computed: {
@@ -56,9 +58,11 @@
     },
 
     methods: {
-      ...mapActions('auth', [
-        'logout',
-      ]),
+      ...mapActions({
+          'logout': 'auth/logout',
+          'toggleDrawer': 'common/toggleDrawer',
+        },
+      ),
       async logoutStart() {
         try {
           await this.logout();
