@@ -9,7 +9,7 @@ const state = () => ({
 
 const getters = {
   sortedMotivators: state => {
-    return _.orderBy(state.all, 'favorite', 'desc');
+    return _.orderBy(state.all, ['favorite', 'done'], ['desc', 'ask']);
   },
 };
 
@@ -26,7 +26,9 @@ const actions = {
   async update({commit}, {id, ...updatedFields}) {
     try {
       const {data} = await axios.put(`/api/motivators/${id}`, updatedFields);
-      commit('setMotivators', data);
+
+      commit('user/setUser', data.user, {root: true});
+      commit('setMotivators', data.motivators);
     } catch (error) {
       throw error;
     }

@@ -1,6 +1,9 @@
 <template>
   <v-flex xs12 sm6 md4 lg3 xl2>
-    <v-card>
+    <v-card
+      :color="motivator.done ? 'success' : undefined"
+      :dark="motivator.done"
+    >
       <!--<v-img-->
         <!--:src="motivator.img"-->
         <!--aspect-ratio="2.75"-->
@@ -55,20 +58,27 @@
         </template>
 
         <template v-else>
+          <span class="title white--text ml-2">
+            <v-icon>done</v-icon> {{motivator.value}}
+          </span>
+
           <v-spacer></v-spacer>
+
           <v-tooltip bottom>
           <v-btn
             slot="activator"
             icon
             @click="motivatorDelete">
-            <v-icon color="red">delete</v-icon>
+            <v-icon color="white">delete</v-icon>
           </v-btn>
             <span>Удалить навсегда</span>
           </v-tooltip>
         </template>
 
       </v-card-actions>
+
         <v-progress-linear
+          v-if="!motivator.done"
           v-model="motivator.valuePercent"
           height="12"
           color="green"

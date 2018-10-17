@@ -14,12 +14,8 @@ mongoose
       user: config.mongoose.user,
       password: config.mongoose.password,
     },
-    'server': {
-      'socketOptions': {
-        'keepAlive': 300000,
-        'connectTimeoutMS': 30000,
-      },
-    },
+    keepAlive: 300000,
+    connectTimeoutMS: 30000,
   })
   .then(() => {
     console.log('Database connection established');
