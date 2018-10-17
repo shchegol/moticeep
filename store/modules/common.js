@@ -1,4 +1,11 @@
 const state = () => ({
+  /**
+   * changing types of filter cards
+   * 0 - default
+   * 1 - by archive
+   * 2 - by trash
+   */
+  filterType: 0,
   snackbar: {
     active: false,
     message: '',
@@ -8,6 +15,9 @@ const state = () => ({
 });
 
 const actions = {
+  changeFilterType({commit}) {
+    commit('toggleDrawer');
+  },
   snackbarShow({commit}, data) {
     commit('snackbarShow', data);
   },
@@ -16,7 +26,7 @@ const actions = {
   },
   toggleDrawer({commit}) {
     commit('toggleDrawer');
-  }
+  },
 };
 
 const mutations = {
