@@ -1,30 +1,44 @@
 <template>
   <v-layout>
     <v-flex>
-      <v-layout align-center>
+      <template v-if="sortedTasks.length > 0">
+        <v-layout align-center>
+          <v-flex>
+            <h3>Задания</h3>
+          </v-flex>
+        </v-layout>
+
+        <v-container
+          fluid
+          grid-list-md
+          class="pa-0 mt-3"
+        >
+          <transition-group name="flip-list" tag="div" class="layout row wrap">
+            <tasks-card
+              v-for="task in sortedTasks"
+              :key="task.id"
+              :task="task"
+              @points-add="pointsAdd"
+              @show-modal="taskEditStart"
+              @edit="taskEdit"
+              @delete="taskDelete"
+            >
+            </tasks-card>
+          </transition-group>
+        </v-container>
+      </template>
+
+      <v-layout
+        v-else
+        align-center
+        class="mt-5"
+      >
         <v-flex>
-          <h3>Задания</h3>
+          <p class="text-xs-center grey--text darken-1 headline">
+            Заданий не найдено.
+          </p>
         </v-flex>
       </v-layout>
-
-      <v-container
-        fluid
-        grid-list-md
-        class="pa-0 mt-3"
-      >
-        <transition-group name="flip-list" tag="div" class="layout row wrap">
-          <tasks-card
-            v-for="task in sortedTasks"
-            :key="task.id"
-            :task="task"
-            @points-add="pointsAdd"
-            @show-modal="taskEditStart"
-            @edit="taskEdit"
-            @delete="taskDelete"
-          >
-          </tasks-card>
-        </transition-group>
-      </v-container>
     </v-flex>
 
     <tasks-modal

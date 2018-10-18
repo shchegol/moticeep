@@ -37,7 +37,7 @@
         <v-spacer></v-spacer>
 
         <v-btn
-          v-if="!motivator.done"
+          v-if="!motivator.done && !motivator.deleted"
           icon
           @click="motivatorFavorite">
           <v-icon color="orange">

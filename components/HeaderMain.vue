@@ -79,12 +79,8 @@
         let type = this.filterType;
         let color = 'primary';
 
-        if (type === 'archive') {
-          color = 'blue-grey darken-1'
-        }
-
-        if (type === 'deleted') {
-          color = 'grey darken-1'
+        if (type === 'archive' || type === 'deleted') {
+          color = 'blue-grey darken-2'
         }
 
         return color

@@ -4,12 +4,26 @@ import _     from 'lodash';
 const state = () => ({
   all: [],
   modalIsActive: false,
-  modalData: {},
+  modalData: {
+    title: null,
+    value: null,
+    editable: false,
+  },
 });
 
 const getters = {
-  sortedTasks: state => {
-    return _.orderBy(state.all, 'favorite', 'desc');
+  sortedTasks: (state, getters, rootState) => {
+    let filterType = rootState.common.filterType;
+    let tasks = _.filter(state.all, {
+      'archive': false,
+      'deleted': false,
+    });
+
+    if (filterType !== 'main') {
+      tasks = _.filter(state.all, filterType);
+    }
+
+    return _.orderBy(tasks, ['favorite', 'done'], ['desc', 'ask']);
   },
 };
 
@@ -48,7 +62,11 @@ const actions = {
 
   hideModal({commit}) {
     commit('toggleModalVisibility', false);
-    commit('setModalData', {});
+    commit('setModalData', {
+      title: null,
+      value: null,
+      editable: false,
+    });
   },
 };
 

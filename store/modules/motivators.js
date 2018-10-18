@@ -4,7 +4,10 @@ import _     from 'lodash';
 const state = () => ({
   all: [],
   modalIsActive: false,
-  modalData: {},
+  modalData: {
+    title: null,
+    maxValue: null,
+  },
 });
 
 const getters = {
@@ -60,7 +63,10 @@ const actions = {
 
   hideModal({commit}) {
     commit('toggleModalVisibility', false);
-    commit('setModalData', {});
+    commit('setModalData', {
+      title: null,
+      maxValue: null,
+    });
   },
 };
 

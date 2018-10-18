@@ -106,14 +106,15 @@
           let input = field.$refs.input;
 
           if (name === 'editable') {
-            this.task[name] = input.checked
+            this.task[name] = input.checked;
           } else {
             if (!input.value) return;
-            this.task[name] = input.value
+            this.task[name] = input.value;
           }
         });
 
         this.$emit(action, this.modalData._id, this.task);
+        this.task = {};
       },
     },
   };

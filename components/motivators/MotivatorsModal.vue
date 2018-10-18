@@ -96,11 +96,13 @@
 
         _.each(this.$refs, (field, name) => {
           let input = field.$refs.input;
+
           if (!input.value) return;
           this.motivator[name] = input.value;
         });
 
         this.$emit(action, this.modalData._id, this.motivator);
+        this.motivator = {}
       },
     },
   };
