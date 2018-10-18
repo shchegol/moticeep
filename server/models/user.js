@@ -135,7 +135,7 @@ motivatorSchema
 
 userSchema.pre('save', function(next) {
   // todo сделать более умную функцию, которая наполняет мотиваторы последовательно
-  let motivators = _.filter(this.motivators, ['done', false]);
+  let motivators = _.filter(this.motivators, {done: false, deleted: false, archive: false});
   let favorite = _.filter(motivators, 'favorite');
   let totalPoints = this.points;
   let singlePoint;

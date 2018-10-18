@@ -14,25 +14,27 @@
       </v-card-title>
 
       <v-card-actions>
-        <template v-if="!motivator.done">
-          <template v-if="motivator.value >= motivator.maxValue">
-            <v-btn
-              flat
-              color="primary"
-              @click="motivatorDone"
-            >
-              Достигнуто
-            </v-btn>
+        <template v-if="!motivator.deleted">
+          <template v-if="!motivator.done">
+            <template v-if="motivator.value >= motivator.maxValue">
+              <v-btn
+                flat
+                color="primary"
+                @click="motivatorDone"
+              >
+                Достигнуто
+              </v-btn>
+            </template>
+
+            <template v-else>
+              <span class="grey--text ml-2">{{motivator.value}} из {{motivator.maxValue}}</span>
+            </template>
           </template>
 
-          <template v-else>
-            <span class="grey--text ml-2">{{motivator.value}} из {{motivator.maxValue}}</span>
-          </template>
-        </template>
-
-        <span v-else class="title white--text ml-2">
+          <span v-else class="title white--text ml-2">
             <v-icon>done</v-icon> {{motivator.value}}
           </span>
+        </template>
 
         <v-spacer></v-spacer>
 
@@ -81,7 +83,7 @@
       </v-card-actions>
 
       <v-progress-linear
-        v-if="!motivator.done"
+        v-if="progressVisibility"
         v-model="motivator.valuePercent"
         height="12"
         color="green"
@@ -103,6 +105,12 @@
 
       img: {
         type: String,
+      },
+    },
+
+    computed: {
+      progressVisibility() {
+        return !this.motivator.archive && !this.motivator.deleted && !this.motivator.done;
       },
     },
 
