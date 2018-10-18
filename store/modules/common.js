@@ -1,10 +1,10 @@
+/**
+ * changing types of filter cards
+ * 0 - default
+ * 1 - by archive
+ * 2 - by trash
+ */
 const state = () => ({
-  /**
-   * changing types of filter cards
-   * 0 - default
-   * 1 - by archive
-   * 2 - by trash
-   */
   filterType: 0,
   snackbar: {
     active: false,
@@ -16,7 +16,7 @@ const state = () => ({
 
 const actions = {
   changeFilterType({commit}) {
-    commit('toggleDrawer');
+    commit('changeFilterType');
   },
   snackbarShow({commit}, data) {
     commit('snackbarShow', data);
@@ -30,6 +30,9 @@ const actions = {
 };
 
 const mutations = {
+  changeFilterType(state, data) {
+    state.filterType = data
+  },
   snackbarShow(state, data) {
     state.snackbar = data;
   },

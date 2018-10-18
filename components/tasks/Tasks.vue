@@ -15,7 +15,7 @@
         <transition-group name="flip-list" tag="div" class="layout row wrap">
           <tasks-card
             v-for="task in sortedTasks"
-            :key="task._id"
+            :key="task.id"
             :task="task"
             @points-add="pointsAdd"
             @show-modal="taskEditStart"

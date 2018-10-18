@@ -42,6 +42,7 @@
             <v-btn small flat>edit</v-btn>
           </v-flex>
         </v-layout>
+
         <v-divider
           v-else-if="item.divider"
           :key="i"

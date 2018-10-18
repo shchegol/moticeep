@@ -78,11 +78,7 @@
 
     data() {
       return {
-        task: {
-          title: '',
-          value: '',
-          editable: false,
-        },
+        task: {},
       };
     },
 
@@ -109,9 +105,12 @@
         _.each(this.$refs, (field, name) => {
           let input = field.$refs.input;
 
-          this.task[name] = (name === 'editable')
-            ? input.checked
-            : input.value;
+          if (name === 'editable') {
+            this.task[name] = input.checked
+          } else {
+            if (!input.value) return;
+            this.task[name] = input.value
+          }
         });
 
         this.$emit(action, this.modalData._id, this.task);

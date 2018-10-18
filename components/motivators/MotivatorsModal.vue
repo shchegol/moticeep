@@ -30,7 +30,7 @@
                 ref="maxValue"
                 :value="modalData.maxValue"
                 label="Стоимость"
-                placeholder="1000"
+                placeholder="300"
                 box
                 class="w-100"
               ></v-text-field>
@@ -70,10 +70,7 @@
 
     data() {
       return {
-        motivator: {
-          title: '',
-          maxValue: '',
-        },
+        motivator: {},
       };
     },
 
@@ -99,6 +96,7 @@
 
         _.each(this.$refs, (field, name) => {
           let input = field.$refs.input;
+          if (!input.value) return;
           this.motivator[name] = input.value;
         });
 

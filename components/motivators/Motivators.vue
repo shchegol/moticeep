@@ -15,7 +15,7 @@
         <transition-group name="flip-list" tag="div" class="layout row wrap">
           <motivators-card
             v-for="motivator in sortedMotivators"
-            :key="motivator._id"
+            :key="motivator.id"
             :motivator="motivator"
             @show-modal="showModal"
             @edit="motivatorEdit"

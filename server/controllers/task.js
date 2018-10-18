@@ -5,16 +5,6 @@ import {getLastValueFromURLPath} from '../utils/common';
 export const createTask = async ctx => {
   const user = await User.findOne({'_id': ctx.state.user._id}).exec();
 
-  ctx.request.body.favorite = false;
-
-  if (!ctx.request.body.title) {
-    ctx.request.body.title = 'За труды';
-  }
-
-  if (!ctx.request.body.value) {
-    ctx.request.body.value = 1;
-  }
-
   if (ctx.request.body._id) {
     delete ctx.request.body._id;
   }
@@ -35,6 +25,7 @@ export const updateTask = async ctx => {
   _.forIn(ctxBody, (value, key) => {
     task[key] = value;
   });
+
   await user.save();
 
   ctx.status = 200;

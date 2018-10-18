@@ -5,22 +5,6 @@ import {getLastValueFromURLPath} from '../utils/common';
 export const createMotivator = async ctx => {
   const user = await User.findOne({'_id': ctx.state.user._id}).exec();
 
-  ctx.request.body.value = 0;
-  ctx.request.body.favorite = false;
-  ctx.request.body.done = false;
-
-  if (!ctx.request.body.title) {
-    ctx.request.body.title = 'Мечта';
-  }
-
-  if (!ctx.request.body.maxValue) {
-    ctx.request.body.maxValue = 300;
-  }
-
-  if (!ctx.request.body.img) {
-    ctx.request.body.img = '/images/motivator.jpg';
-  }
-
   if (ctx.request.body._id) {
     delete ctx.request.body._id;
   }

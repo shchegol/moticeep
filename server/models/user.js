@@ -4,23 +4,73 @@ import bcrypt   from 'bcrypt';
 import _        from 'lodash';
 
 const taskSchema = new mongoose.Schema({
-  title: String,
-  value: Number,
-  editable: Boolean,
-  favorite: Boolean,
+  title: {
+    type: String,
+    default: 'За труды',
+  },
+  value: {
+    type: Number,
+    default: 1,
+  },
+  editable: {
+    type: Boolean,
+    default: false,
+  },
+  favorite: {
+    type: Boolean,
+    default: false,
+  },
+  archive: {
+    type: Boolean,
+    default: false,
+  },
+  deleted: {
+    type: Boolean,
+    default: false,
+  },
+}, {
+  toObject: {
+    virtuals: true,
+  },
 });
 
 const motivatorSchema = new mongoose.Schema({
-  title: String,
-  img: String,
-  value: Number,
-  maxValue: Number,
-  done: Boolean,
-  favorite: Boolean,
+  title: {
+    type: String,
+    default: 'Мечта',
+  },
+  img: {
+    type: String,
+    default: '/images/motivator.jpg',
+  },
+  value: {
+    type: Number,
+    default: 0,
+  },
+  maxValue: {
+    type: Number,
+    default: 300,
+  },
+  done: {
+    type: Boolean,
+    default: false,
+  },
+  favorite: {
+    type: Boolean,
+    default: false,
+  },
+  archive: {
+    type: Boolean,
+    default: false,
+  },
+  deleted: {
+    type: Boolean,
+    default: false,
+  },
 }, {
   toObject: {
-    virtuals: true
-  }
+    virtuals: true,
+  },
 });
 
 const userSchema = new mongoose.Schema({
@@ -46,11 +96,18 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
 
-  points: Number,
+  points: {
+    type: Number,
+    default: 0,
+  },
+
   tasks: [taskSchema],
   motivators: [motivatorSchema],
 
-  deleted: Boolean,
+  deleted: {
+    type: Boolean,
+    default: false,
+  },
 }, {
   timestamps: true,
 });
