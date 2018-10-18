@@ -1,11 +1,5 @@
-/**
- * changing types of filter cards
- * 0 - default
- * 1 - by archive
- * 2 - by trash
- */
 const state = () => ({
-  filterType: 0,
+  filterType: 'main',
   snackbar: {
     active: false,
     message: '',
@@ -15,8 +9,8 @@ const state = () => ({
 });
 
 const actions = {
-  changeFilterType({commit}) {
-    commit('changeFilterType');
+  changeFilterType({commit}, type) {
+    commit('changeFilterType', type);
   },
   snackbarShow({commit}, data) {
     commit('snackbarShow', data);

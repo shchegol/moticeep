@@ -8,8 +8,18 @@ const state = () => ({
 });
 
 const getters = {
-  sortedMotivators: state => {
-    return _.orderBy(state.all, ['favorite', 'done'], ['desc', 'ask']);
+  sortedMotivators: (state, getters, rootState) => {
+    let filterType = rootState.common.filterType;
+    let motivators = _.filter(state.all, {
+      'archive': false,
+      'deleted': false,
+    });
+
+    if (filterType !== 'main') {
+      motivators = _.filter(state.all, filterType);
+    }
+
+    return _.orderBy(motivators, ['favorite', 'done'], ['desc', 'ask']);
   },
 };
 

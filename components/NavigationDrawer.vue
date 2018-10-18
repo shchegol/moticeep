@@ -70,7 +70,7 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex';
+  import {mapState, mapActions} from 'vuex';
 
   export default {
     name: 'NavigationDrawer',
@@ -78,17 +78,23 @@
     data() {
       return {
         items: [
+          {
+            name: 'main',
+            icon: 'home',
+            text: 'Главная',
+          },
           // {
           //   icon: 'loyalty',
           //   text: 'Помощь проекту',
           // },
-          // {divider: true},
-          // {
-          //   icon: 'archive',
-          //   text: 'Архив',
-          // },
+          {divider: true},
           {
-            name: 'trash',
+            name: 'archive',
+            icon: 'archive',
+            text: 'Архив',
+          },
+          {
+            name: 'deleted',
             icon: 'delete',
             text: 'Корзина',
           },
@@ -109,12 +115,13 @@
     },
 
     methods: {
+      ...mapActions({
+          'changeFilterType': 'common/changeFilterType',
+        },
+      ),
+
       clickItem(name) {
-        switch (name) {
-          case 'trash':
-            console.log('trash');
-            break;
-        }
+        this.changeFilterType(name);
       },
     },
   };

@@ -5,12 +5,12 @@
       :dark="motivator.done"
     >
       <!--<v-img-->
-        <!--:src="motivator.img"-->
-        <!--aspect-ratio="2.75"-->
+      <!--:src="motivator.img"-->
+      <!--aspect-ratio="2.75"-->
       <!--&gt;</v-img>-->
 
       <v-card-title>
-          <div class="headline mb-0">{{ motivator.title }}</div>
+        <div class="headline mb-0">{{ motivator.title }}</div>
       </v-card-title>
 
       <v-card-actions>
@@ -28,62 +28,65 @@
           <template v-else>
             <span class="grey--text ml-2">{{motivator.value}} из {{motivator.maxValue}}</span>
           </template>
-
-          <v-spacer></v-spacer>
-
-          <v-btn
-            icon
-            @click="motivatorFavorite">
-            <v-icon color="orange">
-              {{motivator.favorite ? 'star' : 'star_border' }}
-            </v-icon>
-          </v-btn>
-
-          <v-menu bottom left>
-            <v-btn
-              icon
-              slot="activator">
-              <v-icon>more_vert</v-icon>
-            </v-btn>
-
-            <v-list>
-              <v-list-tile @click="motivatorEdit">
-                <v-list-tile-title>Редактировать</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile @click="motivatorDelete">
-                <v-list-tile-title>Удалить</v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-menu>
         </template>
 
-        <template v-else>
-          <span class="title white--text ml-2">
+        <span v-else class="title white--text ml-2">
             <v-icon>done</v-icon> {{motivator.value}}
           </span>
 
-          <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
 
-          <v-tooltip bottom>
+        <v-btn
+          v-if="!motivator.done"
+          icon
+          @click="motivatorFavorite">
+          <v-icon color="orange">
+            {{motivator.favorite ? 'star' : 'star_border'}}
+          </v-icon>
+        </v-btn>
+
+        <v-menu bottom left>
           <v-btn
-            slot="activator"
             icon
-            @click="motivatorDelete">
-            <v-icon color="white">delete</v-icon>
+            slot="activator">
+            <v-icon>more_vert</v-icon>
           </v-btn>
-            <span>Удалить навсегда</span>
-          </v-tooltip>
-        </template>
 
+          <v-list>
+            <template v-if="!motivator.deleted">
+              <v-list-tile
+                v-if="!motivator.done"
+                @click="motivatorEdit"
+              >
+                <v-list-tile-title>Редактировать</v-list-tile-title>
+              </v-list-tile>
+
+              <v-list-tile @click="motivatorArchive">
+                <v-list-tile-title>{{ motivator.archive ? 'Вернуть из архива' : 'Архивировать' }}</v-list-tile-title>
+              </v-list-tile>
+            </template>
+
+            <v-list-tile @click="motivatorDelete">
+              <v-list-tile-title>{{ motivator.deleted ? 'Восстановить' : 'Удалить' }}</v-list-tile-title>
+            </v-list-tile>
+
+            <v-list-tile
+              v-if="motivator.deleted"
+              @click="motivatorDeleteForever"
+            >
+              <v-list-tile-title>Удалить навсегда</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
       </v-card-actions>
 
-        <v-progress-linear
-          v-if="!motivator.done"
-          v-model="motivator.valuePercent"
-          height="12"
-          color="green"
-          class="mt-0"
-        ></v-progress-linear>
+      <v-progress-linear
+        v-if="!motivator.done"
+        v-model="motivator.valuePercent"
+        height="12"
+        color="green"
+        class="mt-0"
+      ></v-progress-linear>
     </v-card>
   </v-flex>
 </template>
@@ -113,7 +116,13 @@
       motivatorDone() {
         this.$emit('edit', this.motivator._id, {done: true});
       },
+      motivatorArchive() {
+        this.$emit('edit', this.motivator._id, {archive: !this.motivator.archive});
+      },
       motivatorDelete() {
+        this.$emit('edit', this.motivator._id, {deleted: !this.motivator.deleted});
+      },
+      motivatorDeleteForever() {
         this.$emit('delete', this.motivator._id);
       },
     },

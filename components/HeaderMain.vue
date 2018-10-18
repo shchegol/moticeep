@@ -1,6 +1,6 @@
 <template>
   <v-toolbar
-    color="primary"
+    :color="headerColor"
     app
     flat
     dark
@@ -9,7 +9,9 @@
     height="64"
   >
     <v-toolbar-side-icon @click.native="toggleDrawer"></v-toolbar-side-icon>
-    <v-toolbar-title>MOTIKEEP</v-toolbar-title>
+    <v-toolbar-title>
+      {{ pageName }}
+    </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
       <v-flex class="mr-5 align-self-center">
@@ -55,7 +57,38 @@
     computed: {
       ...mapState({
         user: state => state.user.item,
+        filterType: state => state.common.filterType,
       }),
+
+      pageName() {
+        let type = this.filterType;
+        let title = 'MOTIKEEP';
+
+        if (type === 'archive') {
+          title = 'Архив'
+        }
+
+        if (type === 'deleted') {
+          title = 'Корзина'
+        }
+
+        return title
+      },
+
+      headerColor() {
+        let type = this.filterType;
+        let color = 'primary';
+
+        if (type === 'archive') {
+          color = 'blue-grey darken-1'
+        }
+
+        if (type === 'deleted') {
+          color = 'grey darken-1'
+        }
+
+        return color
+      }
     },
 
     methods: {
