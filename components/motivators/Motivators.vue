@@ -1,43 +1,45 @@
 <template>
   <v-layout class="mt-3">
     <v-flex>
-      <template v-if="sortedMotivators.length > 0">
-        <v-layout align-center>
-          <v-flex>
-            <h3>Мотиваторы</h3>
-          </v-flex>
-        </v-layout>
-
-        <v-container
-          fluid
-          grid-list-md
-          class="pa-0 mt-3"
-        >
-          <transition-group name="flip-list" tag="div" class="layout row wrap">
-            <motivators-card
-              v-for="motivator in sortedMotivators"
-              :key="motivator.id"
-              :motivator="motivator"
-              @show-modal="showModal"
-              @edit="motivatorEdit"
-              @delete="motivatorDelete"
-            >
-            </motivators-card>
-          </transition-group>
-        </v-container>
-      </template>
 
       <v-layout
-        v-else
+        v-if="sortedMotivators.length > 0"
         align-center
-        class="mt-4"
       >
         <v-flex>
-          <p class="text-xs-center grey--text darken-1 headline">
-            Мотиваторов не найдено.
-          </p>
+          <h3>Мотиваторы</h3>
         </v-flex>
       </v-layout>
+
+      <v-container
+        fluid
+        grid-list-md
+        class="pa-0 mt-3"
+      >
+        <transition-group name="flip-list" tag="div" class="layout row wrap">
+          <motivators-card
+            v-for="motivator in sortedMotivators"
+            :key="motivator.id"
+            :motivator="motivator"
+            @show-modal="showModal"
+            @edit="motivatorEdit"
+            @delete="motivatorDelete"
+          >
+          </motivators-card>
+        </transition-group>
+      </v-container>
+
+      <!--<v-layout-->
+      <!--v-else-->
+      <!--align-center-->
+      <!--class="mt-4"-->
+      <!--&gt;-->
+      <!--<v-flex>-->
+      <!--<p class="text-xs-center grey&#45;&#45;text darken-1 headline">-->
+      <!--Мотиваторов не найдено.-->
+      <!--</p>-->
+      <!--</v-flex>-->
+      <!--</v-layout>-->
     </v-flex>
 
     <motivators-modal

@@ -20,10 +20,6 @@ const taskSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  archive: {
-    type: Boolean,
-    default: false,
-  },
   deleted: {
     type: Boolean,
     default: false,
@@ -56,10 +52,6 @@ const motivatorSchema = new mongoose.Schema({
     default: false,
   },
   favorite: {
-    type: Boolean,
-    default: false,
-  },
-  archive: {
     type: Boolean,
     default: false,
   },
@@ -135,7 +127,7 @@ motivatorSchema
 
 userSchema.pre('save', function(next) {
   // todo сделать более умную функцию, которая наполняет мотиваторы последовательно
-  let motivators = _.filter(this.motivators, {done: false, deleted: false, archive: false});
+  let motivators = _.filter(this.motivators, {done: false, deleted: false});
   let favorite = _.filter(motivators, 'favorite');
   let totalPoints = this.points;
   let singlePoint;

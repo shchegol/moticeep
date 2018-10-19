@@ -53,7 +53,7 @@
         <v-list-tile
           v-else
           :key="i"
-          @click="clickItem(item.name)"
+          @click="clickItem(item.filter)"
         >
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -79,30 +79,26 @@
       return {
         items: [
           {
-            name: 'main',
+            filter: 'main',
             icon: 'home',
             text: 'Главная',
           },
-          // {
-          //   icon: 'loyalty',
-          //   text: 'Помощь проекту',
-          // },
+          {
+            filter: 'main',
+            icon: 'loyalty',
+            text: 'Помощь проекту',
+          },
           {divider: true},
           {
-            name: 'archive',
-            icon: 'archive',
-            text: 'Архив',
+            filter: 'done',
+            icon: 'check',
+            text: 'Завершённые',
           },
           {
-            name: 'deleted',
+            filter: 'deleted',
             icon: 'delete',
             text: 'Корзина',
           },
-          // {divider: true},
-          // {
-          //   icon: 'settings',
-          //   text: 'Настройки',
-          // },
         ],
       };
     },
@@ -120,8 +116,8 @@
         },
       ),
 
-      clickItem(name) {
-        this.changeFilterType(name);
+      clickItem(filter) {
+        this.changeFilterType(filter);
       },
     },
   };

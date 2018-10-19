@@ -62,10 +62,6 @@
               >
                 <v-list-tile-title>Редактировать</v-list-tile-title>
               </v-list-tile>
-
-              <v-list-tile @click="motivatorArchive">
-                <v-list-tile-title>{{ motivator.archive ? 'Вернуть из архива' : 'Архивировать' }}</v-list-tile-title>
-              </v-list-tile>
             </template>
 
             <v-list-tile @click="motivatorDelete">
@@ -110,7 +106,7 @@
 
     computed: {
       progressVisibility() {
-        return !this.motivator.archive && !this.motivator.deleted && !this.motivator.done;
+        return !this.motivator.deleted && !this.motivator.done;
       },
     },
 
@@ -123,9 +119,6 @@
       },
       motivatorDone() {
         this.$emit('edit', this.motivator._id, {done: true});
-      },
-      motivatorArchive() {
-        this.$emit('edit', this.motivator._id, {archive: !this.motivator.archive});
       },
       motivatorDelete() {
         this.$emit('edit', this.motivator._id, {deleted: !this.motivator.deleted});

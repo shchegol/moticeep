@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 const state = () => ({
   filterType: 'main',
   snackbar: {
@@ -25,7 +27,7 @@ const actions = {
 
 const mutations = {
   changeFilterType(state, data) {
-    state.filterType = data
+    state.filterType = data;
   },
   snackbarShow(state, data) {
     state.snackbar = data;
@@ -38,8 +40,8 @@ const mutations = {
     };
   },
   toggleDrawer(state) {
-    state.drawer = !state.drawer
-  }
+    state.drawer = !state.drawer;
+  },
 };
 
 export default {

@@ -12,10 +12,9 @@ const state = () => ({
 });
 
 const getters = {
-  sortedTasks: (state, getters, rootState) => {
+  sortedTasks(state, getters, rootState) {
     let filterType = rootState.common.filterType;
     let tasks = _.filter(state.all, {
-      'archive': false,
       'deleted': false,
     });
 
@@ -24,6 +23,10 @@ const getters = {
     }
 
     return _.orderBy(tasks, ['favorite', 'done'], ['desc', 'ask']);
+  },
+
+  tasksCount(state, getters) {
+    return getters.sortedTasks.length;
   },
 };
 

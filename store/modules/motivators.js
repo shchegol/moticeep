@@ -11,11 +11,11 @@ const state = () => ({
 });
 
 const getters = {
-  sortedMotivators: (state, getters, rootState) => {
+  sortedMotivators(state, getters, rootState) {
     let filterType = rootState.common.filterType;
     let motivators = _.filter(state.all, {
-      'archive': false,
       'deleted': false,
+      'done': false,
     });
 
     if (filterType !== 'main') {
@@ -23,6 +23,10 @@ const getters = {
     }
 
     return _.orderBy(motivators, ['favorite', 'done'], ['desc', 'ask']);
+  },
+
+  motivatorsCount(state, getters) {
+    return getters.sortedMotivators.length;
   },
 };
 

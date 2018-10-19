@@ -52,10 +52,6 @@
               <v-list-tile @click="taskEdit">
                 <v-list-tile-title>Редактировать</v-list-tile-title>
               </v-list-tile>
-
-              <v-list-tile @click="taskArchive">
-                <v-list-tile-title>{{ task.archive ? 'Вернуть из архива' : 'Архивировать' }}</v-list-tile-title>
-              </v-list-tile>
             </template>
 
             <v-list-tile @click="taskDelete">
@@ -98,9 +94,6 @@
       },
       taskFavorite() {
         this.$emit('edit', this.task._id, {favorite: !this.task.favorite});
-      },
-      taskArchive() {
-        this.$emit('edit', this.task._id, {archive: !this.task.archive});
       },
       taskDelete() {
         this.$emit('edit', this.task._id, {deleted: !this.task.deleted});

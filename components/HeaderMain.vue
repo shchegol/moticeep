@@ -64,8 +64,8 @@
         let type = this.filterType;
         let title = 'MOTIKEEP';
 
-        if (type === 'archive') {
-          title = 'Архив'
+        if (type === 'done') {
+          title = 'Завершённые'
         }
 
         if (type === 'deleted') {
@@ -79,7 +79,7 @@
         let type = this.filterType;
         let color = 'primary';
 
-        if (type === 'archive' || type === 'deleted') {
+        if (type !== 'main') {
           color = 'blue-grey darken-2'
         }
 
