@@ -1,7 +1,6 @@
 <template>
-  <v-layout class="mt-3">
+  <v-layout>
     <v-flex>
-
       <v-layout
         v-if="sortedMotivators.length > 0"
         align-center

@@ -3,7 +3,8 @@
     <v-flex>
       <v-layout
         v-if="sortedTasks.length > 0"
-        align-center>
+        align-center
+      >
         <v-flex>
           <h3>Задания</h3>
         </v-flex>

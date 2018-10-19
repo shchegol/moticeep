@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <tasks></tasks>
+    <tasks v-if="tasksCount > 0"></tasks>
 
     <v-divider
       v-if="showCardsDivider"
       class="mt-5 mb-5"
     ></v-divider>
 
-    <motivators></motivators>
+    <motivators v-if="motivatorsCount > 0"></motivators>
 
     <v-layout
       v-if="emptinessMessage.isShow"
@@ -23,7 +23,6 @@
         <p class="grey--text lighten-2 mt-3">
           {{emptinessMessage.text}}
         </p>
-
       </v-flex>
     </v-layout>
   </v-container>
