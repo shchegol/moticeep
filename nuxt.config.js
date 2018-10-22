@@ -40,6 +40,10 @@ module.exports = {
 
   loading: {color: '#3B8070'},
 
+  env: {
+    backendUrl: 'http://localhost:3001'
+  },
+
   build: {
     vendor: [
       '~/plugins/vuetify.js',
