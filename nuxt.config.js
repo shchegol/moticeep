@@ -40,24 +40,15 @@ module.exports = {
 
   loading: {color: '#3B8070'},
 
-  env: {
-    backendUrl: 'http://localhost:3001'
-  },
+  srcDir: 'client/',
 
   build: {
     vendor: [
-      '~/plugins/vuetify.js',
+      '@/plugins/vuetify.js',
       'lodash',
       'axios',
       'moment',
     ],
-
-    // postcss: {
-    //   plugins: {
-    //     'postcss-custom-properties': false,
-    //   },
-    // },
-    // extractCSS: true,
 
     extend(config, {isDev, isClient}) {
       if (isDev && isClient) {
