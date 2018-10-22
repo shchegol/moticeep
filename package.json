@@ -5,14 +5,13 @@
   "author": "Alexander Shchegol <zelenzoom@gmail.com>",
   "private": true,
   "scripts": {
-    "start": "backpack dev",
+    "start": "nuxt start",
     "dev": "backpack dev",
     "build": "nuxt build && backpack build",
     "generate": "nuxt generate",
+    "server": "node ./build/main.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint",
-    "db": "C:/mongodb/bin/mongod.exe --dbpath E:/motikeep/db",
-    "db2": "C:/mongodb/bin/mongod.exe --dbpath D:/motikeep/db"
+    "precommit": "npm run lint"
   },
   "dependencies": {
     "axios": "^0.18.0",
