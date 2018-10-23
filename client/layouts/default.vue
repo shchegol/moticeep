@@ -3,7 +3,7 @@
     <header-main></header-main>
     <navigation-drawer></navigation-drawer>
 
-    <v-content>
+    <v-content class="main-container">
       <nuxt/>
     </v-content>
 

@@ -5,14 +5,32 @@
 @function white($opacity) {
   @return rgba(255, 255, 255, $opacity);
 }
+// xs < 600px
+// sm 600px > < 960px
+// md 960px > < 1264*
+// lg 1264 > < 1904px*
+// xl > 1904px*
+// * -16px on Desktop
 
-//@function material-color-safe($color-name, $color-variant: '500') {
-//  @if $color-name == 'white' {
-//    @return #ffffff;
-//  } @else if $color-name == 'black' {
-//    @return 000000;
-//  } @else {
-//    @return material-color($color-name, $color-variant);
+//@mixin media() {
+//  @if $xy == xy {
+//  } @else if $xy == x {
+//  } @else if $xy == x {
+//  } @else if $xy == x {
+//  }
+//
+//
+//
+//
+//  @media only screen and (min-width: 960px) {
+//    @content;
+//  }
+//
+//  @media only screen and (min-width: 1264px) {
+//    @content;
+//  }
+//  @media only screen and (min-width: 1904px) {
+//    @content;
 //  }
 //}
 
@@ -36,7 +54,7 @@
 
 @mixin box_shadow_material($level) {
   @if $level == 1 {
-    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, .2), 0px 1px 1px 0px rgba(0, 0, 0, .14), 0px 1px 3px 0px rgba(0, 0, 0, .12)
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, .2), 0px 1px 1px 0px rgba(0, 0, 0, .14), 0px 1px 3px 0px rgba(0, 0, 0, .12)
 
   } @else if $level == 2 {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -48,33 +66,3 @@
     box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
   }
 }
-//
-//@mixin btn-color($bg-color, $text-color: 'white') {
-//  @if $text-color == 'white' {
-//    color: #ffffff;
-//  } @else if $text-color == 'black' {
-//    color: material-color('grey', '800')
-//  } @else {
-//    @warn "!!! ERROR: TEXT COLOR NOT VALID !!! | $text-color must be 'white' or 'black'";
-//  }
-//
-//  background-color: material-color-safe($bg-color);
-//
-//  &:hover {
-//    background-color: material-color-safe($bg-color, '600');
-//  }
-//
-//  &.btn_outline {
-//    background-color: transparent;
-//    border-color: material-color-safe($bg-color);
-//
-//    &:hover {
-//      @if $text-color == 'white' {
-//        color: material-color('grey', '800')
-//      }
-//
-//      background-color: material-color-safe($bg-color, '600');
-//      border-color: material-color-safe($bg-color, '600');
-//    }
-//  }
-//}
