@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "prestart": "npm run build",
-    "start": "npm run server –-env production",
+    "start": "NODE_ENV=production npm run server",
     "dev": "backpack dev",
     "build": "nuxt build && backpack build",
     "generate": "nuxt generate",
