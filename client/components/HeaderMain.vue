@@ -13,7 +13,8 @@
       {{ pageName }}
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-toolbar-items class="hidden-sm-and-down">
+    <!--<v-toolbar-items class="hidden-sm-and-down">-->
+    <v-toolbar-items>
       <v-flex class="mr-5 align-self-center">
         <div class="d-flex align-center">
           <v-icon medium class="mr-1">account_balance_wallet</v-icon>
@@ -24,7 +25,6 @@
 
       </v-flex>
 
-      <!--<v-btn flat to="/user">{{ user.displayName }}</v-btn>-->
       <v-btn icon to="/user">
         <v-avatar
           size="38"

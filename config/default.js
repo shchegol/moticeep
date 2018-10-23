@@ -1,13 +1,10 @@
 module.exports = {
-  // todo secret data can be moved to env variables
-  // or a separate config
+  // todo secret data can be moved to env variables or a separate config
   secret: 'mysecret',
 
   server: {
     host: process.env.NODE_ENV === 'production' ? '10.50.3.32' : 'localhost',
     port:  process.env.NODE_ENV === 'production' ? '8080' : '3000',
-    // host: '0.0.0.0',
-    // port: '5000',
   },
 
   // providers: {

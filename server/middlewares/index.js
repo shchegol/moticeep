@@ -31,13 +31,8 @@ export default app => {
     .use(bodyParser())
     .use(session({
       key: 'sid',
-      cookie:  {
-        httpOnly:  true,
-        path:      '/',
-        overwrite: true,
-        signed:    false,
-        maxAge:    3600 * 24 * 100
-      },
+      signed: false,
+      maxAge: 3600 * 24 * 100,
       rolling: true,
 
       store: mongooseStore.create({
