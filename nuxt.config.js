@@ -47,7 +47,7 @@ module.exports = {
       '@/plugins/vuetify.js',
       'lodash',
       'axios',
-      'moment',
+      // 'moment',
     ],
 
     extend(config, {isDev, isClient}) {

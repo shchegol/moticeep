@@ -4,8 +4,8 @@ module.exports = {
   secret: 'mysecret',
 
   server: {
-    host: 'localhost',
-    port: '3000',
+    host: process.env.NODE_ENV === 'production' ? '10.50.3.32' : 'localhost',
+    port:  process.env.NODE_ENV === 'production' ? '8080' : '3000',
     // host: '0.0.0.0',
     // port: '5000',
   },

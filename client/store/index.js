@@ -9,6 +9,7 @@ export default () => {
   return new Vuex.Store({
     actions: {
       nuxtServerInit({commit}, {req}) {
+        console.log('req', req);
         if (req.session.passport && req.state.user) {
           commit('user/setUser', req.state.user.getPublicFields());
           commit('tasks/setTasks', req.state.user.tasks);
@@ -16,6 +17,7 @@ export default () => {
         }
       },
     },
+
     modules: {
       common,
       auth,
@@ -23,6 +25,7 @@ export default () => {
       tasks,
       motivators,
     },
+
     strict: true
   });
 };
