@@ -1,6 +1,6 @@
 module.exports = {
   // todo secret data can be moved to env variables or a separate config
-  secret: 'mysecret',
+  secret: '8QGvPfvG',
 
   server: {
     host: process.env.NODE_ENV === 'production' ? '10.50.3.32' : 'localhost',
@@ -48,8 +48,8 @@ module.exports = {
 
   mongoose: {
     uri: 'mongodb://ds125713.mlab.com:25713/motikeep',
-    user: 'zelenzoom',
-    password: 'shchegol041642'
+    user: 'shchegol',
+    password: '3aD6C3mq'
   },
 
   crypto: {
