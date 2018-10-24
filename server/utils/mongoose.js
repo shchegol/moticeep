@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 import config   from 'config';
 
+// console.log(process.env);
+console.log('NODE_CONFIG_DIR: ' + config.util.getEnv('NODE_CONFIG_DIR'));
+
 mongoose.Promise = Promise;
 
 if (process.env.MONGOOSE_DEBUG) {

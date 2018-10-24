@@ -7,7 +7,7 @@
   "scripts": {
     "prestart": "npm run build",
     "start": "NODE_ENV=production npm run server",
-    "dev": "backpack dev",
+    "dev": "set NODE_CONFIG_DIR=../motikeepConfig/ && backpack dev",
     "build": "nuxt build && backpack build",
     "generate": "nuxt generate",
     "server": "node ./build/main.js",

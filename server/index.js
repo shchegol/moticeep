@@ -7,7 +7,6 @@ import middlewares     from './middlewares';
 import apiRouter       from './routes';
 
 async function start() {
-
   const host = process.env.HOST || config.server.host,
         port = process.env.PORT || config.server.port,
         app  = new Koa();
