@@ -1,13 +1,13 @@
 <template>
   <v-container>
-    <tasks v-if="tasksCount > 0"></tasks>
+    <tasks></tasks>
 
     <v-divider
       v-if="showCardsDivider"
       class="mt-5 mb-5"
     ></v-divider>
 
-    <motivators v-if="motivatorsCount > 0"></motivators>
+    <motivators></motivators>
 
     <v-layout
       v-if="emptinessMessage.isShow"

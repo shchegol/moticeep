@@ -1,10 +1,7 @@
 <template>
   <v-layout>
-    <v-flex>
-      <v-layout
-        v-if="sortedMotivators.length > 0"
-        align-center
-      >
+    <v-flex v-if="motivatorsCount > 0">
+      <v-layout align-center>
         <v-flex>
           <h3>Мотиваторы</h3>
         </v-flex>
@@ -81,6 +78,7 @@
     computed: {
       ...mapGetters('motivators', [
         'sortedMotivators',
+        'motivatorsCount',
       ]),
     },
 

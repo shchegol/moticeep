@@ -1,10 +1,7 @@
 <template>
   <v-layout>
-    <v-flex>
-      <v-layout
-        v-if="sortedTasks.length > 0"
-        align-center
-      >
+    <v-flex v-if="tasksCount > 0">
+      <v-layout align-center>
         <v-flex>
           <h3>Задания</h3>
         </v-flex>
@@ -57,6 +54,7 @@
       }),
       ...mapGetters('tasks', [
         'sortedTasks',
+        'tasksCount',
       ]),
     },
 
