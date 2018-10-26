@@ -20,8 +20,8 @@ const actions = {
   snackbarHide({commit}) {
     commit('snackbarHide');
   },
-  toggleDrawer({commit}) {
-    commit('toggleDrawer');
+  toggleDrawer({commit}, data) {
+    commit('toggleDrawer', data);
   },
 };
 
@@ -39,8 +39,11 @@ const mutations = {
       color: undefined,
     };
   },
-  toggleDrawer(state) {
-    state.drawer = !state.drawer;
+  toggleDrawer(state, payload) {
+    if (payload.type || !payload.type && payload !== state.drawer) {
+      console.log('drewer changed');
+      state.drawer = !state.drawer;
+    }
   },
 };
 

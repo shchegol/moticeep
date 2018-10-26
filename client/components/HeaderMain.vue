@@ -8,10 +8,12 @@
     clipped-left
     height="64"
   >
-    <v-toolbar-side-icon @click.native="toggleDrawer"></v-toolbar-side-icon>
+    <v-toolbar-side-icon @click="toggleDrawer"></v-toolbar-side-icon>
+
     <v-toolbar-title>
       {{ pageName }}
     </v-toolbar-title>
+
     <v-spacer></v-spacer>
     <!--<v-toolbar-items class="hidden-sm-and-down">-->
     <v-toolbar-items>

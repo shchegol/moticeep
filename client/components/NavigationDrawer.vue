@@ -1,11 +1,14 @@
 <template>
   <v-navigation-drawer
+    ref="drawer"
     :value="drawer"
     app
     fixed
     floating
     clipped
+    disable-resize-watcher
     class="grey lighten-5"
+    @input="toggleDrawer"
   >
     <!--<v-toolbar flat class="transparent">-->
     <!--<v-list class="pa-0">-->
@@ -113,10 +116,15 @@
     methods: {
       ...mapActions({
           'changeFilterType': 'common/changeFilterType',
+          'toggleDrawer': 'common/toggleDrawer',
         },
       ),
-
       clickItem(filter) {
+        // hide navigation drawer if app open in mobile
+        if (this.$refs.drawer.isMobile) {
+          this.toggleDrawer('false');
+        }
+
         this.changeFilterType(filter);
       },
     },
