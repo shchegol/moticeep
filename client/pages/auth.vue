@@ -213,7 +213,7 @@
 
           this.$router.push('/');
         } catch (error) {
-          this.showMessage(error.response.data || 'Не выходит. Попробуйте попозже.');
+          this.showMessage('Не выходит. Попробуйте попозже.');
         }
 
         this.loading = false;

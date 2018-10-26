@@ -10,19 +10,25 @@
     class="grey lighten-5"
     @input="toggleDrawer"
   >
-    <!--<v-toolbar flat class="transparent">-->
-    <!--<v-list class="pa-0">-->
-    <!--<v-list-tile avatar>-->
-    <!--<v-list-tile-avatar>-->
-    <!--<img src="https://randomuser.me/api/portraits/men/85.jpg">-->
-    <!--</v-list-tile-avatar>-->
+    <v-toolbar flat class="transparent">
+      <v-list class="pa-0">
+        <v-list-tile avatar>
+          <v-list-tile-avatar>
+            <img src="https://randomuser.me/api/portraits/men/85.jpg">
+          </v-list-tile-avatar>
 
-    <!--<v-list-tile-content>-->
-    <!--<v-list-tile-title>{{user.displayName}}</v-list-tile-title>-->
-    <!--</v-list-tile-content>-->
-    <!--</v-list-tile>-->
-    <!--</v-list>-->
-    <!--</v-toolbar>-->
+          <v-list-tile-content>
+            <v-list-tile-title>{{user.displayName}}</v-list-tile-title>
+          </v-list-tile-content>
+
+          <v-list-tile-action>
+            <v-btn icon @click="logoutStart">
+              <v-icon>exit_to_app</v-icon>
+            </v-btn>
+          </v-list-tile-action>
+        </v-list-tile>
+      </v-list>
+    </v-toolbar>
 
     <v-list
       dense
@@ -86,11 +92,11 @@
             icon: 'home',
             text: 'Главная',
           },
-          {
-            filter: 'main',
-            icon: 'loyalty',
-            text: 'Помощь проекту',
-          },
+          // {
+          //   filter: 'main',
+          //   icon: 'loyalty',
+          //   text: 'Помощь проекту',
+          // },
           {divider: true},
           {
             filter: 'done',
@@ -115,10 +121,19 @@
 
     methods: {
       ...mapActions({
+          'logout': 'auth/logout',
           'changeFilterType': 'common/changeFilterType',
           'toggleDrawer': 'common/toggleDrawer',
         },
       ),
+      async logoutStart() {
+        try {
+          await this.logout();
+          this.$router.push('/auth');
+        } catch (e) {
+          console.log(e.message);
+        }
+      },
       clickItem(filter) {
         // hide navigation drawer if app open in mobile
         if (this.$refs.drawer.isMobile) {

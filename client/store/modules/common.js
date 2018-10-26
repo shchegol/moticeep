@@ -41,7 +41,6 @@ const mutations = {
   },
   toggleDrawer(state, payload) {
     if (payload.type || !payload.type && payload !== state.drawer) {
-      console.log('drewer changed');
       state.drawer = !state.drawer;
     }
   },

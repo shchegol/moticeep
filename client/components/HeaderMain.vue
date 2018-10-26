@@ -15,9 +15,9 @@
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
-    <!--<v-toolbar-items class="hidden-sm-and-down">-->
+
     <v-toolbar-items>
-      <v-flex class="mr-5 align-self-center">
+      <v-flex class="align-self-center">
         <div class="d-flex align-center">
           <v-icon medium class="mr-1">account_balance_wallet</v-icon>
           <span class="title">
@@ -27,7 +27,7 @@
 
       </v-flex>
 
-      <v-btn icon to="/user">
+      <v-btn icon to="/user" class="hidden-sm-and-down ml-5">
         <v-avatar
           size="38"
           color="red"
@@ -37,7 +37,7 @@
         </v-avatar>
       </v-btn>
 
-      <v-btn icon @click="logoutStart">
+      <v-btn icon @click="logoutStart" class="hidden-sm-and-down">
         <v-icon>exit_to_app</v-icon>
       </v-btn>
     </v-toolbar-items>
