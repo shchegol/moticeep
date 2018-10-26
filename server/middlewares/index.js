@@ -32,12 +32,11 @@ export default app => {
     .use(session({
       key: 'sid',
       signed: false,
-      maxAge: 3600 * 24 * 100,
+      maxAge: 86400000 * 10,
       rolling: true,
 
       store: mongooseStore.create({
         name: 'Session',
-        expires: 3600 * 24 * 100,
         connection: mongoose,
       }),
     }, app))
