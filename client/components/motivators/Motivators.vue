@@ -24,18 +24,6 @@
           </motivators-card>
         </transition-group>
       </v-container>
-
-      <!--<v-layout-->
-      <!--v-else-->
-      <!--align-center-->
-      <!--class="mt-4"-->
-      <!--&gt;-->
-      <!--<v-flex>-->
-      <!--<p class="text-xs-center grey&#45;&#45;text darken-1 headline">-->
-      <!--Мотиваторов не найдено.-->
-      <!--</p>-->
-      <!--</v-flex>-->
-      <!--</v-layout>-->
     </v-flex>
 
     <motivators-modal
@@ -108,6 +96,13 @@
         try {
           await this.$store.dispatch('motivators/update', {id: id, ...updatedFields});
           this.hideModal();
+
+          if (updatedFields.done) {
+            this.snackbarShow({
+              active: true,
+              message: 'Мотиватор достигнут! Вы можете найти его в разделе "Завершённые"',
+            });
+          }
         } catch (error) {
           this.snackbarShow({
             active: true,
