@@ -29,9 +29,9 @@
 </template>
 
 <script>
-  import Tasks                  from '~/components/tasks/Tasks';
-  import Motivators             from '~/components/motivators/Motivators';
-  import {mapState, mapGetters} from 'vuex';
+  import {mapState, mapGetters, mapActions} from 'vuex';
+  import Tasks                              from '~/components/tasks/Tasks';
+  import Motivators                         from '~/components/motivators/Motivators';
 
   export default {
     name: 'IndexPage',
@@ -95,6 +95,16 @@
         }
       },
 
+    },
+
+    mounted() {
+      this.changeFilterType('main');
+    },
+
+    methods: {
+      ...mapActions('common', [
+        'changeFilterType',
+      ]),
     },
   };
 </script>

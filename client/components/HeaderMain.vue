@@ -1,6 +1,6 @@
 <template>
   <v-toolbar
-    :color="headerColor"
+    :color="header.color"
     app
     flat
     dark
@@ -8,101 +8,29 @@
     clipped-left
     height="64"
   >
-    <v-toolbar-side-icon @click="toggleDrawer"></v-toolbar-side-icon>
+    <slot name="nav-button"></slot>
 
     <v-toolbar-title>
-      {{ pageName }}
+      {{ header.title }}
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
 
-    <v-toolbar-items>
-      <v-flex class="align-self-center">
-        <div class="d-flex align-center">
-          <v-icon medium class="mr-1">account_balance_wallet</v-icon>
-          <span class="title">
-            {{ user.points }} p.
-          </span>
-        </div>
-
-      </v-flex>
-
-      <v-btn icon to="/user" class="hidden-sm-and-down ml-5">
-        <v-avatar
-          size="38"
-          color="red"
-        >
-          <!--<span class="white&#45;&#45;text headline">A</span>-->
-          <img src="https://randomuser.me/api/portraits/men/85.jpg">
-        </v-avatar>
-      </v-btn>
-
-      <v-btn icon @click="logoutStart" class="hidden-sm-and-down">
-        <v-icon>exit_to_app</v-icon>
-      </v-btn>
-    </v-toolbar-items>
+    <slot name="toolbar"></slot>
   </v-toolbar>
 </template>
 
 <script>
-  import {mapState, mapActions} from 'vuex';
+  import {mapState} from 'vuex';
 
   export default {
     name: 'HeaderMain',
 
-    data() {
-      return {
-        drawer: true,
-      };
-    },
-
     computed: {
       ...mapState({
-        user: state => state.user.item,
         filterType: state => state.common.filterType,
+        header: state => state.common.header,
       }),
-
-      pageName() {
-        let type = this.filterType;
-        let title = 'MOTIKEEP';
-
-        if (type === 'done') {
-          title = 'Завершённые'
-        }
-
-        if (type === 'deleted') {
-          title = 'Корзина'
-        }
-
-        return title
-      },
-
-      headerColor() {
-        let type = this.filterType;
-        let color = 'primary';
-
-        if (type !== 'main') {
-          color = 'blue-grey darken-2'
-        }
-
-        return color
-      }
-    },
-
-    methods: {
-      ...mapActions({
-          'logout': 'auth/logout',
-          'toggleDrawer': 'common/toggleDrawer',
-        },
-      ),
-      async logoutStart() {
-        try {
-          await this.logout();
-          this.$router.push('/auth');
-        } catch (e) {
-          console.log(e.message);
-        }
-      },
     },
   };
 </script>

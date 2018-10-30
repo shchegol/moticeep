@@ -1,18 +1,43 @@
-import _ from 'lodash';
-
 const state = () => ({
+  drawer: false,
   filterType: 'main',
+  header: {
+    title: 'MOTIKEEP',
+    color: 'primary'
+  },
   snackbar: {
     active: false,
     message: '',
     color: undefined,
   },
-  drawer: false,
 });
 
 const actions = {
   changeFilterType({commit}, type) {
+    let headerOpt = {
+      title: 'MOTIKEEP',
+      color: 'primary'
+    };
+
+    if (type === 'done') {
+      headerOpt = {
+        title: 'Завершённые',
+        color: 'blue-grey darken-2'
+      }
+    }
+
+    if (type === 'deleted') {
+      headerOpt = {
+        title: 'Корзина',
+        color: 'blue-grey darken-2'
+      }
+    }
+
     commit('changeFilterType', type);
+    commit('changeHeader', headerOpt);
+  },
+  changeHeader({commit}, data) {
+    commit('changeHeader', data);
   },
   snackbarShow({commit}, data) {
     commit('snackbarShow', data);
@@ -28,6 +53,9 @@ const actions = {
 const mutations = {
   changeFilterType(state, data) {
     state.filterType = data;
+  },
+  changeHeader(state, data) {
+    state.header = data;
   },
   snackbarShow(state, data) {
     state.snackbar = data;
