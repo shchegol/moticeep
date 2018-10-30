@@ -1,9 +1,11 @@
+import _ from 'lodash';
+
 const state = () => ({
   drawer: false,
   filterType: 'main',
   header: {
     title: 'MOTIKEEP',
-    color: 'primary'
+    color: 'primary',
   },
   snackbar: {
     active: false,
@@ -12,29 +14,19 @@ const state = () => ({
   },
 });
 
+const getters = {
+  showCardsDivider(state, getters, rootState, rootGetters) {
+    if (rootGetters['tasks/tasksCount'] !== 0) {
+      return rootGetters['motivators/motivatorsCount'] !== 0;
+    } else {
+      return false;
+    }
+  },
+};
+
 const actions = {
   changeFilterType({commit}, type) {
-    let headerOpt = {
-      title: 'MOTIKEEP',
-      color: 'primary'
-    };
-
-    if (type === 'done') {
-      headerOpt = {
-        title: 'Завершённые',
-        color: 'blue-grey darken-2'
-      }
-    }
-
-    if (type === 'deleted') {
-      headerOpt = {
-        title: 'Корзина',
-        color: 'blue-grey darken-2'
-      }
-    }
-
     commit('changeFilterType', type);
-    commit('changeHeader', headerOpt);
   },
   changeHeader({commit}, data) {
     commit('changeHeader', data);
@@ -77,6 +69,7 @@ const mutations = {
 export default {
   namespaced: true,
   state,
+  getters,
   actions,
   mutations,
 };

@@ -24,7 +24,7 @@
 
 <script>
   export default {
-    name: 'donate',
+    name: 'PageDonate',
     layout: 'modal',
   };
 </script>

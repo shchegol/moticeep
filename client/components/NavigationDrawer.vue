@@ -12,7 +12,11 @@
   >
     <v-toolbar flat class="transparent hidden-md-and-up">
       <v-list class="pa-0">
-        <v-list-tile avatar>
+        <v-list-tile
+          avatar
+          nuxt
+          to="/user"
+        >
           <v-list-tile-avatar>
             <img src="https://randomuser.me/api/portraits/men/85.jpg">
           </v-list-tile-avatar>
@@ -62,7 +66,8 @@
         <v-list-tile
           v-else
           :key="i"
-          @click="clickItem(item.filter)"
+          :to="item.url"
+          nuxt
         >
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -88,25 +93,25 @@
       return {
         items: [
           {
-            filter: 'main',
+            url: '/',
             icon: 'home',
-            text: 'Главная',
+            text: 'Главная'
           },
           // {
-          //   filter: 'main',
+          //   url: '/donate'
           //   icon: 'loyalty',
           //   text: 'Помощь проекту',
           // },
           {divider: true},
           {
-            filter: 'done',
+            url: '/done',
             icon: 'check',
-            text: 'Завершённые',
+            text: 'Завершённые'
           },
           {
-            filter: 'deleted',
+            url: '/deleted',
             icon: 'delete',
-            text: 'Корзина',
+            text: 'Корзина'
           },
         ],
       };
@@ -134,14 +139,14 @@
           console.log(e.message);
         }
       },
-      clickItem(filter) {
-        // hide navigation drawer if app open in mobile
-        if (this.$refs.drawer.isMobile) {
-          this.toggleDrawer('false');
-        }
-
-        this.changeFilterType(filter);
-      },
+      // clickItem(filter) {
+      //   // hide navigation drawer if app open in mobile
+      //   if (this.$refs.drawer.isMobile) {
+      //     this.toggleDrawer('false');
+      //   }
+      //
+      //   this.changeFilterType(filter);
+      // },
     },
   };
 </script>

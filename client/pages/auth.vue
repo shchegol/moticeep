@@ -122,7 +122,7 @@
 <script>
   let emailCheck = value => /^[-.\w]+@([\w-]+\.)+[\w-]{2,12}$/.test(value);
   export default {
-    name: 'AuthPage',
+    name: 'PageAuth',
 
     layout: 'auth',
 

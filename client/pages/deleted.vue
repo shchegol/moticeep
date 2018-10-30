@@ -1,26 +1,26 @@
 <template>
   <v-container>
-    <tasks></tasks>
+    <motivators></motivators>
 
     <v-divider
       v-if="showCardsDivider"
       class="mt-5 mb-5"
     ></v-divider>
 
-    <motivators></motivators>
+    <tasks></tasks>
 
     <emptiness-message></emptiness-message>
   </v-container>
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
-  import Tasks                  from '~/components/tasks/Tasks';
-  import Motivators             from '~/components/motivators/Motivators';
-  import EmptinessMessage       from '~/components/EmptinessMessage';
+  import {mapGetters}     from 'vuex';
+  import Tasks            from '~/components/tasks/Tasks';
+  import Motivators       from '~/components/motivators/Motivators';
+  import EmptinessMessage from '~/components/EmptinessMessage';
 
   export default {
-    name: 'PageIndex',
+    name: 'PageDeleted',
 
     components: {
       Tasks,
@@ -37,4 +37,3 @@
     },
   };
 </script>
-

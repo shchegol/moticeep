@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-5">
+  <v-container>
     <v-layout justify-center>
       <v-flex xs12 sm6>
         <v-layout align-center>
@@ -30,33 +30,24 @@
 </template>
 
 <script>
-  import {mapState, mapActions} from 'vuex';
+  import {mapState} from 'vuex';
   import ActionButton           from '~/components/ActionButton';
 
   export default {
-    name: 'User',
+    name: 'PageUser',
+
     components: {
       ActionButton,
     },
+
     layout: 'single',
-    middleware: 'notAuthenticated',
+
+    middleware: ['notAuthenticated', 'headerChange'],
+
     computed: {
       ...mapState('user', {
         user: state => state.item,
       }),
-    },
-
-    mounted() {
-      this.changeHeader({
-          title: 'Пользователь',
-          color: 'primary',
-        });
-    },
-
-    methods: {
-      ...mapActions('common', [
-        'changeHeader',
-      ]),
     },
   };
 </script>

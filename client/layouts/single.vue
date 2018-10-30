@@ -5,7 +5,6 @@
         slot="nav-button"
         icon
         to="/"
-        class="hidden-xs-only"
       >
         <v-icon>arrow_back</v-icon>
       </v-btn>
