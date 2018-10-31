@@ -13,14 +13,22 @@ const state = () => ({
 const getters = {
   sortedMotivators(state, getters, rootState) {
     let filterType = rootState.common.filterType;
-    let motivators = _.filter(state.all, {
-      'deleted': false,
-      'done': false,
-    });
+    let filterOpt = filterType;
+    let motivators = {};
 
-    if (filterType !== 'main') {
-      motivators = _.filter(state.all, filterType);
+    if (filterType === 'main') {
+      filterOpt = {
+        'deleted': false,
+        'done': false,
+      };
+    } else if (filterType === 'done') {
+      filterOpt = {
+        'deleted': false,
+        'done': true,
+      };
     }
+
+    motivators = _.filter(state.all, filterOpt);
 
     return _.orderBy(motivators, ['favorite', 'done'], ['desc', 'ask']);
   },

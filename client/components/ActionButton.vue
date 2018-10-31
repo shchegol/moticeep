@@ -13,7 +13,6 @@
         color="accent"
         dark
         fab
-        class="ma-2"
       >
         <v-icon>add</v-icon>
         <v-icon>close</v-icon>

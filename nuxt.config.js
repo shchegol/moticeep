@@ -1,5 +1,6 @@
 module.exports = {
   // mode: 'spa',
+  seo: false,
   head: {
     title: 'motikeep',
     meta: [
@@ -31,7 +32,10 @@ module.exports = {
     ],
   },
 
-  plugins: ['~/plugins/vuetify.js'],
+  plugins: [
+    '~/plugins/vuetify.js',
+    '~/plugins/croppa.js',
+  ],
 
   css: [
     'vuetify/dist/vuetify.css',
