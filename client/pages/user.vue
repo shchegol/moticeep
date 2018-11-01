@@ -3,22 +3,22 @@
     <v-layout justify-center>
       <v-flex xs12 sm8 lg6 xl4>
         <v-layout>
-        <v-flex class="text-xs-center">
-          <croppa
-            v-model="myCroppa"
-            :width="128"
-            :height="128"
-            canvas-color="#E91E63"
-            placeholder=""
-            class="v-avatar"
-            style="overflow: hidden"
-          ></croppa>
-        </v-flex>
-        </v-layout>
-
-        <v-layout>
           <v-flex class="text-xs-center">
+            <croppa
+              v-if="isEdit"
+              v-model="myCroppa"
+              :width="128"
+              :height="128"
+              :show-remove-button="false"
+              canvas-color="#E91E63"
+              placeholder=""
+              prevent-white-space
+              class="v-avatar"
+              style="overflow: hidden"
+            ></croppa>
+
             <v-avatar
+              v-else
               size="128"
               color="accent"
             >
@@ -102,7 +102,7 @@
 
     data() {
       return {
-        isEdit: false,
+        isEdit: true,
         myCroppa: {}
       };
     },
