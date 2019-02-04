@@ -13,7 +13,7 @@
         class="pa-0 mt-3"
       >
         <!--<transition-group name="flip-list" tag="div" class="layout row wrap">-->
-        <v-layout>
+        <v-layout row wrap>
           <motivators-card
             v-for="motivator in sortedMotivators"
             :key="motivator.id"

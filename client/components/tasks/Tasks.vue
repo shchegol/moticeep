@@ -14,7 +14,7 @@
       >
 
         <!--<transition-group name="flip-list" tag="div" class="layout row wrap">-->
-        <v-layout>
+        <v-layout row wrap>
           <tasks-card
             v-for="task in sortedTasks"
             :key="task.id"
