@@ -12,7 +12,9 @@
         grid-list-md
         class="pa-0 mt-3"
       >
-        <transition-group name="flip-list" tag="div" class="layout row wrap">
+
+        <!--<transition-group name="flip-list" tag="div" class="layout row wrap">-->
+        <v-layout>
           <tasks-card
             v-for="task in sortedTasks"
             :key="task.id"
@@ -23,7 +25,8 @@
             @delete="taskDelete"
           >
           </tasks-card>
-        </transition-group>
+        </v-layout>
+        <!--</transition-group>-->
       </v-container>
     </v-flex>
 
