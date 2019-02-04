@@ -80,7 +80,7 @@
 
       <v-progress-linear
         v-if="progressVisibility"
-        v-model="motivator.valuePercent"
+        v-model="progressPercent"
         height="12"
         color="green"
         class="mt-0"
@@ -108,6 +108,10 @@
       progressVisibility() {
         return !this.motivator.deleted && !this.motivator.done;
       },
+
+      progressPercent() {
+        return this.motivator.value / this.motivator.maxValue * 100
+      }
     },
 
     methods: {
