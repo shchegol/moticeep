@@ -21,16 +21,39 @@
 </template>
 
 <script>
-  import {mapState} from 'vuex';
+  // import {mapState} from 'vuex';
 
   export default {
     name: 'HeaderMain',
 
     computed: {
-      ...mapState({
-        filterType: state => state.common.filterType,
-        header: state => state.common.header,
-      }),
+      header() {
+        let path = this.$route.path;
+        let headerOpt = {
+          title: 'MOTIKEEP',
+          color: 'primary',
+        };
+
+        if (path === '/done') {
+          headerOpt = {
+            title: 'Завершённые',
+            color: 'blue-grey darken-2',
+          };
+        }
+
+        if (path === '/deleted') {
+          headerOpt = {
+            title: 'Корзина',
+            color: 'blue-grey darken-2',
+          };
+        }
+
+        if (path === '/user') {
+          headerOpt.title = 'Профиль';
+        }
+
+        return headerOpt;
+      },
     },
   };
 </script>

@@ -28,7 +28,7 @@
       EmptinessMessage,
     },
 
-    middleware: ['notAuthenticated', 'headerChange'],
+    middleware: ['notAuthenticated', 'filter'],
 
     computed: {
       ...mapGetters({

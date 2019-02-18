@@ -3,10 +3,6 @@ import _ from 'lodash';
 const state = () => ({
   drawer: false,
   filterType: 'main',
-  header: {
-    title: 'MOTIKEEP',
-    color: 'primary',
-  },
   snackbar: {
     active: false,
     message: '',
@@ -28,9 +24,6 @@ const actions = {
   changeFilterType({commit}, type) {
     commit('changeFilterType', type);
   },
-  changeHeader({commit}, data) {
-    commit('changeHeader', data);
-  },
   snackbarShow({commit}, data) {
     commit('snackbarShow', data);
   },
@@ -45,9 +38,6 @@ const actions = {
 const mutations = {
   changeFilterType(state, data) {
     state.filterType = data;
-  },
-  changeHeader(state, data) {
-    state.header = data;
   },
   snackbarShow(state, data) {
     state.snackbar = data;

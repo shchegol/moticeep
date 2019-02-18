@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="fabVisibility">
     <v-speed-dial
       v-model="fab"
       fixed
@@ -53,6 +53,13 @@
       return {
         fab: false,
       };
+    },
+
+    computed: {
+      fabVisibility() {
+        let path = this.$route.path;
+        return path !== "/done" && path !== "/deleted";
+      }
     },
 
     methods: {

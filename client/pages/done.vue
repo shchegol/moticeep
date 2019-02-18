@@ -17,6 +17,6 @@
       EmptinessMessage,
     },
 
-    middleware: ['notAuthenticated', 'headerChange'],
+    middleware: ['notAuthenticated', 'filter'],
   };
 </script>

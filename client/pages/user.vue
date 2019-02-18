@@ -98,7 +98,7 @@
 
     layout: 'single',
 
-    middleware: ['notAuthenticated', 'headerChange'],
+    middleware: ['notAuthenticated', 'filter'],
 
     data() {
       return {
